@@ -6,6 +6,7 @@ const MAX_SHIP_SPEED_V = 200 # TODO - change by planet?
 const SHIP_ACCEL_H = 15
 const SHIP_ACCEL_V = 30
 
+const SHIP_DECEL_H = 3
 
 const SHIP_FALL_RATE = 20
 
@@ -22,6 +23,10 @@ func _process(delta):
 		velocity.x += SHIP_ACCEL_H
 	elif Input.is_action_pressed("ui_left"):
 		velocity.x -= SHIP_ACCEL_H
+	elif abs(velocity.x) > 0:
+		velocity.x = velocity.x - (SHIP_DECEL_H * (velocity.x/abs(velocity.x)))
+		if abs(velocity.x) <= SHIP_DECEL_H:
+			velocity.x = 0
 		
 	if Input.is_action_pressed("ui_up"):
 		velocity.y -= SHIP_ACCEL_V
@@ -33,6 +38,6 @@ func _process(delta):
 		
 	if abs(velocity.y) > MAX_SHIP_SPEED_V:
 		velocity.y = MAX_SHIP_SPEED_V * velocity.y / abs(velocity.y)
-		
+	
 	move_and_slide(velocity)
 		
