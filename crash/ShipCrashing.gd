@@ -48,3 +48,5 @@ func stopFireDisplay():
 
 func showDamage():
 	$AnimationPlayer.play("damage")
+	
+	

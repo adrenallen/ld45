@@ -21,8 +21,7 @@ func _process(delta):
 			var thrustDir = global_position.direction_to($Camera2D.get_global_mouse_position())
 			var thrust = thrustDir.normalized()*THRUST_POWER*delta
 			velocity += thrust
-			Game.fuel -= FUEL_BURN_RATE*delta
-	
+			Game.fuel -= FUEL_BURN_RATE*delta	
 	
 	self.rotation = velocity.angle()
 	
@@ -30,7 +29,9 @@ func _process(delta):
 		velocity = velocity.normalized() * MAX_SPEED
 		
 	if gravityVelocity.length() > MAX_SPEED:
-		gravityVelocity = gravityVelocity.normalized() * MAX_SPEED
+		gravityVelocity = gravityVelocity.normalized() * MAX_SPEED * 0.8
 		
 	move_and_slide(velocity + gravityVelocity)
 	
+func getFullVector():
+	return (velocity + gravityVelocity).normalized()
