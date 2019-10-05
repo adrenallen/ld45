@@ -15,3 +15,6 @@ shape = SubResource( 1 )
 [node name="astro-top" type="Sprite" parent="."]
 rotation = 1.5708
 texture = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
