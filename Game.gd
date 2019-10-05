@@ -30,7 +30,6 @@ func refresh():
 func _ready():
 	randomize()
 	currentPlanet = generatePlanet()
-	print(currentPlanet)
 	self.fuel = 80
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -40,10 +39,18 @@ func _process(delta):
 
 func generatePlanet():
 	return {
-		radius = rand_range(32,96),
-		gravity = rand_range(90, 200),
+		radius = rand_range(16,64),
+		gravity = rand_range(20, 80),
 		biome = PlanetBiome.values()[randi()%PlanetBiome.values().size()],
 		atmosphereToxicity = rand_range(1,5)
+	}
+	
+func setPlanet(planetNode):
+	self.currentPlanet = {
+		radius = planetNode.planetRadius,
+		gravity = planetNode.gravity,
+		biome = planetNode.biome,
+		atmosphereToxicity = planetNode.atmosphereToxicity
 	}
 	
 func addFuel(amt):
@@ -54,3 +61,12 @@ func die():
 	print("The end")
 	get_tree().change_scene("res://Menu.tscn")
 	# TODO - cut to scene of destruction based on phase?
+	
+func setPhase(phase):
+	if phase == 1:
+		get_tree().change_scene("res://crash/Crashing.tscn")
+	elif phase == 2:
+		get_tree().change_scene("res://explore/Exploring.tscn")
+	elif phase == 3:
+		get_tree().change_scene("res://launch/Launching.tscn")
+	

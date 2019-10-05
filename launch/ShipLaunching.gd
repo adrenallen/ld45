@@ -1,8 +1,8 @@
 extends KinematicBody2D
 
-const THRUST_POWER = 135
+const THRUST_POWER = 140
 
-const MAX_SPEED = 300
+const MAX_SPEED = 120
 
 const FUEL_BURN_RATE = 5
 

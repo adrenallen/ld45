@@ -1,10 +1,7 @@
 extends Node2D
 
-export var gravity = 120
-export var planetRadius = 32
-export var biome = Game.PlanetBiome.Mountain
-export var atmosphereToxicity = 3
-export var landable = true
+export var gravity = 70
+export var radius = 64
 
 
 var gravityPullingObjects = []
@@ -12,15 +9,15 @@ var gravityPullingObjects = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$planet1.transform.x = Vector2(planetRadius/32, 0)
-	$planet1.transform.y = Vector2(0, planetRadius/32)
+	$planet1.transform.x = Vector2(radius/32, 0)
+	$planet1.transform.y = Vector2(0, radius/32)
 	
 	var planetShape = CircleShape2D.new()
-	planetShape.set_radius(planetRadius)
+	planetShape.set_radius(radius)
 	$PlanetArea2D/CollisionShape2D.set_shape(planetShape)
 
 	var gravityShape = CircleShape2D.new()
-	gravityShape.set_radius(planetRadius*5)
+	gravityShape.set_radius(radius*6)
 	$GravityArea2D/CollisionShape2D.set_shape(gravityShape)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -33,8 +30,6 @@ func _process(delta):
 func _on_GravityArea2D_body_entered(body):
 	if body.is_in_group("ship"):
 		gravityPullingObjects.append(body)
-	
-
 
 func _on_GravityArea2D_body_exited(body):
 	gravityPullingObjects.erase(body)
@@ -42,11 +37,4 @@ func _on_GravityArea2D_body_exited(body):
 
 func _on_PlanetArea2D_body_entered(body):
 	if body.is_in_group("ship"):
-		if self.landable:
-			Game.setPlanet(self)
-			Game.setPhase(1)
-
-
-func _on_PlanetArea2D_area_entered(area):
-	if area.is_in_group("planet"):
-		queue_free()
+		Game.die()

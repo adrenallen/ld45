@@ -4,7 +4,7 @@ const MAX_SHIP_SPEED_H = 300
 const MAX_SHIP_SPEED_V = 450 # TODO - change by planet?
 
 const SHIP_ACCEL_H = 350
-const SHIP_ACCEL_V = 600
+const SHIP_ACCEL_V = 900
 
 const SHIP_DECEL_H = 150
 

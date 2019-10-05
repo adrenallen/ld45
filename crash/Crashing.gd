@@ -1,8 +1,8 @@
 extends Node2D
 
 const FALL_SPEED = 1000
-const GROUND_OBS_SPEED = 800
-const SKY_OBS_SPEED = 900
+const GROUND_OBS_SPEED = 700
+const SKY_OBS_SPEED = 800
 
 var mountainScene = load("res://crash/Mountain.tscn")
 var junkScene = load("res://crash/Junk.tscn")
@@ -68,9 +68,9 @@ func handleGroundSpawn():
 			mtn.find_node("Area2D").connect("body_entered", self, "hitObstacle")
 			$GroundObstacles/Obstacles.add_child(mtn)
 			$GroundObstacles/Timer.start(rand_range(0.2,3))
-	if Game.currentPlanet.biome == Game.PlanetBiome.Forest:
-		if distanceToGround < 20000:
-			pass #TODO make this a thing
+#	if Game.currentPlanet.biome == Game.PlanetBiome.Forest:
+#		if distanceToGround < 20000:
+#			pass #TODO make this a thing
 			
 			
 func handleGroundMoves(delta):
