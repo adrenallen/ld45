@@ -41,4 +41,6 @@ func _process(delta):
 		velocity.y = MAX_SHIP_SPEED_V * velocity.y / abs(velocity.y)
 	
 	move_and_slide(velocity)
-		
+	
+func showDamage():
+	$AnimationPlayer.play("damage")

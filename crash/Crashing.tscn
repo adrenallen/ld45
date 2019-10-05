@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://crash/Crashing.gd" type="Script" id=1]
 [ext_resource path="res://crash/ShipCrashing.tscn" type="PackedScene" id=2]
 [ext_resource path="res://transition/Transition.tscn" type="PackedScene" id=3]
+[ext_resource path="res://crash/white_bg.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 88, 357 )
@@ -20,6 +21,7 @@ script = ExtResource( 1 )
 position = Vector2( 370, 96 )
 
 [node name="Boundaries" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Boundaries"]
 
@@ -40,3 +42,32 @@ position = Vector2( 518, -110 )
 shape = SubResource( 3 )
 
 [node name="Transition" parent="." instance=ExtResource( 3 )]
+
+[node name="DistanceLabel" type="RichTextLabel" parent="."]
+margin_left = 53.1856
+margin_top = 15.5125
+margin_right = 182.186
+margin_bottom = 59.5125
+text = "
+"
+
+[node name="GroundObstacles" type="Node2D" parent="."]
+
+[node name="StartPosition" type="Position2D" parent="GroundObstacles"]
+position = Vector2( 1358.45, 706.925 )
+
+[node name="EndPosition" type="Position2D" parent="GroundObstacles"]
+position = Vector2( -651.523, 518.56 )
+
+[node name="Timer" type="Timer" parent="GroundObstacles"]
+wait_time = 4.0
+one_shot = true
+autostart = true
+
+[node name="Obstacles" type="Node2D" parent="GroundObstacles"]
+
+[node name="sky_bg" type="Sprite" parent="."]
+self_modulate = Color( 0.239216, 0.647059, 0.894118, 1 )
+z_index = -1
+texture = ExtResource( 4 )
+centered = false
