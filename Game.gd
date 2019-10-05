@@ -12,7 +12,8 @@ var health = 100
 var currentPlanet = {
 	gravity = 200,
 	radius = 32,
-	biome = PlanetBiome.Forest
+	biome = PlanetBiome.Forest,
+	atmosphereToxicity = 5
 }
 
 var debug = false
@@ -37,8 +38,13 @@ func generatePlanet():
 	return {
 		radius = rand_range(32,96),
 		gravity = rand_range(90, 200),
-		biome = PlanetBiome.values()[randi()%PlanetBiome.values().size()]
+		biome = PlanetBiome.values()[randi()%PlanetBiome.values().size()],
+		atmosphereToxicity = rand_range(1,5)
 	}
+	
+func addFuel(amt):
+	self.fuel += amt
+	print("new fuel is ", self.fuel)
 
 func die():
 	print("The end")

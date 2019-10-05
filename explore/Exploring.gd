@@ -5,6 +5,10 @@ extends Node2D
 # var b = "text"
 const MAX_FUEL_SCALE = 3.96
 
+var minimumLaunchFuel = 30 # TODO - change by gravity?
+
+var fuelScene = load("res://explore/Fuel.tscn")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	placeWorld()
@@ -17,10 +21,14 @@ func _process(delta):
 	$UI.global_position.x -= get_viewport_rect().size.x/2
 	$UI.global_position.y -= get_viewport_rect().size.y/2
 	
-	$"UI/fuel-icon/fuel-body".scale.x = Game.fuel / 100 * MAX_FUEL_SCALE
+	$"UI/fuel-icon/fuel-body".scale.x = Game.fuel / 100.0 * MAX_FUEL_SCALE
+	$"UI/o2/o2-body".scale.x = Game.oxygen / 100 * MAX_FUEL_SCALE
 	
+	Game.oxygen -= delta*Game.currentPlanet.atmosphereToxicity
 	
-
+	if Game.oxygen < 0:
+		Game.die()
+	
 func nextPhase():
 	get_tree().change_scene("res://launch/Launching.tscn")
 
@@ -30,15 +38,33 @@ func _on_Transition_TransitionIn():
 func placeWorld():
 	var map = generateMap()
 	
+	var numberOfFuel = Game.currentPlanet.atmosphereToxicity * Game.currentPlanet.radius / 3.5
+	
+	var openSpots = []
+	
 	var playerStart = Vector2(0,0)
 	for y in range(map.size()):
 		for x in range(map[y].size()):
 #			print(x, y, map[y][x])
 			$TileMap.set_cell(x, y, map[y][x])
 			if map[y][x] == 0:
+				openSpots.append(Vector2(x,y))
 				playerStart.x = x
 				playerStart.y = y
 				
+	for i in range(numberOfFuel):
+		var randomLoc = randi()%openSpots.size()
+		var randomSpot = openSpots[randomLoc]
+		var loc = $TileMap.map_to_world(randomSpot)
+		var fuel = fuelScene.instance()
+		fuel.position = loc
+		fuel.position.x += 32
+		fuel.position.y += 32
+		$World.add_child(fuel)
+		
+		openSpots.erase(randomSpot)
+		
+	
 	# position player start
 	$KinematicBody2D.global_position = $TileMap.map_to_world(playerStart)
 	$KinematicBody2D.global_position.x += 32
@@ -59,6 +85,8 @@ func placeWorld():
 	$"World/ship-top".global_position = $KinematicBody2D.global_position
 	$"World/ship-top".global_position.x -= 128
 	
+	
+	
 
 func generateMapOpen(dimensions):
 	var array = []
@@ -69,9 +97,9 @@ func generateMapOpen(dimensions):
 	return array
 
 func generateMap():
-	var dimensions = 128
-	var maxTunnels = 128
-	var maxLength = 10
+	var dimensions = int(floor(Game.currentPlanet.radius*4))
+	var maxTunnels = int(floor(rand_range(dimensions*.75, dimensions*2)))
+	var maxLength = int(floor(rand_range(4,32)))
 	var map = generateMapOpen(dimensions)
 	var currentRow = randi()%dimensions
 	var currentCol = randi()%dimensions

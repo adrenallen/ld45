@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://explore/Exploring.gd" type="Script" id=1]
 [ext_resource path="res://explore/Astro.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://explore/fuel-level.png" type="Texture" id=8]
 [ext_resource path="res://explore/fuel-body.png" type="Texture" id=9]
 [ext_resource path="res://explore/fuel-min.png" type="Texture" id=10]
+[ext_resource path="res://explore/o2.png" type="Texture" id=11]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 61.7307
@@ -80,7 +81,7 @@ tile_data = PoolIntArray( 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0, 
 z_index = 50
 
 [node name="fuel-icon" type="Sprite" parent="UI"]
-position = Vector2( 45.8683, 553.584 )
+position = Vector2( 49.2811, 485.328 )
 scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 7 )
 
@@ -90,6 +91,7 @@ rotation = 1.5708
 texture = ExtResource( 8 )
 
 [node name="fuel-body" type="Sprite" parent="UI/fuel-icon"]
+modulate = Color( 0.466667, 0.941176, 0.270588, 1 )
 position = Vector2( 53.7465, -30.5132 )
 scale = Vector2( 1.1, 0.968 )
 z_index = -1
@@ -101,4 +103,23 @@ position = Vector2( 124.764, -25.4569 )
 rotation = 1.5708
 scale = Vector2( 0.620755, 0.428606 )
 texture = ExtResource( 10 )
+
+[node name="o2" type="Sprite" parent="UI"]
+position = Vector2( 49.6866, 562.885 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 11 )
+
+[node name="o2-body" type="Sprite" parent="UI/o2"]
+modulate = Color( 0.623529, 0.67451, 1, 1 )
+position = Vector2( 53.167, -33.524 )
+scale = Vector2( 1, 0.968 )
+z_index = -1
+texture = ExtResource( 9 )
+centered = false
+
+[node name="o2-level" type="Sprite" parent="UI/o2"]
+position = Vector2( 180.646, -2.793 )
+rotation = 1.5708
+scale = Vector2( 1, 1 )
+texture = ExtResource( 8 )
 [connection signal="TransitionIn" from="Transition" to="." method="_on_Transition_TransitionIn"]
