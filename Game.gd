@@ -1,15 +1,18 @@
 extends Node
 
-var fuel = 200
+enum PlanetBiome {
+	Forest,
+	Mountain
+}
+
+var fuel = 0
+var oxygen = 100
+var health = 100
+
 var currentPlanet = {
 	gravity = 200,
 	radius = 32,
 	biome = PlanetBiome.Forest
-} 
-
-enum PlanetBiome {
-	Forest,
-	Mountain
 }
 
 var debug = true
@@ -34,8 +37,7 @@ func generatePlanet():
 	return {
 		radius = rand_range(32,96),
 		gravity = rand_range(90, 200),
-#		biome = PlanetBiome.values()[randi()%PlanetBiome.values().size()]
-		biome = PlanetBiome.Mountain
+		biome = PlanetBiome.values()[randi()%PlanetBiome.values().size()]
 	}
 
 func die():

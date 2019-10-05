@@ -8,12 +8,12 @@ var mountainScene = load("res://crash/Mountain.tscn")
 var junkScene = load("res://crash/Junk.tscn")
 
 var distanceToGround = 39000
-var health = 100 # always start at full health
 
 var groundDirection = Vector2(0,0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Game.health = 100
 	distanceToGround = Game.currentPlanet.radius * 1000
 	var groundRad =  $GroundObstacles/StartPosition.get_angle_to($GroundObstacles/EndPosition.position)
 	groundDirection = Vector2(cos(groundRad), sin(groundRad))
@@ -81,12 +81,12 @@ func handleGroundMoves(delta):
 
 func hitObstacle(body):
 	if body.is_in_group("ship"):
-		health -= 20
+		Game.health -= 20
 		print("ouch")
 		$Ship.showDamage()
 		# TODO - play hurt (spark and flash?)
 	
-	if health <= 0:
+	if Game.health <= 0:
 		Game.die()
 		
 

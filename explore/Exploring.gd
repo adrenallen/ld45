@@ -6,13 +6,8 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var map = generateMap()
-	for y in range(map.size()):
-		for x in range(map[y].size()):
-#			print(x, y, map[y][x])
-			$TileMap.set_cell(x, y, map[y][x])
-			if map[y][x] == 0:
-				$KinematicBody2D.global_position = $TileMap.map_to_world(Vector2(x,y))
+	placeWorld()
+	Game.oxygen = 100
 	
 func _process(delta):
 	pass
@@ -22,6 +17,39 @@ func nextPhase():
 
 func _on_Transition_TransitionIn():
 	$KinematicBody2D/Camera2D.current = true
+
+func placeWorld():
+	var map = generateMap()
+	
+	var playerStart = Vector2(0,0)
+	for y in range(map.size()):
+		for x in range(map[y].size()):
+#			print(x, y, map[y][x])
+			$TileMap.set_cell(x, y, map[y][x])
+			if map[y][x] == 0:
+				playerStart.x = x
+				playerStart.y = y
+				
+	# position player start
+	$KinematicBody2D.global_position = $TileMap.map_to_world(playerStart)
+	$KinematicBody2D.global_position.x += 32
+	$KinematicBody2D.global_position.y += 32
+	
+	# make sure we dont open an out of world path
+	for x in range(playerStart.x-9, playerStart.x+5):
+		for y in range(playerStart.y-7, playerStart.y+7):
+			if $TileMap.get_cell(x,y) < 0:
+				$TileMap.set_cell(x,y,1)
+	
+	# make space for crash zone
+	for x in range(playerStart.x-6, playerStart.x+2):
+		for y in range(playerStart.y-4, playerStart.y+4):
+			$TileMap.set_cell(x,y,0)
+	
+			
+	$"World/ship-top".global_position = $KinematicBody2D.global_position
+	$"World/ship-top".global_position.x -= 128
+	
 
 func generateMapOpen(dimensions):
 	var array = []
@@ -33,7 +61,7 @@ func generateMapOpen(dimensions):
 
 func generateMap():
 	var dimensions = 128
-	var maxTunnels = 60
+	var maxTunnels = 128
 	var maxLength = 10
 	var map = generateMapOpen(dimensions)
 	var currentRow = randi()%dimensions
@@ -53,10 +81,10 @@ func generateMap():
 		
 		while tunnelLength < randomLength:
 			if (
-				((currentRow == 0) and (randomDirection.x == -1)) or 
-				((currentCol == 0) and (randomDirection.y == -1)) or
-				((currentRow == dimensions - 1) and (randomDirection.x == 1)) or
-				((currentCol == dimensions - 1) and (randomDirection.y == 1))
+				((currentRow == 1) and (randomDirection.x == -1)) or 
+				((currentCol == 1) and (randomDirection.y == -1)) or
+				((currentRow == dimensions - 2) and (randomDirection.x == 1)) or
+				((currentCol == dimensions - 2) and (randomDirection.y == 1))
 			):
 				break
 			else:
