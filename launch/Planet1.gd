@@ -22,6 +22,26 @@ func _ready():
 	var gravityShape = CircleShape2D.new()
 	gravityShape.set_radius(planetRadius*5)
 	$GravityArea2D/CollisionShape2D.set_shape(gravityShape)
+	
+	setPlanetImage()
+	
+func setPlanetImage():
+	$planet1.hframes = 1
+	if biome == Game.PlanetBiome.Mountain:
+		$planet1.texture = load("res://launch/planet_mountain.png")
+	elif biome == Game.PlanetBiome.Forest:
+		$planet1.texture = load("res://launch/planet_forest.png")
+	elif biome == Game.PlanetBiome.Fungal:
+		$planet1.texture = load("res://launch/planet_fungal.png")
+	elif biome == Game.PlanetBiome.Water:
+		$planet1.texture = load("res://launch/planet_water.png")
+	elif biome == Game.PlanetBiome.Gas:
+		$planet1.texture = load("res://launch/planet_gas.png")
+		$planet1.hframes = 5
+		$AnimationPlayer.play("gas_idle")
+	elif biome == Game.PlanetBiome.Lava:
+		$planet1.texture = load("res://launch/planet_lava.png")
+		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

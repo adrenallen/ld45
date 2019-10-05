@@ -1,11 +1,17 @@
 extends Node
 
 enum PlanetBiome {
-#	Forest,
+	Forest,
 	Mountain,
-#	Mushroom,
-#	Gas,
-#	Water,
+	Fungal,
+	Gas,
+	Water,
+	Lava
+}
+
+enum DeathBy {
+	Sun,
+	Planet
 }
 
 var fuel = 0
@@ -22,6 +28,7 @@ var currentPlanet = {
 var debug = true
 
 var dead = false
+var deathBy = {cause = null}
 
 var distance = 0
 var currentDistance = 0 #distance in current scene
@@ -60,9 +67,17 @@ func addFuel(amt):
 	self.fuel += amt
 	print("new fuel is ", self.fuel)
 
-func die():
+func die(deathInfo = null):
+	if deathInfo:
+		deathBy.cause = deathInfo.causeprint(deathInfo)
+	else:
+		deathBy.cause = Game.DeathBy.Planet
 	print("The end")
-	print("Score of ", distance + currentDistance)
+	
+	
+	
+	var score = (distance + currentDistance) * 1000.0
+	print("Score of ", score)
 	get_tree().change_scene("res://Menu.tscn")
 	# TODO - cut to scene of destruction based on phase?
 	
