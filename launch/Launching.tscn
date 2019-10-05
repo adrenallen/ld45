@@ -37,6 +37,7 @@ z_index = 1
 
 [node name="LaunchPlanet" parent="." instance=ExtResource( 3 )]
 position = Vector2( 40.5876, 88.7802 )
+landable = false
 
 [node name="TransitionIn" parent="." instance=ExtResource( 4 )]
 position = Vector2( -674.842, -400.77 )

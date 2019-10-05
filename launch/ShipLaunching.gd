@@ -1,13 +1,12 @@
 extends KinematicBody2D
 
-const THRUST_POWER = 140
+const THRUST_POWER = 190
 
 const MAX_SPEED = 120
 
 const FUEL_BURN_RATE = 5
 
 export var velocity = Vector2(0,0)
-var gravityVelocity = Vector2(0,0)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -28,10 +27,7 @@ func _process(delta):
 	if velocity.length() > MAX_SPEED:
 		velocity = velocity.normalized() * MAX_SPEED
 		
-	if gravityVelocity.length() > MAX_SPEED:
-		gravityVelocity = gravityVelocity.normalized() * MAX_SPEED * 0.8
-		
-	move_and_slide(velocity + gravityVelocity)
+	move_and_slide(velocity)
 	
 func getFullVector():
-	return (velocity + gravityVelocity).normalized()
+	return (velocity).normalized()

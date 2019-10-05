@@ -24,7 +24,7 @@ func _ready():
 func _process(delta):
 	for obj in gravityPullingObjects:
 		var gravityPull = obj.global_position.direction_to(self.global_position) * gravity * delta
-		obj.gravityVelocity += gravityPull
+		obj.velocity += gravityPull
 
 
 func _on_GravityArea2D_body_entered(body):
