@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://crash/fungal.png" type="Texture" id=1]
+
+[node name="Node2D" type="Node2D"]
+position = Vector2( 65.2445, -64.5276 )
+
+[node name="Area2D" type="Area2D" parent="." groups=[
+"obstacle",
+]]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PoolVector2Array( 11.3284, -58.3564, 53.6895, -46.429, 60.1738, -31.2989, 51.528, -21.5724, 5.05704, 62.7237, -3.58871, 62.7237, -56.544, -38.864, -54.3826, -49.6712, -32.1561, -55.8477, -3.58871, -59.3977 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )

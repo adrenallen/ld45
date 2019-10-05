@@ -16,10 +16,19 @@ var playBoxCoordinates = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Ship.global_position = $LaunchPlanet/planet1.global_position
-	$Ship.global_position.y -= $LaunchPlanet.planetRadius
+	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 	$LaunchPlanet.gravity = 0 # TODO - can we do some magic to turn this on after ship leaves?
 	$LaunchPlanet.landable = false
+	
+	$LaunchPlanet.biome = Game.currentPlanet.biome
+	$LaunchPlanet.planetRadius = Game.currentPlanet.radius
+	$LaunchPlanet.atmosphereToxicity = Game.currentPlanet.atmosphereToxicity
+	
+	$LaunchPlanet._ready() # refresh now that we set the params
+	
+	$Ship.global_position = $LaunchPlanet/planet1.global_position
+	$Ship.global_position.y -= $LaunchPlanet.planetRadius
+	
 	generateSpace($Ship.global_position)
 	
 func calculatePlayBox():

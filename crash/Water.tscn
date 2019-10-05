@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://crash/water.png" type="Texture" id=1]
+
+[sub_resource type="Animation" id=1]
+resource_name = "idle"
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.00132981, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0, 1, 2 ]
+}
+
+[node name="Node2D" type="Node2D"]
+position = Vector2( 65.2445, -64.5276 )
+
+[node name="Area2D" type="Area2D" parent="." groups=[
+"obstacle",
+]]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PoolVector2Array( 64.6773, 63.2396, -64.106, 63.6689, -37.0616, -44.5091, -15.1684, -61.2509, 9.30045, -61.6802, 32.9107, -43.6505 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "idle"
+anims/idle = SubResource( 1 )

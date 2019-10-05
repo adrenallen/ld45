@@ -5,18 +5,28 @@ const GROUND_OBS_SPEED = 700
 const SKY_OBS_SPEED = 800
 
 var mountainScene = load("res://crash/Mountain.tscn")
+var forestScene = load("res://crash/Forest.tscn")
+var fungalScene = load("res://crash/Fungal.tscn")
+var lavaScene = load("res://crash/Lava.tscn")
+var gasScene = load("res://crash/Gas.tscn")
+var waterScene = load("res://crash/Water.tscn")
+
 var junkScene = load("res://crash/Junk.tscn")
 
 var distanceToGround = 39000
 
 var groundDirection = Vector2(0,0)
 
+var inSpace = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	Game.health = 100
 	distanceToGround = Game.currentPlanet.radius * 1000
 	var groundRad =  $GroundObstacles/StartPosition.get_angle_to($GroundObstacles/EndPosition.position)
 	groundDirection = Vector2(cos(groundRad), sin(groundRad))
+	
+	setBGColor()
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,13 +39,38 @@ func _process(delta):
 	
 	handleSkySpawn()
 	handleSkyMoves(delta)
-	
+		
 	if distanceToGround < 20000:
 		$Ship.stopFireDisplay()
+	
+	if distanceToGround < 35000 and inSpace:
+		inSpace = false
+		$space/AnimationPlayer.play("space_fade")
 		
 	if distanceToGround <= 0:
 		crash()
 
+func setBGColor():
+	var bgColor = Color(165, 238, 255)
+	if Game.currentPlanet.biome == Game.PlanetBiome.Forest:
+		bgColor = Color(42,255,245)
+	elif Game.currentPlanet.biome == Game.PlanetBiome.Fungal:
+		bgColor = Color(255,118,118)
+	elif Game.currentPlanet.biome == Game.PlanetBiome.Water:
+		bgColor = Color(131,197,255)
+	elif Game.currentPlanet.biome == Game.PlanetBiome.Lava:
+		bgColor = Color(231,141,97)
+	elif Game.currentPlanet.biome == Game.PlanetBiome.Mountain:
+		bgColor = Color(193,193,193)
+	elif Game.currentPlanet.biome == Game.PlanetBiome.Gas:
+		bgColor = Color(231,255,177)
+	
+	#Fix for dumb
+	bgColor /= 255.0
+	bgColor.a = 1
+	
+	$sky_bg.self_modulate = bgColor
+		
 func handleSkySpawn():
 	if $SkyObstacles/Timer.time_left <= 0:
 		# Yikes, don't judge me
@@ -57,10 +92,26 @@ func handleSkyMoves(delta):
 			obj.queue_free()
 	
 func handleGroundSpawn():
+	if inSpace:
+		return #no ground in space bro
+	var sceneToUse
 	if Game.currentPlanet.biome == Game.PlanetBiome.Mountain:
+		sceneToUse = mountainScene
+	elif Game.currentPlanet.biome == Game.PlanetBiome.Forest:
+		sceneToUse = forestScene
+	elif Game.currentPlanet.biome == Game.PlanetBiome.Fungal:
+		sceneToUse = fungalScene
+	elif Game.currentPlanet.biome == Game.PlanetBiome.Water:
+		sceneToUse = waterScene
+	elif Game.currentPlanet.biome == Game.PlanetBiome.Gas:
+		sceneToUse = gasScene
+	elif Game.currentPlanet.biome == Game.PlanetBiome.Lava:
+		sceneToUse = lavaScene
+		
+	if sceneToUse != null:
 		if $GroundObstacles/Timer.time_left <= 0:
 			# Yikes, don't judge me
-			var mtn = mountainScene.instance()
+			var mtn = sceneToUse.instance()
 			mtn.position = $GroundObstacles/StartPosition.position
 			mtn.position.x += rand_range(-50,100)
 			mtn.position.y += rand_range(-32,32)
@@ -68,11 +119,7 @@ func handleGroundSpawn():
 			mtn.find_node("Area2D").connect("body_entered", self, "hitObstacle")
 			$GroundObstacles/Obstacles.add_child(mtn)
 			$GroundObstacles/Timer.start(rand_range(0.2,3))
-#	if Game.currentPlanet.biome == Game.PlanetBiome.Forest:
-#		if distanceToGround < 20000:
-#			pass #TODO make this a thing
-			
-			
+
 func handleGroundMoves(delta):
 	for obj in $GroundObstacles/Obstacles.get_children():
 		obj.position += groundDirection*GROUND_OBS_SPEED*delta
