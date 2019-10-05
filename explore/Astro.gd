@@ -1,8 +1,8 @@
 extends KinematicBody2D
 
-const MAX_SPEED = 200
-const ACCEL = 10
-const DECEL = 8
+const MAX_SPEED = 300
+const ACCEL = 500
+const DECEL = 1500
 
 var velocity = Vector2(0,0)
 
@@ -15,21 +15,21 @@ func _process(delta):
 	self.look_at($Camera2D.get_global_mouse_position())
 	
 	if Input.is_action_pressed("ui_right"):
-		velocity.x += ACCEL
+		velocity.x += ACCEL*delta
 	elif Input.is_action_pressed("ui_left"):
-		velocity.x -= ACCEL
+		velocity.x -= ACCEL*delta
 	elif abs(velocity.x) > 0:
-		velocity.x = velocity.x - (DECEL * (velocity.x/abs(velocity.x)))
-		if abs(velocity.x) <= DECEL:
+		velocity.x = velocity.x - (DECEL*delta * (velocity.x/abs(velocity.x)))
+		if abs(velocity.x) <= DECEL*delta:
 			velocity.x = 0
 		
 	if Input.is_action_pressed("ui_up"):
-		velocity.y -= ACCEL
+		velocity.y -= ACCEL*delta
 	elif Input.is_action_pressed("ui_down"):
-		velocity.y += ACCEL
+		velocity.y += ACCEL*delta
 	elif abs(velocity.y) > 0:
-		velocity.y = velocity.y - (DECEL * (velocity.y/abs(velocity.y)))
-		if abs(velocity.y) <= DECEL:
+		velocity.y = velocity.y - (DECEL*delta * (velocity.y/abs(velocity.y)))
+		if abs(velocity.y) <= DECEL*delta:
 			velocity.y = 0
 		
 	if velocity.length() > MAX_SPEED:

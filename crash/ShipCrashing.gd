@@ -1,14 +1,14 @@
 extends KinematicBody2D
 
-const MAX_SHIP_SPEED_H = 200
-const MAX_SHIP_SPEED_V = 200 # TODO - change by planet?
+const MAX_SHIP_SPEED_H = 300
+const MAX_SHIP_SPEED_V = 450 # TODO - change by planet?
 
-const SHIP_ACCEL_H = 15
-const SHIP_ACCEL_V = 30
+const SHIP_ACCEL_H = 250
+const SHIP_ACCEL_V = 400
 
-const SHIP_DECEL_H = 3
+const SHIP_DECEL_H = 150
 
-const SHIP_FALL_RATE = 20
+const SHIP_FALL_RATE = 200
 
 var velocity = Vector2(0,0)
 
@@ -18,20 +18,20 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	velocity.y += SHIP_FALL_RATE
+	velocity.y += SHIP_FALL_RATE*delta
 	if Input.is_action_pressed("ui_right"):
-		velocity.x += SHIP_ACCEL_H
+		velocity.x += SHIP_ACCEL_H*delta
 	elif Input.is_action_pressed("ui_left"):
-		velocity.x -= SHIP_ACCEL_H
+		velocity.x -= SHIP_ACCEL_H*delta
 	elif abs(velocity.x) > 0:
-		velocity.x = velocity.x - (SHIP_DECEL_H * (velocity.x/abs(velocity.x)))
-		if abs(velocity.x) <= SHIP_DECEL_H:
+		velocity.x = velocity.x - (SHIP_DECEL_H*delta * (velocity.x/abs(velocity.x)))
+		if abs(velocity.x) <= SHIP_DECEL_H*delta:
 			velocity.x = 0
 		
 	if Input.is_action_pressed("ui_up"):
-		velocity.y -= SHIP_ACCEL_V
+		velocity.y -= SHIP_ACCEL_V*delta
 	elif Input.is_action_pressed("ui_down"):
-		velocity.y += SHIP_ACCEL_V
+		velocity.y += SHIP_ACCEL_V*delta
 		
 	if abs(velocity.x) > MAX_SHIP_SPEED_H:
 		velocity.x = MAX_SHIP_SPEED_H * velocity.x / abs(velocity.x)
