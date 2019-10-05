@@ -13,9 +13,7 @@ func _process(delta):
 		nextPhase()
 
 func nextPhase():
-	get_tree().change_scene("res://crash/Crashing.tscn")
+	get_tree().change_scene("res://launch/Launching.tscn")
 
-
-func _on_TransitionIn_TransitionIn():
+func _on_Transition_TransitionIn():
 	$KinematicBody2D/Camera2D.current = true
-	

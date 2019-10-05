@@ -3,22 +3,23 @@ extends KinematicBody2D
 const MAX_SHIP_SPEED_H = 300
 const MAX_SHIP_SPEED_V = 450 # TODO - change by planet?
 
-const SHIP_ACCEL_H = 250
+const SHIP_ACCEL_H = 350
 const SHIP_ACCEL_V = 400
 
 const SHIP_DECEL_H = 150
 
-const SHIP_FALL_RATE = 200
+const SHIP_FALL_RATE = 100
 
 var velocity = Vector2(0,0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print("Planet gravity is ", SHIP_FALL_RATE+Game.currentPlanet.gravity)
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	velocity.y += SHIP_FALL_RATE*delta
+	velocity.y += (SHIP_FALL_RATE+Game.currentPlanet.gravity)*delta
 	if Input.is_action_pressed("ui_right"):
 		velocity.x += SHIP_ACCEL_H*delta
 	elif Input.is_action_pressed("ui_left"):

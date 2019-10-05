@@ -6,16 +6,12 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
-	
+	pass # Replace with function body.
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("debugger"):
 		nextPhase()
 
 func nextPhase():
-	get_tree().change_scene("res://crash/Crashing.tscn")
-
-
-func _on_TransitionIn_TransitionIn():
-	$KinematicBody2D/Camera2D.current = true
-	
+	get_tree().change_scene("res://explore/Exploring.tscn")
