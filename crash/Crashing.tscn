@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://crash/Crashing.gd" type="Script" id=1]
 [ext_resource path="res://crash/ShipCrashing.tscn" type="PackedScene" id=2]
@@ -14,6 +14,9 @@ extents = Vector2( 88, 355 )
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 594, 81 )
 
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 594, 81 )
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -21,7 +24,6 @@ script = ExtResource( 1 )
 position = Vector2( 370, 96 )
 
 [node name="Boundaries" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Boundaries"]
 
@@ -41,6 +43,13 @@ shape = SubResource( 2 )
 position = Vector2( 518, -110 )
 shape = SubResource( 3 )
 
+[node name="DeathArea2D" type="Area2D" parent="Boundaries"]
+position = Vector2( 4.66541, 814.113 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/DeathArea2D"]
+position = Vector2( 518, -110 )
+shape = SubResource( 4 )
+
 [node name="Transition" parent="." instance=ExtResource( 3 )]
 
 [node name="DistanceLabel" type="RichTextLabel" parent="."]
@@ -52,6 +61,7 @@ text = "
 "
 
 [node name="GroundObstacles" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="StartPosition" type="Position2D" parent="GroundObstacles"]
 position = Vector2( 1358.45, 706.925 )
@@ -71,3 +81,4 @@ self_modulate = Color( 0.239216, 0.647059, 0.894118, 1 )
 z_index = -1
 texture = ExtResource( 4 )
 centered = false
+[connection signal="body_entered" from="Boundaries/DeathArea2D" to="." method="_on_DeathArea2D_body_entered"]

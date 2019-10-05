@@ -19,10 +19,9 @@ func refresh():
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
 	currentPlanet = generatePlanet()
 	print(currentPlanet)
-	print(currentPlanet.biome == PlanetBiome.Mountain)
-	print(currentPlanet.biome == PlanetBiome.Forest)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -37,4 +36,5 @@ func generatePlanet():
 
 func die():
 	print("The end")
+	get_tree().change_scene("res://Menu.tscn")
 	# TODO - cut to scene of destruction based on phase?

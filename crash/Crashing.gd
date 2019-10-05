@@ -44,6 +44,9 @@ func handleGroundSpawn():
 			mtn.find_node("Area2D").connect("body_entered", self, "hitGroundObstacle")
 			$GroundObstacles/Obstacles.add_child(mtn)
 			$GroundObstacles/Timer.start(rand_range(0.2,3))
+#	if Game.currentPlanet.biome == Game.PlanetBiome.Forest:
+#		if distanceToGround < 20000:
+			
 			
 func handleGroundMoves(delta):
 	for obj in $GroundObstacles/Obstacles.get_children():
@@ -68,3 +71,7 @@ func crash():
 	
 func nextPhase():
 	get_tree().change_scene("res://explore/Exploring.tscn")
+
+func _on_DeathArea2D_body_entered(body):
+	if body.is_in_group("ship"):
+		Game.die()

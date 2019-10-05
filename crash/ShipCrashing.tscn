@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://crash/ShipCrashing.gd" type="Script" id=1]
 [ext_resource path="res://crash/ship-side.png" type="Texture" id=2]
+[ext_resource path="res://crash/ship-side-fire.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 61, 22 )
@@ -21,6 +22,23 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.698039, 0.227451, 0.227451, 1 ), Color( 1, 1, 1, 1 ), Color( 0.698039, 0.227451, 0.227451, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
+[sub_resource type="Animation" id=3]
+resource_name = "fire"
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
 [node name="ship-side" type="KinematicBody2D" groups=[
 "ship",
 ]]
@@ -34,3 +52,12 @@ shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/damage = SubResource( 2 )
+
+[node name="ship-side-fire" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.780392 )
+texture = ExtResource( 3 )
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ship-side-fire"]
+autoplay = "fire"
+anims/fire = SubResource( 3 )
