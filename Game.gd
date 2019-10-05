@@ -31,7 +31,8 @@ func generatePlanet():
 	return {
 		radius = rand_range(32,96),
 		gravity = rand_range(90, 200),
-		biome = PlanetBiome.values()[randi()%PlanetBiome.values().size()]
+#		biome = PlanetBiome.values()[randi()%PlanetBiome.values().size()]
+		biome = PlanetBiome.Mountain
 	}
 
 func die():

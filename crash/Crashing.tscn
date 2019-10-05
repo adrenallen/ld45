@@ -24,6 +24,7 @@ script = ExtResource( 1 )
 position = Vector2( 370, 96 )
 
 [node name="Boundaries" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Boundaries"]
 
@@ -61,7 +62,6 @@ text = "
 "
 
 [node name="GroundObstacles" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="StartPosition" type="Position2D" parent="GroundObstacles"]
 position = Vector2( 1358.45, 706.925 )
@@ -81,4 +81,67 @@ self_modulate = Color( 0.239216, 0.647059, 0.894118, 1 )
 z_index = -1
 texture = ExtResource( 4 )
 centered = false
+
+[node name="SkyObstacles" type="Node2D" parent="."]
+
+[node name="Obstacles" type="Node2D" parent="SkyObstacles"]
+
+[node name="StartPositions" type="Node2D" parent="SkyObstacles"]
+editor/display_folded = true
+
+[node name="Position2D" type="Position2D" parent="SkyObstacles/StartPositions"]
+position = Vector2( 1320.28, 100.238 )
+
+[node name="Position2D2" type="Position2D" parent="SkyObstacles/StartPositions"]
+position = Vector2( 1320.28, 203.34 )
+
+[node name="Position2D3" type="Position2D" parent="SkyObstacles/StartPositions"]
+position = Vector2( 1326.01, 309.306 )
+
+[node name="Position2D4" type="Position2D" parent="SkyObstacles/StartPositions"]
+position = Vector2( 1323.14, 257.755 )
+
+[node name="Position2D5" type="Position2D" parent="SkyObstacles/StartPositions"]
+position = Vector2( 1323.14, 146.061 )
+
+[node name="Position2D6" type="Position2D" parent="SkyObstacles/StartPositions"]
+position = Vector2( 1314.55, 40.0952 )
+
+[node name="Position2D7" type="Position2D" parent="SkyObstacles/StartPositions"]
+position = Vector2( 1311.69, -17.1837 )
+
+[node name="EndPositions" type="Node2D" parent="SkyObstacles"]
+editor/display_folded = true
+
+[node name="Position2D" type="Position2D" parent="SkyObstacles/EndPositions"]
+position = Vector2( -128.878, 8.59183 )
+
+[node name="Position2D2" type="Position2D" parent="SkyObstacles/EndPositions"]
+position = Vector2( -131.742, 42.9592 )
+
+[node name="Position2D3" type="Position2D" parent="SkyObstacles/EndPositions"]
+position = Vector2( -131.742, 83.0544 )
+
+[node name="Position2D4" type="Position2D" parent="SkyObstacles/EndPositions"]
+position = Vector2( -137.469, 117.422 )
+
+[node name="Position2D5" type="Position2D" parent="SkyObstacles/EndPositions"]
+position = Vector2( -137.469, 154.653 )
+
+[node name="Position2D6" type="Position2D" parent="SkyObstacles/EndPositions"]
+position = Vector2( -140.333, 194.748 )
+
+[node name="Position2D7" type="Position2D" parent="SkyObstacles/EndPositions"]
+position = Vector2( -140.333, 237.707 )
+
+[node name="Position2D8" type="Position2D" parent="SkyObstacles/EndPositions"]
+position = Vector2( -140.333, 289.258 )
+
+[node name="Position2D9" type="Position2D" parent="SkyObstacles/EndPositions"]
+position = Vector2( -143.197, 335.082 )
+
+[node name="Timer" type="Timer" parent="SkyObstacles"]
+wait_time = 2.0
+one_shot = true
+autostart = true
 [connection signal="body_entered" from="Boundaries/DeathArea2D" to="." method="_on_DeathArea2D_body_entered"]

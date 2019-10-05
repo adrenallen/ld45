@@ -4,7 +4,7 @@ const MAX_SHIP_SPEED_H = 300
 const MAX_SHIP_SPEED_V = 450 # TODO - change by planet?
 
 const SHIP_ACCEL_H = 350
-const SHIP_ACCEL_V = 400
+const SHIP_ACCEL_V = 600
 
 const SHIP_DECEL_H = 150
 
@@ -41,6 +41,10 @@ func _process(delta):
 		velocity.y = MAX_SHIP_SPEED_V * velocity.y / abs(velocity.y)
 	
 	move_and_slide(velocity)
-	
+
+func stopFireDisplay():
+	$"ship-side-fire/AnimationPlayer".stop()
+	$"ship-side-fire".hide()
+
 func showDamage():
 	$AnimationPlayer.play("damage")
