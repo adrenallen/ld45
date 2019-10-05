@@ -2,6 +2,9 @@ extends StaticBody2D
 
 export var gravity = 120
 export var planetRadius = 32
+export var biome = Game.PlanetBiome.Mountain
+export var atmosphereToxicity = 3
+
 
 var gravityPullingObjects = []
 

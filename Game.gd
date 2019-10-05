@@ -1,8 +1,11 @@
 extends Node
 
 enum PlanetBiome {
-	Forest,
-	Mountain
+#	Forest,
+	Mountain,
+#	Mushroom,
+#	Gas,
+#	Water,
 }
 
 var fuel = 0
@@ -12,11 +15,11 @@ var health = 100
 var currentPlanet = {
 	gravity = 200,
 	radius = 32,
-	biome = PlanetBiome.Forest,
+	biome = PlanetBiome.Mountain,
 	atmosphereToxicity = 5
 }
 
-var debug = false
+var debug = true
 
 var dead = false
 
@@ -28,6 +31,7 @@ func _ready():
 	randomize()
 	currentPlanet = generatePlanet()
 	print(currentPlanet)
+	self.fuel = 80
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
