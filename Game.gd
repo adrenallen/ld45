@@ -69,7 +69,7 @@ func addFuel(amt):
 
 func die(deathInfo = null):
 	if deathInfo:
-		deathBy.cause = deathInfo.causeprint(deathInfo)
+		deathBy.cause = deathInfo.cause
 	else:
 		deathBy.cause = Game.DeathBy.Planet
 	print("The end")
