@@ -84,9 +84,6 @@ func placeWorld():
 			
 	$"World/ship-top".global_position = $KinematicBody2D.global_position
 	$"World/ship-top".global_position.x -= 128
-	
-	
-	
 
 func generateMapOpen(dimensions):
 	var array = []
@@ -135,3 +132,8 @@ func generateMap():
 			maxTunnels -= 1
 			
 	return map
+
+func _on_Area2D_input_event(viewport, event, shape_idx):
+	if event is InputEventMouseButton:
+		if Game.fuel >= minimumLaunchFuel:
+			nextPhase()
