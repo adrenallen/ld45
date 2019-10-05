@@ -32,10 +32,6 @@ func _process(delta):
 	
 	if distanceToGround < 20000:
 		$Ship.stopFireDisplay()
-	
-	
-	if Input.is_action_just_pressed("debugger"):
-		nextPhase()
 		
 	if distanceToGround <= 0:
 		crash()

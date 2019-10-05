@@ -9,8 +9,7 @@ func _ready():
 	pass
 	
 func _process(delta):
-	if Input.is_action_just_pressed("debugger"):
-		nextPhase()
+	pass
 
 func nextPhase():
 	get_tree().change_scene("res://crash/Crashing.tscn")
@@ -18,4 +17,3 @@ func nextPhase():
 
 func _on_TransitionIn_TransitionIn():
 	$KinematicBody2D/Camera2D.current = true
-	

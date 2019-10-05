@@ -11,12 +11,12 @@ export var transitionPhase = 1
 func _ready():
 	setTransitionTitle()
 	$AnimationPlayer.play("intro")
-#	$AnimationPlayer.playback_speed = 10
 	get_tree().paused = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	if Game.debug:
+		$AnimationPlayer.playback_speed = 10
 
 func setTransitionTitle():
 	if transitionPhase == 1:
