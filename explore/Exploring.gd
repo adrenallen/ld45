@@ -30,7 +30,7 @@ func _process(delta):
 		Game.die()
 	
 func nextPhase():
-	get_tree().change_scene("res://launch/Launching.tscn")
+	Game.setPhase(3)
 
 func _on_Transition_TransitionIn():
 	$KinematicBody2D/Camera2D.current = true

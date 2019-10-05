@@ -95,7 +95,7 @@ func crash():
 	nextPhase()
 	
 func nextPhase():
-	get_tree().change_scene("res://explore/Exploring.tscn")
+	Game.setPhase(2)
 
 func _on_DeathArea2D_body_entered(body):
 	if body.is_in_group("ship"):

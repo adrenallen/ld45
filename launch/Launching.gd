@@ -20,10 +20,15 @@ func _ready():
 	$Ship.global_position.y -= $LaunchPlanet.planetRadius
 	$LaunchPlanet.gravity = 0 # TODO - can we do some magic to turn this on after ship leaves?
 	$LaunchPlanet.landable = false
-	generateSpace()
-	calculatePlayBox()
+	generateSpace($Ship.global_position)
 	
 func calculatePlayBox():
+	playBoxCoordinates = {
+		minX = 0,
+		minY = 0,
+		maxX = 0,
+		maxY = 0
+	}
 	for p in $Planets.get_children():
 		if p.global_position.x < playBoxCoordinates.minX:
 			playBoxCoordinates.minX = p.global_position.x
@@ -35,19 +40,22 @@ func calculatePlayBox():
 		elif p.global_position.y > playBoxCoordinates.maxY:
 			playBoxCoordinates.maxY = p.global_position.y
 			
-func generateSpace():
-	var ringsToGenerate = 3
-	var maxGenerationDistance = 701*ringsToGenerate
-	var distance = 700
-	while distance < maxGenerationDistance:
+func generateSpace(centralPosition):
+	var ringsToGenerate = 1
+	var ringDistance = 1000
+	var maxGenerationDistance = ringDistance*ringsToGenerate
+	var distance = ringDistance
+	while distance <= maxGenerationDistance:
 		var angleDeg = randi()%360
-		var galaxyCount = 4
+		var galaxyCount = 4 + floor(2 * distance / ringDistance)
 		for i in range(galaxyCount):
 			angleDeg += 360/galaxyCount*i
 			var angleRad = deg2rad(angleDeg)
-			var position = Vector2(cos(angleRad), sin(angleRad)) * distance
+			var position = centralPosition + (Vector2(cos(angleRad), sin(angleRad)) * distance)
 			generateGalaxy(position.x, position.y, randi()%10+1)
-		distance += 700
+		distance += ringDistance
+		
+	calculatePlayBox()
 	
 # Generate a galaxy with a center at point x,y
 func generateGalaxy(x,y,planets = 10, maxPlanetDistance = 500):
@@ -88,26 +96,30 @@ func _process(delta):
 	
 	$"UI/fuel-icon/fuel-body".scale.x = Game.fuel / 100.0 * MAX_FUEL_SCALE
 	
+	Game.currentDistance = $Ship.global_position.length()
+	
 	checkShipInPlaybox()
 	
+	
 func checkShipInPlaybox():
-	var placeMargin = 500
 	var oobMargin = 700
 	var shipPos = $Ship.global_position
-	if shipPos.x < playBoxCoordinates.minX-oobMargin:
-		shipPos.x = playBoxCoordinates.maxX + placeMargin
-	elif shipPos.x > playBoxCoordinates.maxX+oobMargin:
-		shipPos.x = playBoxCoordinates.minX - placeMargin
-		
-	if shipPos.y < playBoxCoordinates.minY-oobMargin:
-		shipPos.y = playBoxCoordinates.maxY + placeMargin
-	elif shipPos.y > playBoxCoordinates.maxY+oobMargin:
-		shipPos.y = playBoxCoordinates.minY - placeMargin
-	
-	$Ship.global_position = shipPos
+	if (shipPos.x < playBoxCoordinates.minX-oobMargin or
+		shipPos.x > playBoxCoordinates.maxX+oobMargin or 
+		shipPos.y < playBoxCoordinates.minY-oobMargin or
+		shipPos.y > playBoxCoordinates.maxY+oobMargin):
+			newGeneration()
+
+func newGeneration():
+	destroyPlanets()
+	generateSpace($Ship.global_position)
+
+func destroyPlanets():
+	for p in $Planets.get_children():
+		p.queue_free()
 
 func nextPhase():
-	get_tree().change_scene("res://crash/Crashing.tscn")
+	Game.setPhase(1)
 
 
 func _on_TransitionIn_TransitionIn():

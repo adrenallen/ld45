@@ -23,6 +23,9 @@ var debug = true
 
 var dead = false
 
+var distance = 0
+var currentDistance = 0 #distance in current scene
+
 func refresh():
 	dead = false
 	
@@ -59,10 +62,13 @@ func addFuel(amt):
 
 func die():
 	print("The end")
+	print("Score of ", distance + currentDistance)
 	get_tree().change_scene("res://Menu.tscn")
 	# TODO - cut to scene of destruction based on phase?
 	
 func setPhase(phase):
+	distance += currentDistance
+	currentDistance = 0
 	if phase == 1:
 		get_tree().change_scene("res://crash/Crashing.tscn")
 	elif phase == 2:
