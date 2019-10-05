@@ -15,7 +15,7 @@ var currentPlanet = {
 	biome = PlanetBiome.Forest
 }
 
-var debug = true
+var debug = false
 
 var dead = false
 

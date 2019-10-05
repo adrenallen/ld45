@@ -3,6 +3,7 @@ extends Node2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+const MAX_FUEL_SCALE = 3.96
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -10,7 +11,15 @@ func _ready():
 	Game.oxygen = 100
 	
 func _process(delta):
-	pass
+	
+	# This is dumb :(
+	$UI.global_position = $KinematicBody2D/Camera2D.get_camera_position()
+	$UI.global_position.x -= get_viewport_rect().size.x/2
+	$UI.global_position.y -= get_viewport_rect().size.y/2
+	
+	$"UI/fuel-icon/fuel-body".scale.x = Game.fuel / 100 * MAX_FUEL_SCALE
+	
+	
 
 func nextPhase():
 	get_tree().change_scene("res://launch/Launching.tscn")
