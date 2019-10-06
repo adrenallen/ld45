@@ -56,7 +56,7 @@ func fireMissile():
 	msl.velocity = velocity
 	msl.rotation = rotation
 	msl.global_position = $MissileSpawn.global_position
-	get_tree().root.add_child(msl)
+	get_parent().add_child(msl)
 	stunned = true
 	$StunTimer.start()
 	$MissileTimer.start()

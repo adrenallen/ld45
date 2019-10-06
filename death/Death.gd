@@ -4,7 +4,7 @@ var planetScene = load("res://launch/Planet1.tscn")
 var sunScene = load("res://launch/Sun.tscn")
 var alienScene = load("res://launch/AlienShip.tscn")
 
-const RECORD_URL = "http://18.224.157.46:5000/record"
+const RECORD_URL = Game.BASE_URL + "/record"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

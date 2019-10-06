@@ -1,6 +1,6 @@
 extends Node2D
 
-const LEADERBOARD_URL = "http://18.224.157.46:5000/leaderboard"
+const LEADERBOARD_URL = Game.BASE_URL + "/leaderboard"
 var lbRowScene = load("res://leaderboard/LeaderboardRow.tscn")
 
 # Called when the node enters the scene tree for the first time.

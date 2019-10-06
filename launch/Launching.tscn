@@ -45,6 +45,7 @@ transitionPhase = 3
 [node name="Planets" type="Node2D" parent="."]
 
 [node name="UI" type="Node2D" parent="."]
+editor/display_folded = true
 z_index = 50
 
 [node name="fuel-icon" type="Sprite" parent="UI"]
@@ -93,4 +94,8 @@ region_filter_clip = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ParallaxBackground"]
 autoplay = "space_twinkles"
 anims/space_twinkles = SubResource( 1 )
+
+[node name="AlienShips" type="Node2D" parent="." groups=[
+"ship-container",
+]]
 [connection signal="TransitionIn" from="TransitionIn" to="." method="_on_TransitionIn_TransitionIn"]

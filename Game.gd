@@ -18,6 +18,8 @@ enum DeathBy {
 const MAX_ATMO_TOXIC = 5
 
 const MAX_SHIP_HEALTH = 5
+const BASE_URL = "https://ld45.garrettallen.dev/lb"
+#const BASE_URL = "http://18.224.157.46:5000"
 
 var fuel = 0
 var oxygen = 100

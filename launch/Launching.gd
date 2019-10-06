@@ -78,7 +78,7 @@ func generateGalaxy(x,y,planets = 10, maxPlanetDistance = 500):
 		var alien = alienFighterScene.instance()
 		alien.global_position.x = x
 		alien.global_position.y = y
-		get_tree().root.add_child(alien)
+		$AlienShips.add_child(alien)
 		print("Spawned alien")
 		
 	
