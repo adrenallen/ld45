@@ -23,8 +23,11 @@ func init():
 		newPlanet.planetRadius = deathBy.radius
 		newPlanet.atmosphereToxicity = deathBy.atmosphereToxicity
 		$LeaderboardRow/Exhibit.add_child(newPlanet)
-		print("Placing planet!")
-		
+	
+	for ch in $LeaderboardRow/Exhibit.get_children():
+		ch.z_index = z_index-1
+	$LeaderboardRow/white_bg.z_index = z_index-2
+	
 	$LeaderboardRow/DistanceLabel.text = str(distance) + " miles"
 	$LeaderboardRow/NameLabel.text = planetName
 

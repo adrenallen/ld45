@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://death/Death.gd" type="Script" id=1]
 [ext_resource path="res://death/DeathScreen.png" type="Texture" id=2]
 [ext_resource path="res://launch/space.png" type="Texture" id=3]
+[ext_resource path="res://crash/white_bg.png" type="Texture" id=4]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://death/Aero.ttf"
@@ -41,6 +42,21 @@ size = 24
 use_mipmaps = true
 use_filter = true
 font_data = SubResource( 8 )
+
+[sub_resource type="Animation" id=10]
+resource_name = "fade-in"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
@@ -106,6 +122,15 @@ custom_colors/font_color = Color( 0.729412, 0.729412, 0.729412, 1 )
 text = "View Leaderboard"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="white_bg" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="white_bg"]
+autoplay = "fade-in"
+anims/fade-in = SubResource( 10 )
 [connection signal="text_changed" from="PlanetNameInput" to="." method="_on_PlanetNameInput_text_changed"]
 [connection signal="button_up" from="Button" to="." method="_on_Button_button_up"]
 [connection signal="button_up" from="LeaderboardButton" to="." method="_on_LeaderboardButton_button_up"]

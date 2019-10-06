@@ -14,7 +14,6 @@ func _ready():
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
-	print(json.result)
 	#[{deathBy:{cause:Null}, distance:0, name:asdfasdf, time:1570334831211}]
 	var position = 0
 	for lb in json.result:
@@ -23,8 +22,9 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		lbr.deathBy = lb.deathBy
 		lbr.distance = lb.distance
 		lbr.position.y += 55*position
+		lbr.z_index = -position
 		lbr.init()
-		lbr.z_index = position
+		
 		$Top10.add_child(lbr)
 		
 		position += 1

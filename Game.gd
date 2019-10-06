@@ -14,6 +14,8 @@ enum DeathBy {
 	Planet
 }
 
+const MAX_ATMO_TOXIC = 5
+
 var fuel = 0
 var oxygen = 100
 var health = 100
@@ -57,7 +59,7 @@ func generatePlanet():
 		radius = rand_range(16,64),
 		gravity = rand_range(20, 80),
 		biome = PlanetBiome.values()[randi()%PlanetBiome.values().size()],
-		atmosphereToxicity = rand_range(1,5)
+		atmosphereToxicity = rand_range(1,MAX_ATMO_TOXIC)
 	}
 	
 func setPlanet(planetNode):

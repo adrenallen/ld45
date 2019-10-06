@@ -15,7 +15,7 @@ var closedTileIdx = 1
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	setTileIndex()
-	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	placeWorld()
 	Game.oxygen = 100
 	Game.planetsLandedOn += 1

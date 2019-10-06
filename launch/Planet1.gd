@@ -45,6 +45,14 @@ func setPlanetImage():
 	elif biome == Game.PlanetBiome.Lava:
 		$planet1.texture = load("res://launch/planet_lava.png")
 		
+	var atmoFactor = atmosphereToxicity/Game.MAX_ATMO_TOXIC
+	if atmoFactor > 0.75:
+		$planet1.modulate *= 0.65
+		$planet1.modulate.g = 1
+	elif atmoFactor > 0.5:
+		$planet1.modulate *= 0.8
+		$planet1.modulate.r = 1
+		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
