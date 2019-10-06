@@ -71,5 +71,6 @@ func _on_PlanetArea2D_body_entered(body):
 
 
 func _on_PlanetArea2D_area_entered(area):
-	if area.is_in_group("planet"):
-		queue_free()
+	if landable:
+		if area.is_in_group("planet"):
+			queue_free()

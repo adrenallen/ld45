@@ -1,0 +1,112 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://death/Death.gd" type="Script" id=1]
+[ext_resource path="res://death/DeathScreen.png" type="Texture" id=2]
+[ext_resource path="res://launch/space.png" type="Texture" id=3]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://death/Aero.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+font_data = SubResource( 1 )
+
+[sub_resource type="Theme" id=3]
+default_font = SubResource( 2 )
+
+[sub_resource type="DynamicFontData" id=4]
+font_path = "res://death/Aero.ttf"
+
+[sub_resource type="DynamicFont" id=5]
+size = 20
+use_mipmaps = true
+use_filter = true
+extra_spacing_char = 1
+font_data = SubResource( 4 )
+
+[sub_resource type="DynamicFontData" id=6]
+font_path = "res://death/Aero.ttf"
+
+[sub_resource type="DynamicFont" id=7]
+size = 24
+use_mipmaps = true
+use_filter = true
+extra_spacing_top = 4
+font_data = SubResource( 6 )
+
+[sub_resource type="DynamicFontData" id=8]
+font_path = "res://death/Aero.ttf"
+
+[sub_resource type="DynamicFont" id=9]
+size = 24
+use_mipmaps = true
+use_filter = true
+font_data = SubResource( 8 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="DeathScreen" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+centered = false
+
+[node name="space" type="Sprite" parent="DeathScreen"]
+position = Vector2( -5612.46, -92.9349 )
+z_index = -1
+texture = ExtResource( 3 )
+
+[node name="Exhibit" type="Node2D" parent="."]
+position = Vector2( 243.847, 257.208 )
+
+[node name="DistanceLabel" type="Label" parent="."]
+margin_left = 556.0
+margin_top = 76.0
+margin_right = 852.0
+margin_bottom = 114.0
+theme = SubResource( 3 )
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+
+[node name="DetailsLabel" type="Label" parent="."]
+margin_left = 556.0
+margin_top = 194.0
+margin_right = 974.0
+margin_bottom = 487.0
+theme = SubResource( 3 )
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+
+[node name="PlanetNameInput" type="TextEdit" parent="."]
+margin_left = 25.0
+margin_top = 539.0
+margin_right = 491.0
+margin_bottom = 577.0
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0.729412, 0.729412, 0.729412, 1 )
+
+[node name="Button" type="Button" parent="."]
+margin_left = 540.0
+margin_top = 531.0
+margin_right = 667.0
+margin_bottom = 583.0
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 0.729412, 0.729412, 0.729412, 1 )
+text = "Submit"
+
+[node name="LeaderboardButton" type="Button" parent="."]
+margin_left = 680.828
+margin_top = 531.0
+margin_right = 987.828
+margin_bottom = 583.0
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 0.729412, 0.729412, 0.729412, 1 )
+text = "View Leaderboard"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[connection signal="text_changed" from="PlanetNameInput" to="." method="_on_PlanetNameInput_text_changed"]
+[connection signal="button_up" from="Button" to="." method="_on_Button_button_up"]
+[connection signal="button_up" from="LeaderboardButton" to="." method="_on_LeaderboardButton_button_up"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

@@ -26,7 +26,7 @@ var currentPlanet = {
 }
 
 var debug = false
-
+var planetsLandedOn = 0
 var dead = false
 var deathBy = {cause = null}
 
@@ -35,6 +35,11 @@ var currentDistance = 0 #distance in current scene
 
 func refresh():
 	dead = false
+	deathBy = {cause = null}
+	planetsLandedOn = 0
+	health = 100
+	fuel = 0
+	oxygen = 100
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -62,25 +67,25 @@ func setPlanet(planetNode):
 		biome = planetNode.biome,
 		atmosphereToxicity = planetNode.atmosphereToxicity
 	}
+	print(currentPlanet)
 	
 func addFuel(amt):
 	self.fuel += amt
-	print("new fuel is ", self.fuel)
 
 func die(deathInfo = null):
 	if deathInfo:
-		deathBy.cause = deathInfo.cause
+		deathBy = deathInfo
 	else:
+		deathBy.biome = Game.currentPlanet.biome
+		deathBy.radius = Game.currentPlanet.radius
+		deathBy.atmosphereToxicity = Game.currentPlanet.atmosphereToxicity
 		deathBy.cause = Game.DeathBy.Planet
-	print("The end")
+			
+	get_tree().change_scene("res://death/Death.tscn")
 	
-	
-	
-	var score = (distance + currentDistance) * 1000.0
-	print("Score of ", score)
-	get_tree().change_scene("res://Menu.tscn")
-	# TODO - cut to scene of destruction based on phase?
-	
+func getMilesTraveled():
+	return round((distance + currentDistance) * 1000.0)
+
 func setPhase(phase):
 	distance += currentDistance
 	currentDistance = 0
@@ -90,4 +95,8 @@ func setPhase(phase):
 		get_tree().change_scene("res://explore/Exploring.tscn")
 	elif phase == 3:
 		get_tree().change_scene("res://launch/Launching.tscn")
+		
+func secret(distance):
+	# hahahahahah
+	return distance
 	

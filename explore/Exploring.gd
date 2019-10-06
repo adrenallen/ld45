@@ -18,6 +18,7 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 	placeWorld()
 	Game.oxygen = 100
+	Game.planetsLandedOn += 1
 	
 func _process(delta):
 	

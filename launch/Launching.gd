@@ -70,6 +70,7 @@ func generateSpace(centralPosition):
 func generateGalaxy(x,y,planets = 10, maxPlanetDistance = 500):
 	var sun = sunScene.instance()
 	sun.global_position = Vector2(x,y)
+	sun.planetsOrbiting = planets
 	$Planets.add_child(sun)
 	
 	var lastPlanetDistance = 150

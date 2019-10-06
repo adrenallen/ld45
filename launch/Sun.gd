@@ -5,7 +5,7 @@ export var radius = 64
 
 
 var gravityPullingObjects = []
-
+var planetsOrbiting = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,4 +37,4 @@ func _on_GravityArea2D_body_exited(body):
 
 func _on_PlanetArea2D_body_entered(body):
 	if body.is_in_group("ship"):
-		Game.die({cause = Game.DeathBy.Sun})
+		Game.die({cause = Game.DeathBy.Sun, planetsOrbiting = planetsOrbiting})
