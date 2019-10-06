@@ -25,6 +25,7 @@ var fuel = 0
 var oxygen = 100
 var shipHealth = MAX_SHIP_HEALTH
 var tutorialsCompleted = []
+var cheaterMode = false
 
 var currentPlanet = {
 	gravity = 200,
@@ -37,6 +38,7 @@ var debug = false
 var planetsLandedOn = 0
 var dead = false
 var deathBy = {cause = null}
+var quickTransitions = false
 
 var distance = 0
 var currentDistance = 0 #distance in current scene
@@ -61,6 +63,8 @@ func _ready():
 	currentPlanet.atmosphereToxicity = 1.0
 	currentPlanet.radius = 20.0
 	currentPlanet.biome = PlanetBiome.Mountain
+	
+	fuel = 50
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -121,11 +125,15 @@ func die(deathInfo = null):
 		deathBy.radius = Game.currentPlanet.radius
 		deathBy.atmosphereToxicity = Game.currentPlanet.atmosphereToxicity
 		deathBy.cause = Game.DeathBy.Planet
+		deathBy.gravity = Game.currentPlanet.gravity
 			
 	get_tree().change_scene("res://death/Death.tscn")
 	
 func getMilesTraveled():
-	return round((distance + currentDistance) * 1000.0)
+	if cheaterMode:
+		return 0
+	else:
+		return round((distance + currentDistance) * 1000.0)
 
 func setPhase(phase):
 	distance += currentDistance

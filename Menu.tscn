@@ -146,6 +146,7 @@ align = 1
 valign = 1
 
 [node name="Control" type="Control" parent="Options"]
+editor/display_folded = true
 margin_right = 40.0
 margin_bottom = 40.0
 
@@ -208,6 +209,55 @@ margin_left = 922.536
 margin_top = 221.203
 margin_right = 946.536
 margin_bottom = 245.203
+
+[node name="Control3" type="Control" parent="Options"]
+margin_left = -1.35553
+margin_top = 148.731
+margin_right = 38.6445
+margin_bottom = 188.731
+
+[node name="Label2" type="Label" parent="Options/Control3"]
+margin_left = 563.34
+margin_top = 89.0458
+margin_right = 981.34
+margin_bottom = 382.046
+theme = SubResource( 13 )
+custom_fonts/font = SubResource( 14 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Quick Transitions"
+align = 1
+valign = 1
+
+[node name="QuickTransitionsButton" type="CheckBox" parent="Options/Control3"]
+margin_left = 922.536
+margin_top = 221.203
+margin_right = 946.536
+margin_bottom = 245.203
+
+[node name="Control4" type="Control" parent="Options"]
+margin_left = -0.158081
+margin_top = 208.605
+margin_right = 39.8419
+margin_bottom = 248.605
+
+[node name="Label2" type="Label" parent="Options/Control4"]
+margin_left = 563.34
+margin_top = 89.0458
+margin_right = 981.34
+margin_bottom = 382.046
+theme = SubResource( 13 )
+custom_fonts/font = SubResource( 14 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Explorer Mode
+(Invalidates Score)"
+align = 1
+valign = 1
+
+[node name="CheaterMode" type="CheckBox" parent="Options/Control4"]
+margin_left = 922.536
+margin_top = 221.203
+margin_right = 946.536
+margin_bottom = 245.203
 [connection signal="button_up" from="StartButton" to="." method="_on_StartButton_button_up"]
 [connection signal="pressed" from="StartTutButton" to="." method="_on_StartTutButton_pressed"]
 [connection signal="pressed" from="LeaderboardButton" to="." method="_on_LeaderboardButton_pressed"]
@@ -216,3 +266,5 @@ margin_bottom = 245.203
 [connection signal="toggled" from="Options/Control/MusicMute" to="." method="_on_MusicMute_toggled"]
 [connection signal="text_changed" from="Options/Control2/SFXVolume" to="." method="_on_SFXVolume_text_changed"]
 [connection signal="toggled" from="Options/Control2/SFXMute" to="." method="_on_SFXMute_toggled"]
+[connection signal="toggled" from="Options/Control3/QuickTransitionsButton" to="." method="_on_QuickTransitionsButton_toggled"]
+[connection signal="toggled" from="Options/Control4/CheaterMode" to="." method="_on_CheaterMode_toggled"]

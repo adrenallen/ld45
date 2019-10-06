@@ -59,7 +59,8 @@ func _process(delta):
 		Game.oxygen -= delta*Game.currentPlanet.atmosphereToxicity
 		
 	
-	if Game.oxygen < 0:
+	if Game.oxygen <= 0:
+		Game.oxygen = 0
 		$KinematicBody2D.die()
 
 func setTileIndex():
@@ -90,16 +91,13 @@ func placeWorld():
 	
 	var numberOfFuel = Game.currentPlanet.atmosphereToxicity * Game.currentPlanet.radius / 3.5
 	var numberOfRepair = randi()%5
-	var numberOfAirPockets = randi()%(2 + int(Game.currentPlanet.atmosphereToxicity))
-	#numberOfAirPockets = 0 # CUT CONTENT :(
+	var numberOfAirPockets = randi()%(3 + int(Game.currentPlanet.atmosphereToxicity))
 	
 	
 	if Game.shipHealth > 3:
 		numberOfRepair -= 1
 	if Game.currentPlanet.atmosphereToxicity < (Game.MAX_ATMO_TOXIC/2):
 		numberOfRepair -= 1
-		
-	print("Number of repair: ", numberOfRepair)
 	
 	var openSpots = []
 	
@@ -227,6 +225,8 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 	if $KinematicBody2D.global_position.distance_to($"World/ship-top".global_position) < SHIP_ENTER_DISTANCE:
 		if event is InputEventMouseButton:
 			if Game.fuel >= minimumLaunchFuel:
+				nextPhase()
+			if Game.cheaterMode:
 				nextPhase()
 
 func _on_Area2D_mouse_entered():

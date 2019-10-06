@@ -23,7 +23,9 @@ func _ready():
 	
 	$Options/Control2/SFXVolume.text = str(sfxVol)
 	$Options/Control/MusicVolume.text = str(musicVol)
-
+	
+	$Options/Control3/QuickTransitionsButton.pressed = Game.quickTransitions
+	$Options/Control4/CheaterMode.pressed = Game.cheaterMode
 
 func _on_StartButton_button_up():
 	Game.refresh()
@@ -67,3 +69,11 @@ func _on_MusicMute_toggled(button_pressed):
 func _on_SFXMute_toggled(button_pressed):
 	sfxMute = button_pressed
 	AudioServer.set_bus_mute(AudioServer.get_bus_index("Sound Effects"), sfxMute)
+
+
+func _on_QuickTransitionsButton_toggled(button_pressed):
+	Game.quickTransitions = button_pressed
+
+
+func _on_CheaterMode_toggled(button_pressed):
+	Game.cheaterMode = button_pressed

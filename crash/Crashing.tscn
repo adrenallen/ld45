@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://crash/Crashing.gd" type="Script" id=1]
 [ext_resource path="res://crash/ShipCrashing.tscn" type="PackedScene" id=2]
@@ -23,6 +23,25 @@ extents = Vector2( 594, 81 )
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 594, 81 )
 
+[sub_resource type="DynamicFontData" id=7]
+font_path = "res://death/Aero.ttf"
+
+[sub_resource type="DynamicFont" id=8]
+font_data = SubResource( 7 )
+
+[sub_resource type="Theme" id=9]
+default_font = SubResource( 8 )
+
+[sub_resource type="DynamicFontData" id=6]
+font_path = "res://death/Aero.ttf"
+
+[sub_resource type="DynamicFont" id=10]
+size = 20
+use_mipmaps = true
+use_filter = true
+extra_spacing_char = 1
+font_data = SubResource( 6 )
+
 [sub_resource type="Animation" id=5]
 resource_name = "space_fade"
 length = 2.0
@@ -39,8 +58,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "scroll"
+[sub_resource type="Animation" id=11]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:offset")
@@ -55,8 +73,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( -1200, 0 ) ]
 }
 
-[sub_resource type="Animation" id=7]
-resource_name = "crash"
+[sub_resource type="Animation" id=12]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("white_bg:modulate")
@@ -138,13 +155,17 @@ shape = SubResource( 4 )
 
 [node name="Transition" parent="." instance=ExtResource( 4 )]
 
-[node name="DistanceLabel" type="RichTextLabel" parent="."]
-margin_left = 881.995
-margin_top = 8.86429
-margin_right = 1011.0
-margin_bottom = 52.8643
-text = "
-"
+[node name="DistanceLabel" type="Label" parent="."]
+margin_left = 813.0
+margin_top = 4.0
+margin_right = 1016.0
+margin_bottom = 75.0
+theme = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "100234 feet"
+align = 1
+valign = 1
 
 [node name="GroundObstacles" type="Node2D" parent="."]
 editor/display_folded = true
@@ -173,7 +194,7 @@ anims/space_fade = SubResource( 5 )
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="space"]
 autoplay = "scroll"
-anims/scroll = SubResource( 6 )
+anims/scroll = SubResource( 11 )
 
 [node name="sky_bg" type="Sprite" parent="."]
 self_modulate = Color( 0.45098, 0.854902, 0.898039, 1 )
@@ -266,7 +287,7 @@ texture = ExtResource( 6 )
 centered = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/crash = SubResource( 7 )
+anims/crash = SubResource( 12 )
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 10 )

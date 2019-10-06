@@ -18,11 +18,13 @@ func _process(delta):
 	if dying:
 		return
 	if Input.is_action_pressed("mouse_left"):
-		if Game.fuel > 0:
+		if Game.fuel > 0 or Game.cheaterMode:
 			var thrustDir = global_position.direction_to($Camera2D.get_global_mouse_position())
 			var thrust = thrustDir.normalized()*THRUST_POWER*delta
 			velocity += thrust
-			Game.fuel -= FUEL_BURN_RATE*delta	
+			Game.fuel -= FUEL_BURN_RATE*delta
+			if Game.fuel < 0:
+				Game.fuel = 0
 	
 	self.rotation = velocity.angle()
 	

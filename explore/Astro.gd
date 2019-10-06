@@ -32,6 +32,8 @@ func _physics_process(delta):
 	move_and_slide(velocity)
 	
 func die():
+	if Game.cheaterMode:
+		return
 	dying = true
 	$AnimationPlayer.play("die")
 	

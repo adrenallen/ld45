@@ -21,12 +21,19 @@ func _ready():
 		newPlanet.planetRadius = Game.deathBy.radius
 		newPlanet.atmosphereToxicity = Game.deathBy.atmosphereToxicity
 		$Exhibit.add_child(newPlanet)
+		$DetailsLabel.text = "- Planet Info -\n\nCircumference: " + str(floor(Game.deathBy.radius * 1000)) + " miles"
+		$DetailsLabel.text += "\n\nAtmosphere Toxicity: " + str(Game.deathBy.atmosphereToxicity)
+		$DetailsLabel.text += "\n\nGravity Rating: " + str(round(Game.deathBy.gravity))
 	elif Game.deathBy.cause == Game.DeathBy.AlienShip:
 		var alien = alienScene.instance()
 		alien.stunned = true
 		$Exhibit.add_child(alien)
 		
 	$DistanceLabel.text = str(Game.getMilesTraveled())
+	
+	if Game.cheaterMode:
+		$Button.visible = false
+		$PlanetNameInput.visible = false
 	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -40,6 +47,8 @@ func _on_PlanetNameInput_text_changed():
 
 
 func _on_Button_button_up():
+	if Game.cheaterMode:
+		return #Extra safety
 	if $PlanetNameInput.text.length() > 1:
 		var request = JSON.print({deathBy = Game.deathBy, distance = Game.getMilesTraveled(), name = $PlanetNameInput.text, confirmer = Game.secret(Game.getMilesTraveled())})
 		var headers = PoolStringArray()

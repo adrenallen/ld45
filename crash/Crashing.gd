@@ -31,7 +31,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	distanceToGround -= delta * FALL_SPEED
-	$DistanceLabel.text = str(round(distanceToGround)) + " ft"
+	$DistanceLabel.text = str(round(distanceToGround)) + " feet"
 	
 	handleGroundSpawn()
 	handleGroundMoves(delta)

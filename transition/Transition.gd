@@ -15,7 +15,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Game.debug:
+	if Game.quickTransitions:
 		$AnimationPlayer.playback_speed = 10
 
 func setTransitionTitle():
