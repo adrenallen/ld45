@@ -24,6 +24,7 @@ const BASE_URL = "https://ld45.garrettallen.dev/lb"
 var fuel = 0
 var oxygen = 100
 var shipHealth = MAX_SHIP_HEALTH
+var tutorialsCompleted = []
 
 var currentPlanet = {
 	gravity = 200,
@@ -101,11 +102,20 @@ func setPhase(phase):
 	distance += currentDistance
 	currentDistance = 0
 	if phase == 1:
-		get_tree().change_scene("res://crash/Crashing.tscn")
+		if tutorialsCompleted.has(phase):
+			get_tree().change_scene("res://crash/Crashing.tscn")
+		else:
+			get_tree().change_scene("res://crash/Tutorial.tscn")
 	elif phase == 2:
-		get_tree().change_scene("res://explore/Exploring.tscn")
+		if tutorialsCompleted.has(phase):
+			get_tree().change_scene("res://explore/Exploring.tscn")
+		else:
+			get_tree().change_scene("res://explore/Tutorial.tscn")
 	elif phase == 3:
-		get_tree().change_scene("res://launch/Launching.tscn")
+		if tutorialsCompleted.has(phase):
+			get_tree().change_scene("res://launch/Launching.tscn")
+		else:
+			get_tree().change_scene("res://launch/Tutorial.tscn")
 
 func getMaxAlienFighters():
 	return ceil(getMilesTraveled()/10000000.0)

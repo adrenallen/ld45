@@ -15,4 +15,4 @@ func _ready():
 
 func _on_StartButton_button_up():
 	Game.refresh()
-	get_tree().change_scene("res://crash/Crashing.tscn")
+	Game.setPhase(1)
