@@ -56,7 +56,11 @@ func refresh():
 func _ready():
 	randomize()
 	currentPlanet = generatePlanet()
-	self.fuel = 80
+	
+	# First planet should be easy
+	currentPlanet.atmosphereToxicity = 1.0
+	currentPlanet.radius = 20.0
+	currentPlanet.biome = PlanetBiome.Mountain
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

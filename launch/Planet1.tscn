@@ -3,10 +3,10 @@
 [ext_resource path="res://launch/Planet1.gd" type="Script" id=1]
 [ext_resource path="res://launch/planet_gas.png" type="Texture" id=2]
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=1]
 radius = 120.0
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=2]
 radius = 32.3666
 
 [sub_resource type="Animation" id=3]
@@ -38,7 +38,7 @@ hframes = 5
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GravityArea2D" groups=[
 "gravity",
 ]]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="PlanetArea2D" type="Area2D" parent="." groups=[
 "planet",
@@ -47,7 +47,7 @@ shape = SubResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlanetArea2D" groups=[
 "planet",
 ]]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
 

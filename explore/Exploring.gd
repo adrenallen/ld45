@@ -90,8 +90,8 @@ func placeWorld():
 	
 	var numberOfFuel = Game.currentPlanet.atmosphereToxicity * Game.currentPlanet.radius / 3.5
 	var numberOfRepair = randi()%5
-#	var numberOfAirPockets = randi()%(2 + int(Game.currentPlanet.atmosphereToxicity))
-	var numberOfAirPockets = 0 # CUT CONTENT :(
+	var numberOfAirPockets = randi()%(2 + int(Game.currentPlanet.atmosphereToxicity))
+	#numberOfAirPockets = 0 # CUT CONTENT :(
 	
 	
 	if Game.shipHealth > 3:
@@ -205,8 +205,8 @@ func generateMap():
 			if (
 				((currentRow == 1) and (randomDirection.x == -1)) or 
 				((currentCol == 1) and (randomDirection.y == -1)) or
-				((currentRow == dimensions - 2) and (randomDirection.x == 1)) or
-				((currentCol == dimensions - 2) and (randomDirection.y == 1))
+				((currentRow >= dimensions - 2) and (randomDirection.x == 1)) or
+				((currentCol >= dimensions - 2) and (randomDirection.y == 1))
 			):
 				break
 			else:
