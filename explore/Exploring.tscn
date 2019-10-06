@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://explore/Exploring.gd" type="Script" id=1]
 [ext_resource path="res://explore/Astro.tscn" type="PackedScene" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://explore/fuel-body.png" type="Texture" id=14]
 [ext_resource path="res://explore/fuel-min.png" type="Texture" id=15]
 [ext_resource path="res://explore/o2.png" type="Texture" id=16]
+[ext_resource path="res://crash/ShipHealth.tscn" type="PackedScene" id=17]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 61.7307
@@ -276,5 +277,8 @@ centered = false
 position = Vector2( 180.646, -2.793 )
 rotation = 1.5708
 texture = ExtResource( 13 )
+
+[node name="Node2D" parent="UI" instance=ExtResource( 17 )]
+position = Vector2( 40, 40 )
 [connection signal="input_event" from="World/ship-top/Area2D" to="." method="_on_Area2D_input_event"]
 [connection signal="TransitionIn" from="Transition" to="." method="_on_Transition_TransitionIn"]

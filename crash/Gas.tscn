@@ -32,7 +32,7 @@ polygon = PoolVector2Array( 64.6773, 63.2396, -60.0376, 63.7232, -62.0809, 11.27
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 hframes = 5
-frame = 1
+frame = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "idle"

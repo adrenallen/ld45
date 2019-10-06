@@ -8,6 +8,7 @@ const MAX_FUEL_SCALE = 3.96
 var minimumLaunchFuel = 30 # TODO - change by gravity?
 
 var fuelScene = load("res://explore/Fuel.tscn")
+var repairScene = load("res://explore/Repair.tscn")
 
 var openTileIdx = 0
 var closedTileIdx = 1
@@ -62,6 +63,14 @@ func placeWorld():
 	var map = generateMap()
 	
 	var numberOfFuel = Game.currentPlanet.atmosphereToxicity * Game.currentPlanet.radius / 3.5
+	var numberOfRepair = randi()%5
+	
+	if Game.shipHealth > 3:
+		numberOfRepair -= 1
+	if Game.currentPlanet.atmosphereToxicity < (Game.MAX_ATMO_TOXIC/2):
+		numberOfRepair -= 1
+		
+	print("Number of repair: ", numberOfRepair)
 	
 	var openSpots = []
 	
@@ -87,6 +96,18 @@ func placeWorld():
 		fuel.position.x += 32
 		fuel.position.y += 32
 		$World.add_child(fuel)
+		
+		openSpots.erase(randomSpot)
+		
+	for i in range(numberOfRepair):
+		var randomLoc = randi()%openSpots.size()
+		var randomSpot = openSpots[randomLoc]
+		var loc = $TileMap.map_to_world(randomSpot)
+		var rep = repairScene.instance()
+		rep.position = loc
+		rep.position.x += 32
+		rep.position.y += 32
+		$World.add_child(rep)
 		
 		openSpots.erase(randomSpot)
 		

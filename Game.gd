@@ -16,9 +16,11 @@ enum DeathBy {
 
 const MAX_ATMO_TOXIC = 5
 
+const MAX_SHIP_HEALTH = 5
+
 var fuel = 0
 var oxygen = 100
-var health = 100
+var shipHealth = MAX_SHIP_HEALTH
 
 var currentPlanet = {
 	gravity = 200,
@@ -39,7 +41,7 @@ func refresh():
 	dead = false
 	deathBy = {cause = null}
 	planetsLandedOn = 0
-	health = 100
+	shipHealth = MAX_SHIP_HEALTH
 	fuel = 0
 	oxygen = 100
 	
@@ -73,6 +75,10 @@ func setPlanet(planetNode):
 	
 func addFuel(amt):
 	self.fuel += amt
+
+func repairShip():
+	if shipHealth != MAX_SHIP_HEALTH:
+		shipHealth += 1
 
 func die(deathInfo = null):
 	if deathInfo:

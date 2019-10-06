@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://crash/Crashing.gd" type="Script" id=1]
 [ext_resource path="res://crash/ShipCrashing.tscn" type="PackedScene" id=2]
 [ext_resource path="res://transition/Transition.tscn" type="PackedScene" id=3]
 [ext_resource path="res://launch/space.png" type="Texture" id=4]
 [ext_resource path="res://crash/white_bg.png" type="Texture" id=5]
+[ext_resource path="res://crash/ShipHealth.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 88, 357 )
@@ -87,14 +88,15 @@ shape = SubResource( 4 )
 [node name="Transition" parent="." instance=ExtResource( 3 )]
 
 [node name="DistanceLabel" type="RichTextLabel" parent="."]
-margin_left = 53.1856
-margin_top = 15.5125
-margin_right = 182.186
-margin_bottom = 59.5125
+margin_left = 881.995
+margin_top = 8.86429
+margin_right = 1011.0
+margin_bottom = 52.8643
 text = "
 "
 
 [node name="GroundObstacles" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="StartPosition" type="Position2D" parent="GroundObstacles"]
 position = Vector2( 1358.45, 706.925 )
@@ -110,9 +112,10 @@ autostart = true
 [node name="Obstacles" type="Node2D" parent="GroundObstacles"]
 
 [node name="space" type="Sprite" parent="."]
+editor/display_folded = true
 z_index = -1
 texture = ExtResource( 4 )
-offset = Vector2( -880.425, 0 )
+offset = Vector2( -867.107, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="space"]
 anims/space_fade = SubResource( 5 )
@@ -128,6 +131,7 @@ texture = ExtResource( 5 )
 centered = false
 
 [node name="SkyObstacles" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="Obstacles" type="Node2D" parent="SkyObstacles"]
 
@@ -189,4 +193,7 @@ position = Vector2( -143.197, 335.082 )
 wait_time = 2.0
 one_shot = true
 autostart = true
+
+[node name="Node2D" parent="." instance=ExtResource( 6 )]
+position = Vector2( 40, 40 )
 [connection signal="body_entered" from="Boundaries/DeathArea2D" to="." method="_on_DeathArea2D_body_entered"]

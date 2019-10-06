@@ -21,7 +21,6 @@ var inSpace = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	Game.health = 100
 	distanceToGround = Game.currentPlanet.radius * 1000
 	var groundRad =  $GroundObstacles/StartPosition.get_angle_to($GroundObstacles/EndPosition.position)
 	groundDirection = Vector2(cos(groundRad), sin(groundRad))
@@ -129,12 +128,11 @@ func handleGroundMoves(delta):
 
 func hitObstacle(body):
 	if body.is_in_group("ship"):
-		Game.health -= 20
-		print("ouch")
+		Game.shipHealth -= 1
 		$Ship.showDamage()
 		# TODO - play hurt (spark and flash?)
 	
-	if Game.health <= 0:
+	if Game.shipHealth <= 0:
 		Game.die()
 		
 
