@@ -72,3 +72,4 @@ anims/die = SubResource( 2 )
 stream = ExtResource( 3 )
 volume_db = -7.0
 pitch_scale = 0.8
+bus = "Sound Effects"

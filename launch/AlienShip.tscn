@@ -53,9 +53,11 @@ anims/jet = SubResource( 1 )
 
 [node name="AlertAudio" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 3 )
+bus = "Sound Effects"
 
 [node name="ShootAudio" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 4 )
 volume_db = -5.0
 attenuation = 1.7411
+bus = "Sound Effects"
 [connection signal="timeout" from="StunTimer" to="." method="_on_StunTimer_timeout"]

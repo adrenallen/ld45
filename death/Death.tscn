@@ -5,26 +5,26 @@
 [ext_resource path="res://launch/space.png" type="Texture" id=3]
 [ext_resource path="res://crash/white_bg.png" type="Texture" id=4]
 
-[sub_resource type="DynamicFontData" id=3]
+[sub_resource type="DynamicFontData" id=7]
 font_path = "res://death/Aero.ttf"
 
-[sub_resource type="DynamicFont" id=4]
-font_data = SubResource( 3 )
+[sub_resource type="DynamicFont" id=8]
+font_data = SubResource( 7 )
 
 [sub_resource type="Theme" id=5]
-default_font = SubResource( 4 )
+default_font = SubResource( 8 )
 
 [sub_resource type="DynamicFontData" id=6]
 font_path = "res://death/Aero.ttf"
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=11]
 size = 20
 use_mipmaps = true
 use_filter = true
 extra_spacing_char = 1
 font_data = SubResource( 6 )
 
-[sub_resource type="DynamicFontData" id=8]
+[sub_resource type="DynamicFontData" id=12]
 font_path = "res://death/Aero.ttf"
 
 [sub_resource type="DynamicFont" id=9]
@@ -32,7 +32,7 @@ size = 24
 use_mipmaps = true
 use_filter = true
 extra_spacing_top = 4
-font_data = SubResource( 8 )
+font_data = SubResource( 12 )
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://death/Aero.ttf"
@@ -79,7 +79,7 @@ margin_top = 76.0
 margin_right = 852.0
 margin_bottom = 114.0
 theme = SubResource( 5 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1
@@ -90,7 +90,7 @@ margin_top = 194.0
 margin_right = 974.0
 margin_bottom = 487.0
 theme = SubResource( 5 )
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1

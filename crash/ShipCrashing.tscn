@@ -23,7 +23,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.698039, 0.227451, 0.227451, 1 ), Color( 1, 1, 1, 1 ), Color( 0.698039, 0.227451, 0.227451, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "die"
 length = 0.7
 tracks/0/type = "value"
@@ -77,8 +77,7 @@ tracks/3/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "fire"
+[sub_resource type="Animation" id=4]
 length = 0.3
 loop = true
 tracks/0/type = "value"
@@ -109,7 +108,7 @@ shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/damage = SubResource( 2 )
-anims/die = SubResource( 4 )
+anims/die = SubResource( 3 )
 
 [node name="ship-side-fire" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.780392 )
@@ -119,8 +118,9 @@ frame = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ship-side-fire"]
 autoplay = "fire"
-anims/fire = SubResource( 3 )
+anims/fire = SubResource( 4 )
 
 [node name="ExplosionAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 volume_db = -3.0
+bus = "Sound Effects"

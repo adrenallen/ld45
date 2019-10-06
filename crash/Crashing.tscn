@@ -106,6 +106,7 @@ position = Vector2( 370, 96 )
 [node name="ObstacleHitAudio" type="AudioStreamPlayer2D" parent="Ship"]
 position = Vector2( -370, -96 )
 stream = ExtResource( 3 )
+bus = "Sound Effects"
 
 [node name="Boundaries" type="Node2D" parent="."]
 editor/display_folded = true
@@ -257,6 +258,7 @@ position = Vector2( 40, 40 )
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
 volume_db = -14.0
+bus = "Sound Effects"
 
 [node name="white_bg" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 0 )

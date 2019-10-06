@@ -67,4 +67,5 @@ anims/pickup = SubResource( 2 )
 stream = ExtResource( 3 )
 volume_db = -6.0
 pitch_scale = 0.6
+bus = "Sound Effects"
 [connection signal="body_entered" from="repair-icon/Area2D" to="." method="_on_Area2D_body_entered"]
