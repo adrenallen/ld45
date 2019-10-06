@@ -47,6 +47,8 @@ func stopFireDisplay():
 	$"ship-side-fire".hide()
 
 func showDamage():
+	if dying:
+		return
 	$AnimationPlayer.play("damage")
 	
 func die():
