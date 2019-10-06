@@ -5,6 +5,8 @@ extends Node2D
 # var b = "text"
 const MAX_FUEL_SCALE = 3.96
 
+const SHIP_ENTER_DISTANCE = 150
+
 var minimumLaunchFuel = 30 # TODO - change by gravity?
 
 var fuelScene = load("res://explore/Fuel.tscn")
@@ -13,6 +15,9 @@ var repairScene = load("res://explore/Repair.tscn")
 var openTileIdx = 0
 var closedTileIdx = 1
 
+var mouseOnShip = false
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	setTileIndex()
@@ -20,6 +25,14 @@ func _ready():
 	placeWorld()
 	Game.oxygen = 100
 	Game.planetsLandedOn += 1
+	
+func _physics_process(delta):
+	if $KinematicBody2D.global_position.distance_to($"World/ship-top".global_position) < SHIP_ENTER_DISTANCE and mouseOnShip:
+		Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
+		$"World/ship-top".frame =1
+	else:
+		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+		$"World/ship-top".frame =0		
 	
 func _process(delta):
 	
@@ -181,6 +194,13 @@ func generateMap():
 	return map
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
-	if event is InputEventMouseButton:
-		if Game.fuel >= minimumLaunchFuel:
-			nextPhase()
+	if $KinematicBody2D.global_position.distance_to($"World/ship-top".global_position) < SHIP_ENTER_DISTANCE:
+		if event is InputEventMouseButton:
+			if Game.fuel >= minimumLaunchFuel:
+				nextPhase()
+
+func _on_Area2D_mouse_entered():
+	mouseOnShip = true
+
+func _on_Area2D_mouse_exited():
+	mouseOnShip = false

@@ -208,6 +208,7 @@ position = Vector2( 516, 232 )
 [node name="ship-top" type="Sprite" parent="World"]
 position = Vector2( 431, 313 )
 texture = ExtResource( 3 )
+hframes = 2
 
 [node name="ShipBody2D" type="KinematicBody2D" parent="World/ship-top"]
 
@@ -281,4 +282,6 @@ texture = ExtResource( 13 )
 [node name="Node2D" parent="UI" instance=ExtResource( 17 )]
 position = Vector2( 40, 40 )
 [connection signal="input_event" from="World/ship-top/Area2D" to="." method="_on_Area2D_input_event"]
+[connection signal="mouse_entered" from="World/ship-top/Area2D" to="." method="_on_Area2D_mouse_entered"]
+[connection signal="mouse_exited" from="World/ship-top/Area2D" to="." method="_on_Area2D_mouse_exited"]
 [connection signal="TransitionIn" from="Transition" to="." method="_on_Transition_TransitionIn"]
