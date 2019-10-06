@@ -67,6 +67,7 @@ func setBGColor():
 	
 	#Fix for dumb
 	bgColor /= 255.0
+	bgColor *= .75
 	bgColor.a = 1
 	
 	$sky_bg.self_modulate = bgColor

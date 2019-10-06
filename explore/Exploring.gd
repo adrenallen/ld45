@@ -9,8 +9,12 @@ var minimumLaunchFuel = 30 # TODO - change by gravity?
 
 var fuelScene = load("res://explore/Fuel.tscn")
 
+var openTileIdx = 0
+var closedTileIdx = 1
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	setTileIndex()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 	placeWorld()
 	Game.oxygen = 100
@@ -29,7 +33,12 @@ func _process(delta):
 	
 	if Game.oxygen < 0:
 		Game.die()
-	
+
+func setTileIndex():
+	if Game.currentPlanet.biome == Game.PlanetBiome.Forest:
+		openTileIdx = 2
+		closedTileIdx = 3
+
 func nextPhase():
 	Game.setPhase(3)
 
@@ -47,7 +56,10 @@ func placeWorld():
 	for y in range(map.size()):
 		for x in range(map[y].size()):
 #			print(x, y, map[y][x])
-			$TileMap.set_cell(x, y, map[y][x])
+			var tile = closedTileIdx
+			if map[y][x] == 0:
+				tile = openTileIdx
+			$TileMap.set_cell(x, y, tile)
 			if map[y][x] == 0:
 				openSpots.append(Vector2(x,y))
 				playerStart.x = x
@@ -75,12 +87,12 @@ func placeWorld():
 	for x in range(playerStart.x-9, playerStart.x+5):
 		for y in range(playerStart.y-7, playerStart.y+7):
 			if $TileMap.get_cell(x,y) < 0:
-				$TileMap.set_cell(x,y,1)
+				$TileMap.set_cell(x,y,closedTileIdx)
 	
 	# make space for crash zone
 	for x in range(playerStart.x-6, playerStart.x+2):
 		for y in range(playerStart.y-4, playerStart.y+4):
-			$TileMap.set_cell(x,y,0)
+			$TileMap.set_cell(x,y,openTileIdx)
 	
 			
 	$"World/ship-top".global_position = $KinematicBody2D.global_position

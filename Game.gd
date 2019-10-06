@@ -25,7 +25,7 @@ var currentPlanet = {
 	atmosphereToxicity = 5
 }
 
-var debug = true
+var debug = false
 
 var dead = false
 var deathBy = {cause = null}
