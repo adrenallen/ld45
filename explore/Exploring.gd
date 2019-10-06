@@ -38,6 +38,18 @@ func setTileIndex():
 	if Game.currentPlanet.biome == Game.PlanetBiome.Forest:
 		openTileIdx = 2
 		closedTileIdx = 3
+	elif Game.currentPlanet.biome == Game.PlanetBiome.Gas:
+		openTileIdx = 4
+		closedTileIdx = 5
+	elif Game.currentPlanet.biome == Game.PlanetBiome.Water:
+		openTileIdx = 6
+		closedTileIdx = 7
+	elif Game.currentPlanet.biome == Game.PlanetBiome.Fungal:
+		openTileIdx = 8
+		closedTileIdx = 9
+	elif Game.currentPlanet.biome == Game.PlanetBiome.Lava:
+		openTileIdx = 10
+		closedTileIdx = 11
 
 func nextPhase():
 	Game.setPhase(3)

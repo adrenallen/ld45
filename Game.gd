@@ -51,7 +51,8 @@ func generatePlanet():
 	return {
 		radius = rand_range(16,64),
 		gravity = rand_range(20, 80),
-		biome = PlanetBiome.values()[randi()%PlanetBiome.values().size()],
+#		biome = PlanetBiome.values()[randi()%PlanetBiome.values().size()],
+		biome = PlanetBiome.Lava,
 		atmosphereToxicity = rand_range(1,5)
 	}
 	
