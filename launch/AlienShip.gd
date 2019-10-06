@@ -6,7 +6,7 @@ const SLOW_MAX_SPEED = 75
 
 const ACTIVATE_DISTANCE = 260
 const SLOW_DISTANCE = 225
-const STOP_DISTANCE = 60
+const STOP_DISTANCE = 120
 
 var missileScene = load("res://launch/AlienMissile.tscn")
 
@@ -69,7 +69,6 @@ func fireMissile():
 func getPlayer():
 	var playerList = get_tree().get_nodes_in_group("ship")
 	if playerList.size() < 1:
-		queue_free()
 		return null
 	else:
 		return get_tree().get_nodes_in_group("ship")[0]

@@ -37,6 +37,7 @@ func _on_GravityArea2D_body_exited(body):
 
 func _on_PlanetArea2D_body_entered(body):
 	if body.is_in_group("ship"):
-		Game.die({cause = Game.DeathBy.Sun, planetsOrbiting = planetsOrbiting})
+		Game.deathBy = {cause = Game.DeathBy.Sun, planetsOrbiting = planetsOrbiting}
+		body.die()
 	if body.is_in_group("alien-ship"):
 		body.queue_free()

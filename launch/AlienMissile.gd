@@ -29,7 +29,6 @@ func _physics_process(delta):
 func getPlayer():
 	var playerList = get_tree().get_nodes_in_group("ship")
 	if playerList.size() < 1:
-		queue_free()
 		return null
 	else:
 		return get_tree().get_nodes_in_group("ship")[0]
@@ -50,6 +49,7 @@ func _on_Area2D_body_entered(body):
 		Game.shipHealth -= 1
 		hasDoneDamage = true
 		if Game.shipHealth <= 0:
-			Game.die({cause = Game.DeathBy.AlienShip})
+			Game.deathBy = {cause = Game.DeathBy.AlienShip}
+			body.die()
 		explode()
 		

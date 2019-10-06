@@ -8,13 +8,15 @@ const FUEL_BURN_RATE = 5
 
 export var velocity = Vector2(0,0)
 
-
+var dying = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	$Ship.frame = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if dying:
+		return
 	if Input.is_action_pressed("mouse_left"):
 		if Game.fuel > 0:
 			var thrustDir = global_position.direction_to($Camera2D.get_global_mouse_position())
@@ -30,3 +32,11 @@ func _process(delta):
 	
 func getFullVector():
 	return (velocity).normalized()
+	
+func die():
+	$AnimationPlayer.play("die")
+	dying = true
+	remove_from_group("ship")
+	
+func finishDying():
+	Game.die(Game.deathBy)
