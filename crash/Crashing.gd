@@ -25,14 +25,13 @@ func _ready():
 	var groundRad =  $GroundObstacles/StartPosition.get_angle_to($GroundObstacles/EndPosition.position)
 	groundDirection = Vector2(cos(groundRad), sin(groundRad))
 	
-	distanceToGround = 20000
 	setBGColor()
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	distanceToGround -= delta * FALL_SPEED
-	$DistanceLabel.text = str(round(distanceToGround)) + "ft"
+	$DistanceLabel.text = str(round(distanceToGround)) + " ft"
 	
 	handleGroundSpawn()
 	handleGroundMoves(delta)
@@ -55,24 +54,7 @@ func _process(delta):
 		crash()
 
 func setBGColor():
-	var bgColor = Color(165, 238, 255)
-	if Game.currentPlanet.biome == Game.PlanetBiome.Forest:
-		bgColor = Color(42,255,245)
-	elif Game.currentPlanet.biome == Game.PlanetBiome.Fungal:
-		bgColor = Color(255,118,118)
-	elif Game.currentPlanet.biome == Game.PlanetBiome.Water:
-		bgColor = Color(131,197,255)
-	elif Game.currentPlanet.biome == Game.PlanetBiome.Lava:
-		bgColor = Color(231,141,97)
-	elif Game.currentPlanet.biome == Game.PlanetBiome.Mountain:
-		bgColor = Color(193,193,193)
-	elif Game.currentPlanet.biome == Game.PlanetBiome.Gas:
-		bgColor = Color(231,255,177)
-	
-	#Fix for dumb
-	bgColor /= 255.0
-	bgColor *= .75
-	bgColor.a = 1
+	var bgColor = Game.getCurrentBiomeTint()
 	
 	$sky_bg.self_modulate = bgColor
 	
@@ -138,6 +120,7 @@ func handleGroundMoves(delta):
 
 func hitObstacle(body):
 	if body.is_in_group("ship"):
+		$Ship/ObstacleHitAudio.play()
 		Game.shipHealth -= 1
 		$Ship.showDamage()
 		# TODO - play hurt (spark and flash?)
@@ -147,8 +130,9 @@ func hitObstacle(body):
 		
 
 func crash():
-	# TODO - play crash
-	nextPhase()
+	set_process(false)
+	$Ship.set_process(false)
+	$AnimationPlayer.play("crash")
 	
 func nextPhase():
 	Game.setPhase(2)

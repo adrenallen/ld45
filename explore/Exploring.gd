@@ -11,6 +11,7 @@ var minimumLaunchFuel = 30 # TODO - change by gravity?
 
 var fuelScene = load("res://explore/Fuel.tscn")
 var repairScene = load("res://explore/Repair.tscn")
+var airPocketScene = load("res://explore/AirPocket.tscn")
 
 var openTileIdx = 0
 var closedTileIdx = 1
@@ -25,6 +26,7 @@ func _ready():
 	placeWorld()
 	Game.oxygen = 100
 	Game.planetsLandedOn += 1
+	Game.playerInAirPocket = false
 	
 func _physics_process(delta):
 	if $KinematicBody2D.global_position.distance_to($"World/ship-top".global_position) < SHIP_ENTER_DISTANCE and mouseOnShip:
@@ -41,10 +43,21 @@ func _process(delta):
 	$UI.global_position.x -= get_viewport_rect().size.x/2
 	$UI.global_position.y -= get_viewport_rect().size.y/2
 	
+	
 	$"UI/fuel-icon/fuel-body".scale.x = Game.fuel / 100.0 * MAX_FUEL_SCALE
 	$"UI/o2/o2-body".scale.x = Game.oxygen / 100 * MAX_FUEL_SCALE
 	
-	Game.oxygen -= delta*Game.currentPlanet.atmosphereToxicity
+	if $"UI/fuel-icon/fuel-body".scale.x > MAX_FUEL_SCALE:
+		$"UI/fuel-icon/fuel-body".scale.x = MAX_FUEL_SCALE
+	if $"UI/o2/o2-body".scale.x > MAX_FUEL_SCALE:
+		$"UI/o2/o2-body".scale.x = MAX_FUEL_SCALE
+	
+	if Game.playerInAirPocket:
+		if Game.oxygen < 100:
+			Game.oxygen += delta*Game.AIR_POCKET_OXYGEN_RATE
+	else:
+		Game.oxygen -= delta*Game.currentPlanet.atmosphereToxicity
+		
 	
 	if Game.oxygen < 0:
 		$KinematicBody2D.die()
@@ -77,6 +90,9 @@ func placeWorld():
 	
 	var numberOfFuel = Game.currentPlanet.atmosphereToxicity * Game.currentPlanet.radius / 3.5
 	var numberOfRepair = randi()%5
+#	var numberOfAirPockets = randi()%(2 + int(Game.currentPlanet.atmosphereToxicity))
+	var numberOfAirPockets = 0 # CUT CONTENT :(
+	
 	
 	if Game.shipHealth > 3:
 		numberOfRepair -= 1
@@ -121,6 +137,18 @@ func placeWorld():
 		rep.position.x += 32
 		rep.position.y += 32
 		$World.add_child(rep)
+		
+		openSpots.erase(randomSpot)
+		
+	for i in range(numberOfAirPockets):
+		var randomLoc = randi()%openSpots.size()
+		var randomSpot = openSpots[randomLoc]
+		var loc = $TileMap.map_to_world(randomSpot)
+		var ap = airPocketScene.instance()
+		ap.position = loc
+		ap.position.x += 32
+		ap.position.y += 32
+		$World.add_child(ap)
 		
 		openSpots.erase(randomSpot)
 		

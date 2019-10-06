@@ -1,12 +1,14 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://crash/Crashing.gd" type="Script" id=1]
 [ext_resource path="res://crash/ShipCrashing.tscn" type="PackedScene" id=2]
-[ext_resource path="res://transition/Transition.tscn" type="PackedScene" id=3]
-[ext_resource path="res://launch/space.png" type="Texture" id=4]
-[ext_resource path="res://crash/white_bg.png" type="Texture" id=5]
-[ext_resource path="res://crash/horizon.png" type="Texture" id=6]
-[ext_resource path="res://crash/ShipHealth.tscn" type="PackedScene" id=7]
+[ext_resource path="res://sounds/crash-hit-obstacle.wav" type="AudioStream" id=3]
+[ext_resource path="res://transition/Transition.tscn" type="PackedScene" id=4]
+[ext_resource path="res://launch/space.png" type="Texture" id=5]
+[ext_resource path="res://crash/white_bg.png" type="Texture" id=6]
+[ext_resource path="res://crash/horizon.png" type="Texture" id=7]
+[ext_resource path="res://crash/ShipHealth.tscn" type="PackedScene" id=8]
+[ext_resource path="res://sounds/crash-landing.wav" type="AudioStream" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 88, 357 )
@@ -52,11 +54,57 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( -1200, 0 ) ]
 }
 
+[sub_resource type="Animation" id=7]
+resource_name = "crash"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("white_bg:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AudioStreamPlayer:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "nextPhase"
+} ]
+}
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="Ship" parent="." instance=ExtResource( 2 )]
 position = Vector2( 370, 96 )
+
+[node name="ObstacleHitAudio" type="AudioStreamPlayer2D" parent="Ship"]
+position = Vector2( -370, -96 )
+stream = ExtResource( 3 )
 
 [node name="Boundaries" type="Node2D" parent="."]
 editor/display_folded = true
@@ -86,7 +134,7 @@ position = Vector2( 4.66541, 814.113 )
 position = Vector2( 518, -110 )
 shape = SubResource( 4 )
 
-[node name="Transition" parent="." instance=ExtResource( 3 )]
+[node name="Transition" parent="." instance=ExtResource( 4 )]
 
 [node name="DistanceLabel" type="RichTextLabel" parent="."]
 margin_left = 881.995
@@ -115,7 +163,7 @@ autostart = true
 [node name="space" type="Sprite" parent="."]
 editor/display_folded = true
 z_index = -1
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 offset = Vector2( -867.107, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="space"]
@@ -128,14 +176,14 @@ anims/scroll = SubResource( 6 )
 [node name="sky_bg" type="Sprite" parent="."]
 self_modulate = Color( 0.45098, 0.854902, 0.898039, 1 )
 z_index = -2
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 centered = false
 
 [node name="horizon" type="Sprite" parent="."]
 position = Vector2( 0, 600 )
 scale = Vector2( 2, 2 )
 z_index = -1
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 centered = false
 
 [node name="SkyObstacles" type="Node2D" parent="."]
@@ -202,6 +250,18 @@ wait_time = 2.0
 one_shot = true
 autostart = true
 
-[node name="Node2D" parent="." instance=ExtResource( 7 )]
+[node name="Node2D" parent="." instance=ExtResource( 8 )]
 position = Vector2( 40, 40 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -8.0
+
+[node name="white_bg" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 0 )
+texture = ExtResource( 6 )
+centered = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/crash = SubResource( 7 )
 [connection signal="body_entered" from="Boundaries/DeathArea2D" to="." method="_on_DeathArea2D_body_entered"]

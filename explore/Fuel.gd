@@ -20,6 +20,8 @@ func _on_Area2D_body_entered(body):
 
 func pickup():
 	Game.addFuel(fuelAmount)
-	queue_free()
+	$AnimationPlayer.play("pickup")
+	
+	
 	# Todo a better animation
 	

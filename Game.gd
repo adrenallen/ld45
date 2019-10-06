@@ -16,7 +16,7 @@ enum DeathBy {
 }
 
 const MAX_ATMO_TOXIC = 5
-
+const AIR_POCKET_OXYGEN_RATE = 5
 const MAX_SHIP_HEALTH = 5
 const BASE_URL = "https://ld45.garrettallen.dev/lb"
 #const BASE_URL = "http://18.224.157.46:5000"
@@ -41,6 +41,8 @@ var deathBy = {cause = null}
 var distance = 0
 var currentDistance = 0 #distance in current scene
 
+var playerInAirPocket = false
+
 func refresh():
 	dead = false
 	deathBy = {cause = null}
@@ -48,6 +50,7 @@ func refresh():
 	shipHealth = MAX_SHIP_HEALTH
 	fuel = 0
 	oxygen = 100
+	playerInAirPocket = false
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -83,6 +86,28 @@ func addFuel(amt):
 func repairShip():
 	if shipHealth != MAX_SHIP_HEALTH:
 		shipHealth += 1
+
+func getCurrentBiomeTint():
+	var bgColor = Color(165, 238, 255)
+	if currentPlanet.biome == PlanetBiome.Forest:
+		bgColor = Color(42,255,245)
+	elif currentPlanet.biome == PlanetBiome.Fungal:
+		bgColor = Color(255,118,118)
+	elif currentPlanet.biome == PlanetBiome.Water:
+		bgColor = Color(131,197,255)
+	elif currentPlanet.biome == PlanetBiome.Lava:
+		bgColor = Color(231,141,97)
+	elif currentPlanet.biome == PlanetBiome.Mountain:
+		bgColor = Color(193,193,193)
+	elif currentPlanet.biome == PlanetBiome.Gas:
+		bgColor = Color(231,255,177)
+	
+	#Fix for dumb
+	bgColor /= 255.0
+	bgColor *= .75
+	bgColor.a = 1
+	
+	return bgColor
 
 func die(deathInfo = null):
 	if deathInfo:
