@@ -4,6 +4,7 @@ const ACCEL = 100
 const MAX_SPEED = 150.0
 
 var velocity = Vector2(0,0)
+var isExploding = false
 
 func _ready():
 	pass
@@ -14,9 +15,11 @@ func _physics_process(delta):
 	var player = getPlayer()
 	if player == null:
 		return
-	var vector = player.position - position
-	var thrust = vector.normalized()*ACCEL*delta
-	velocity += thrust
+		
+	if !isExploding:
+		var vector = player.position - position
+		var thrust = vector.normalized()*ACCEL*delta
+		velocity += thrust
 	
 	if velocity.length() > MAX_SPEED:
 		velocity = velocity.normalized() * MAX_SPEED
@@ -31,7 +34,9 @@ func getPlayer():
 	else:
 		return get_tree().get_nodes_in_group("ship")[0]
 
+
 func explode():
+	isExploding = true
 	$"alien-missile/AnimationPlayer".play("explode")
 
 func _on_ExplodeTimer_timeout():

@@ -19,7 +19,12 @@ func _ready():
 
 func _process(delta):
 	if stunned:
+		$AnimationPlayer.stop()
+		$"alien-ship".frame = 0
 		return
+	elif !$AnimationPlayer.is_playing():
+		$AnimationPlayer.play("jet")
+		
 	var playerTarget = getPlayer()
 	if playerTarget == null:
 		return
