@@ -143,7 +143,7 @@ func hitObstacle(body):
 		# TODO - play hurt (spark and flash?)
 	
 	if Game.shipHealth <= 0:
-		Game.die()
+		$Ship.die()
 		
 
 func crash():
@@ -155,4 +155,4 @@ func nextPhase():
 
 func _on_DeathArea2D_body_entered(body):
 	if body.is_in_group("ship"):
-		Game.die()
+		$Ship.die()

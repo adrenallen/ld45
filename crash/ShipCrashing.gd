@@ -11,10 +11,10 @@ const SHIP_DECEL_H = 150
 const SHIP_FALL_RATE = 100
 
 var velocity = Vector2(0,0)
-
+var dying = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print("Planet gravity is ", SHIP_FALL_RATE+Game.currentPlanet.gravity)
+	$Sprite.frame = 0
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -48,5 +48,15 @@ func stopFireDisplay():
 
 func showDamage():
 	$AnimationPlayer.play("damage")
+	
+func die():
+	set_process(false)
+	if dying:
+		return
+	dying = true
+	$AnimationPlayer.play("die")
+	
+func finishDying():
+	Game.die()
 	
 	
