@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://launch/AlienMissile.gd" type="Script" id=1]
 [ext_resource path="res://launch/alien-missile.png" type="Texture" id=2]
+[ext_resource path="res://sounds/explosion.wav" type="AudioStream" id=3]
 
 [sub_resource type="Animation" id=2]
 resource_name = "explode"
@@ -31,6 +32,18 @@ tracks/1/keys = {
 "args": [  ],
 "method": "queue_free"
 } ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../AudioStreamPlayer2D:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 
 [sub_resource type="Animation" id=1]
@@ -79,5 +92,9 @@ autostart = true
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Area2D"]
 polygon = PoolVector2Array( 12.4703, -3.5304, 11.8391, 3.41189, -6.923, 3.68536, -6.923, -4.47092 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+pitch_scale = 0.6
 [connection signal="timeout" from="ExplodeTimer" to="." method="_on_ExplodeTimer_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

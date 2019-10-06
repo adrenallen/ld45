@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://launch/ShipLaunching.gd" type="Script" id=1]
 [ext_resource path="res://crash/ship-side.png" type="Texture" id=2]
+[ext_resource path="res://sounds/explosion.wav" type="AudioStream" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 18.488, 6.42143 )
@@ -35,6 +36,18 @@ tracks/1/keys = {
 "method": "finishDying"
 } ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("AudioStreamPlayer2D:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [node name="KinematicBody2D" type="KinematicBody2D" groups=[
 "ship",
@@ -45,7 +58,7 @@ script = ExtResource( 1 )
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 2 )
 hframes = 11
-frame = 10
+frame = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -60,3 +73,6 @@ editor_draw_drag_margin = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/die = SubResource( 2 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )

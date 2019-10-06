@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://launch/Launching.gd" type="Script" id=1]
 [ext_resource path="res://launch/ShipLaunching.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://explore/fuel-body.png" type="Texture" id=8]
 [ext_resource path="res://crash/ShipHealth.tscn" type="PackedScene" id=9]
 [ext_resource path="res://launch/space.png" type="Texture" id=10]
+[ext_resource path="res://launch/AlienShip.tscn" type="PackedScene" id=11]
 
 [sub_resource type="Animation" id=1]
 resource_name = "space_twinkles"
@@ -98,4 +99,6 @@ anims/space_twinkles = SubResource( 1 )
 [node name="AlienShips" type="Node2D" parent="." groups=[
 "ship-container",
 ]]
+
+[node name="KinematicBody2D" parent="AlienShips" instance=ExtResource( 11 )]
 [connection signal="TransitionIn" from="TransitionIn" to="." method="_on_TransitionIn_TransitionIn"]

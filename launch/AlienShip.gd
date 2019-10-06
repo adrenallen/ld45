@@ -62,6 +62,8 @@ func fireMissile():
 	msl.rotation = rotation
 	msl.global_position = $MissileSpawn.global_position
 	get_parent().add_child(msl)
+	print("Shoot audio is a go")
+	$ShootAudio.play(0)
 	stunned = true
 	$StunTimer.start()
 	$MissileTimer.start()
@@ -74,6 +76,7 @@ func getPlayer():
 		return get_tree().get_nodes_in_group("ship")[0]
 	
 func reachedPlayer():
+	$AlertAudio.play(0)
 	hasReachedPlayer = true
 	add_to_group("alien-ship")
 	
