@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://explore/Exploring.gd" type="Script" id=1]
 [ext_resource path="res://explore/Astro.tscn" type="PackedScene" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://explore/fuel-min.png" type="Texture" id=15]
 [ext_resource path="res://explore/o2.png" type="Texture" id=16]
 [ext_resource path="res://crash/ShipHealth.tscn" type="PackedScene" id=17]
+[ext_resource path="res://sounds/explore_bg.wav" type="AudioStream" id=18]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 61.7307
@@ -281,6 +282,12 @@ texture = ExtResource( 13 )
 
 [node name="Node2D" parent="UI" instance=ExtResource( 17 )]
 position = Vector2( 40, 40 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 18 )
+volume_db = -10.0
+autoplay = true
+bus = "Background"
 [connection signal="input_event" from="World/ship-top/Area2D" to="." method="_on_Area2D_input_event"]
 [connection signal="mouse_entered" from="World/ship-top/Area2D" to="." method="_on_Area2D_mouse_entered"]
 [connection signal="mouse_exited" from="World/ship-top/Area2D" to="." method="_on_Area2D_mouse_exited"]

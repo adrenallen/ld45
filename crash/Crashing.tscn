@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://crash/Crashing.gd" type="Script" id=1]
 [ext_resource path="res://crash/ShipCrashing.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://crash/horizon.png" type="Texture" id=7]
 [ext_resource path="res://crash/ShipHealth.tscn" type="PackedScene" id=8]
 [ext_resource path="res://sounds/crash-landing.wav" type="AudioStream" id=9]
+[ext_resource path="res://sounds/crash_bg.wav" type="AudioStream" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 88, 357 )
@@ -264,4 +265,10 @@ centered = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/crash = SubResource( 7 )
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -15.0
+autoplay = true
+bus = "Background"
 [connection signal="body_entered" from="Boundaries/DeathArea2D" to="." method="_on_DeathArea2D_body_entered"]
