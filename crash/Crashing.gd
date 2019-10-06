@@ -46,6 +46,10 @@ func _process(delta):
 		inSpace = false
 		$space/AnimationPlayer.play("space_fade")
 		
+	if distanceToGround < 15000:
+		$horizon.position.y -= delta*75
+		$horizon.position.x -= delta*30
+		
 	if distanceToGround <= 0:
 		crash()
 
@@ -70,6 +74,11 @@ func setBGColor():
 	bgColor.a = 1
 	
 	$sky_bg.self_modulate = bgColor
+	
+	#color fg for horizon show up
+	bgColor *= .85
+	bgColor.a = 1
+	$horizon.self_modulate = bgColor
 		
 func handleSkySpawn():
 	if $SkyObstacles/Timer.time_left <= 0:
