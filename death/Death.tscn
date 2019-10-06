@@ -5,43 +5,43 @@
 [ext_resource path="res://launch/space.png" type="Texture" id=3]
 [ext_resource path="res://crash/white_bg.png" type="Texture" id=4]
 
-[sub_resource type="DynamicFontData" id=1]
+[sub_resource type="DynamicFontData" id=3]
 font_path = "res://death/Aero.ttf"
 
-[sub_resource type="DynamicFont" id=2]
-font_data = SubResource( 1 )
+[sub_resource type="DynamicFont" id=4]
+font_data = SubResource( 3 )
 
-[sub_resource type="Theme" id=3]
-default_font = SubResource( 2 )
-
-[sub_resource type="DynamicFontData" id=4]
-font_path = "res://death/Aero.ttf"
-
-[sub_resource type="DynamicFont" id=5]
-size = 20
-use_mipmaps = true
-use_filter = true
-extra_spacing_char = 1
-font_data = SubResource( 4 )
+[sub_resource type="Theme" id=5]
+default_font = SubResource( 4 )
 
 [sub_resource type="DynamicFontData" id=6]
 font_path = "res://death/Aero.ttf"
 
 [sub_resource type="DynamicFont" id=7]
-size = 24
+size = 20
 use_mipmaps = true
 use_filter = true
-extra_spacing_top = 4
+extra_spacing_char = 1
 font_data = SubResource( 6 )
 
 [sub_resource type="DynamicFontData" id=8]
 font_path = "res://death/Aero.ttf"
 
 [sub_resource type="DynamicFont" id=9]
+size = 24
+use_mipmaps = true
+use_filter = true
+extra_spacing_top = 4
+font_data = SubResource( 8 )
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://death/Aero.ttf"
+
+[sub_resource type="DynamicFont" id=2]
 size = 32
 use_mipmaps = true
 use_filter = true
-font_data = SubResource( 8 )
+font_data = SubResource( 1 )
 
 [sub_resource type="Animation" id=10]
 resource_name = "fade-in"
@@ -78,8 +78,8 @@ margin_left = 556.0
 margin_top = 76.0
 margin_right = 852.0
 margin_bottom = 114.0
-theme = SubResource( 3 )
-custom_fonts/font = SubResource( 5 )
+theme = SubResource( 5 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1
@@ -89,8 +89,8 @@ margin_left = 556.0
 margin_top = 194.0
 margin_right = 974.0
 margin_bottom = 487.0
-theme = SubResource( 3 )
-custom_fonts/font = SubResource( 5 )
+theme = SubResource( 5 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1
@@ -100,7 +100,7 @@ margin_left = 25.0
 margin_top = 539.0
 margin_right = 491.0
 margin_bottom = 577.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0.729412, 0.729412, 0.729412, 1 )
 
 [node name="Button" type="Button" parent="."]
@@ -108,7 +108,7 @@ margin_left = 540.0
 margin_top = 531.0
 margin_right = 667.0
 margin_bottom = 583.0
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.729412, 0.729412, 0.729412, 1 )
 text = "Submit"
 
@@ -117,7 +117,7 @@ margin_left = 680.828
 margin_top = 531.0
 margin_right = 987.828
 margin_bottom = 583.0
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.729412, 0.729412, 0.729412, 1 )
 text = "View Leaderboard"
 

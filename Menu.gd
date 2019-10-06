@@ -15,4 +15,18 @@ func _ready():
 
 func _on_StartButton_button_up():
 	Game.refresh()
+	Game.tutorialsCompleted = [1,2,3]
 	Game.setPhase(1)
+
+func _on_StartTutButton_pressed():
+	Game.refresh()
+	Game.tutorialsCompleted = []
+	Game.setPhase(1)
+
+
+func _on_LeaderboardButton_pressed():
+	get_tree().change_scene("res://leaderboard/Leaderboard.tscn")
+
+
+func _on_QuitButton_pressed():
+	get_tree().quit()

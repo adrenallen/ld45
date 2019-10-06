@@ -268,7 +268,7 @@ anims/crash = SubResource( 7 )
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 10 )
-volume_db = -15.0
+volume_db = -16.0
 autoplay = true
 bus = "Background"
 [connection signal="body_entered" from="Boundaries/DeathArea2D" to="." method="_on_DeathArea2D_body_entered"]
