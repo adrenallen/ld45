@@ -25,39 +25,39 @@ use_mipmaps = true
 use_filter = true
 font_data = SubResource( 1 )
 
-[sub_resource type="DynamicFontData" id=7]
+[sub_resource type="DynamicFontData" id=5]
 font_path = "res://death/Aero.ttf"
 
-[sub_resource type="DynamicFont" id=8]
-font_data = SubResource( 7 )
+[sub_resource type="DynamicFont" id=6]
+font_data = SubResource( 5 )
 
-[sub_resource type="Theme" id=9]
-default_font = SubResource( 8 )
+[sub_resource type="Theme" id=7]
+default_font = SubResource( 6 )
 
-[sub_resource type="DynamicFontData" id=6]
+[sub_resource type="DynamicFontData" id=8]
 font_path = "res://death/Aero.ttf"
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=9]
 size = 36
 use_mipmaps = true
 use_filter = true
 extra_spacing_char = 1
-font_data = SubResource( 6 )
+font_data = SubResource( 8 )
 
-[sub_resource type="Theme" id=13]
-default_font = SubResource( 8 )
+[sub_resource type="Theme" id=10]
+default_font = SubResource( 6 )
 
-[sub_resource type="DynamicFont" id=14]
+[sub_resource type="DynamicFont" id=11]
 size = 20
 use_mipmaps = true
 use_filter = true
 extra_spacing_char = 1
-font_data = SubResource( 6 )
+font_data = SubResource( 8 )
 
 [sub_resource type="DynamicFontData" id=12]
 font_path = "res://death/Aero.ttf"
 
-[sub_resource type="DynamicFont" id=15]
+[sub_resource type="DynamicFont" id=13]
 size = 24
 use_mipmaps = true
 use_filter = true
@@ -125,8 +125,8 @@ margin_left = 569.718
 margin_top = 8.80695
 margin_right = 987.718
 margin_bottom = 301.807
-theme = SubResource( 9 )
-custom_fonts/font = SubResource( 10 )
+theme = SubResource( 7 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Options"
 align = 1
@@ -137,8 +137,8 @@ margin_left = 730.905
 margin_top = 63.6789
 margin_right = 1148.9
 margin_bottom = 356.679
-theme = SubResource( 13 )
-custom_fonts/font = SubResource( 14 )
+theme = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Mute
 "
@@ -155,8 +155,8 @@ margin_left = 477.122
 margin_top = 84.2559
 margin_right = 895.122
 margin_bottom = 377.256
-theme = SubResource( 13 )
-custom_fonts/font = SubResource( 14 )
+theme = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Music Adjustment"
 align = 1
@@ -167,7 +167,7 @@ margin_left = 796.813
 margin_top = 210.285
 margin_right = 864.813
 margin_bottom = 252.285
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 13 )
 custom_colors/font_color = Color( 0.729412, 0.729412, 0.729412, 1 )
 text = "100"
 
@@ -188,8 +188,8 @@ margin_left = 477.122
 margin_top = 84.2559
 margin_right = 895.122
 margin_bottom = 377.256
-theme = SubResource( 13 )
-custom_fonts/font = SubResource( 14 )
+theme = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "SFX Adjustment"
 align = 1
@@ -200,7 +200,7 @@ margin_left = 796.813
 margin_top = 210.285
 margin_right = 864.813
 margin_bottom = 252.285
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 13 )
 custom_colors/font_color = Color( 0.729412, 0.729412, 0.729412, 1 )
 text = "100"
 
@@ -221,8 +221,8 @@ margin_left = 563.34
 margin_top = 89.0458
 margin_right = 981.34
 margin_bottom = 382.046
-theme = SubResource( 13 )
-custom_fonts/font = SubResource( 14 )
+theme = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Quick Transitions"
 align = 1
@@ -245,8 +245,8 @@ margin_left = 563.34
 margin_top = 89.0458
 margin_right = 981.34
 margin_bottom = 382.046
-theme = SubResource( 13 )
-custom_fonts/font = SubResource( 14 )
+theme = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Explorer Mode
 (Invalidates Score)"
