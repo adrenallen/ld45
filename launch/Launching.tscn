@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://launch/Launching.gd" type="Script" id=1]
 [ext_resource path="res://launch/ShipLaunching.tscn" type="PackedScene" id=2]
@@ -8,7 +8,8 @@
 [ext_resource path="res://explore/fuel-level.png" type="Texture" id=6]
 [ext_resource path="res://explore/fuel-min.png" type="Texture" id=7]
 [ext_resource path="res://explore/fuel-body.png" type="Texture" id=8]
-[ext_resource path="res://launch/space.png" type="Texture" id=9]
+[ext_resource path="res://crash/ShipHealth.tscn" type="PackedScene" id=9]
+[ext_resource path="res://launch/space.png" type="Texture" id=10]
 
 [sub_resource type="Animation" id=1]
 resource_name = "space_twinkles"
@@ -70,7 +71,11 @@ z_index = -1
 texture = ExtResource( 8 )
 centered = false
 
+[node name="Node2D" parent="UI" instance=ExtResource( 9 )]
+position = Vector2( 48, 48 )
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+editor/display_folded = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 position = Vector2( 222, 148 )
@@ -78,7 +83,8 @@ z_index = -1
 motion_mirroring = Vector2( 2048, 1200 )
 
 [node name="space" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
-texture = ExtResource( 9 )
+position = Vector2( 0, 2.10526 )
+texture = ExtResource( 10 )
 hframes = 6
 frame = 5
 region_rect = Rect2( 0, 0, 2048, 1200 )

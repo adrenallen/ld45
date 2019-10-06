@@ -26,7 +26,6 @@ func _process(delta):
 	
 	if velocity.length() > MAX_SPEED:
 		velocity = velocity.normalized() * MAX_SPEED
-		
 	move_and_slide(velocity)
 	
 func getFullVector():

@@ -62,7 +62,7 @@ func _process(delta):
 
 
 func _on_GravityArea2D_body_entered(body):
-	if body.is_in_group("ship"):
+	if body.is_in_group("ship") or body.is_in_group("alien-ship"):
 		gravityPullingObjects.append(body)
 	
 
@@ -79,6 +79,7 @@ func _on_PlanetArea2D_body_entered(body):
 
 
 func _on_PlanetArea2D_area_entered(area):
+	# Only destroy if landable, if not landable it's probably leaderboard instance
 	if landable:
 		if area.is_in_group("planet"):
 			queue_free()

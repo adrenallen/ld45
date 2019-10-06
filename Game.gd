@@ -11,7 +11,8 @@ enum PlanetBiome {
 
 enum DeathBy {
 	Sun,
-	Planet
+	Planet,
+	AlienShip
 }
 
 const MAX_ATMO_TOXIC = 5
@@ -29,7 +30,7 @@ var currentPlanet = {
 	atmosphereToxicity = 5
 }
 
-var debug = false
+var debug = true
 var planetsLandedOn = 0
 var dead = false
 var deathBy = {cause = null}
@@ -103,7 +104,10 @@ func setPhase(phase):
 		get_tree().change_scene("res://explore/Exploring.tscn")
 	elif phase == 3:
 		get_tree().change_scene("res://launch/Launching.tscn")
-		
+
+func getMaxAlienFighters():
+	return ceil(getMilesTraveled()/10000000.0)
+
 func secret(distance):
 	# hahahahahah
 	return distance

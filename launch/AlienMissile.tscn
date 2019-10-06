@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://launch/AlienMissile.gd" type="Script" id=1]
+[ext_resource path="res://launch/alien-missile.png" type="Texture" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "idle"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
+[node name="KinematicBody2D" type="KinematicBody2D" groups=[
+"alien-ship",
+"alien-missile",
+]]
+script = ExtResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 11.5359, 0.251137, -6.923, 3.68536, -6.923, -4.47092 )
+
+[node name="alien-missile" type="Sprite" parent="."]
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 2 )
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="alien-missile"]
+autoplay = "idle"
+anims/idle = SubResource( 1 )
+
+[node name="ExplodeTimer" type="Timer" parent="."]
+wait_time = 15.0
+one_shot = true
+autostart = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PoolVector2Array( 12.4703, -3.5304, 11.8391, 3.41189, -6.923, 3.68536, -6.923, -4.47092 )
+[connection signal="timeout" from="ExplodeTimer" to="." method="_on_ExplodeTimer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

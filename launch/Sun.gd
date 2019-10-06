@@ -28,7 +28,7 @@ func _process(delta):
 
 
 func _on_GravityArea2D_body_entered(body):
-	if body.is_in_group("ship"):
+	if body.is_in_group("ship") or body.is_in_group("alien-ship"):
 		gravityPullingObjects.append(body)
 
 func _on_GravityArea2D_body_exited(body):
@@ -38,3 +38,5 @@ func _on_GravityArea2D_body_exited(body):
 func _on_PlanetArea2D_body_entered(body):
 	if body.is_in_group("ship"):
 		Game.die({cause = Game.DeathBy.Sun, planetsOrbiting = planetsOrbiting})
+	if body.is_in_group("alien-ship"):
+		body.queue_free()

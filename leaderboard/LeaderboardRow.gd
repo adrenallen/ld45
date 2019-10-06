@@ -2,6 +2,7 @@ extends Node2D
 
 var planetScene = load("res://launch/Planet1.tscn")
 var sunScene = load("res://launch/Sun.tscn")
+var alienScene = load("res://launch/AlienShip.tscn")
 
 var planetName = "N/A"
 var distance = 0
@@ -23,7 +24,11 @@ func init():
 		newPlanet.planetRadius = deathBy.radius
 		newPlanet.atmosphereToxicity = deathBy.atmosphereToxicity
 		$LeaderboardRow/Exhibit.add_child(newPlanet)
-	
+	elif deathBy.cause == Game.DeathBy.AlienShip:
+		var alien = alienScene.instance()
+		alien.stunned = true
+		$LeaderboardRow/Exhibit.add_child(alien)
+		
 	for ch in $LeaderboardRow/Exhibit.get_children():
 		ch.z_index = z_index-1
 	$LeaderboardRow/white_bg.z_index = z_index-2

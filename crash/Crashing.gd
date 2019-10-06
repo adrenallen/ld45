@@ -25,6 +25,7 @@ func _ready():
 	var groundRad =  $GroundObstacles/StartPosition.get_angle_to($GroundObstacles/EndPosition.position)
 	groundDirection = Vector2(cos(groundRad), sin(groundRad))
 	
+	distanceToGround = 20000
 	setBGColor()
 	
 

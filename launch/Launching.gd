@@ -6,6 +6,7 @@ extends Node2D
 const MAX_FUEL_SCALE = 3.96
 var planetScene = load("res://launch/Planet1.tscn")
 var sunScene = load("res://launch/Sun.tscn")
+var alienFighterScene = load("res://launch/AlienShip.tscn")
 
 var playBoxCoordinates = {
 	minX = 0,
@@ -72,6 +73,14 @@ func generateGalaxy(x,y,planets = 10, maxPlanetDistance = 500):
 	sun.global_position = Vector2(x,y)
 	sun.planetsOrbiting = planets
 	$Planets.add_child(sun)
+	
+	if get_tree().get_nodes_in_group("alien-fighter").size() < Game.getMaxAlienFighters():
+		var alien = alienFighterScene.instance()
+		alien.global_position.x = x
+		alien.global_position.y = y
+		get_tree().root.add_child(alien)
+		print("Spawned alien")
+		
 	
 	var lastPlanetDistance = 150
 	for i in range(planets):

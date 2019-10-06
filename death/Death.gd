@@ -2,6 +2,7 @@ extends Node2D
 
 var planetScene = load("res://launch/Planet1.tscn")
 var sunScene = load("res://launch/Sun.tscn")
+var alienScene = load("res://launch/AlienShip.tscn")
 
 const RECORD_URL = "http://18.224.157.46:5000/record"
 
@@ -20,6 +21,10 @@ func _ready():
 		newPlanet.planetRadius = Game.deathBy.radius
 		newPlanet.atmosphereToxicity = Game.deathBy.atmosphereToxicity
 		$Exhibit.add_child(newPlanet)
+	elif Game.deathBy.cause == Game.DeathBy.AlienShip:
+		var alien = alienScene.instance()
+		alien.stunned = true
+		$Exhibit.add_child(alien)
 		
 	$DistanceLabel.text = str(Game.getMilesTraveled())
 	
