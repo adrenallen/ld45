@@ -1,7 +1,37 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://launch/AlienMissile.gd" type="Script" id=1]
 [ext_resource path="res://launch/alien-missile.png" type="Texture" id=2]
+
+[sub_resource type="Animation" id=2]
+resource_name = "explode"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 3, 4, 5, 6, 7, 8, 9 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.7 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
 
 [sub_resource type="Animation" id=1]
 resource_name = "idle"
@@ -32,11 +62,12 @@ polygon = PoolVector2Array( 11.5359, 0.251137, -6.923, 3.68536, -6.923, -4.47092
 [node name="alien-missile" type="Sprite" parent="."]
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 2 )
-hframes = 3
-frame = 2
+hframes = 10
+frame = 9
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="alien-missile"]
 autoplay = "idle"
+anims/explode = SubResource( 2 )
 anims/idle = SubResource( 1 )
 
 [node name="ExplodeTimer" type="Timer" parent="."]

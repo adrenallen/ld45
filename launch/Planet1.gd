@@ -76,6 +76,8 @@ func _on_PlanetArea2D_body_entered(body):
 		if self.landable:
 			Game.setPlanet(self)
 			Game.setPhase(1)
+	if body.is_in_group("alien-missile"):
+		body.explode()
 
 
 func _on_PlanetArea2D_area_entered(area):

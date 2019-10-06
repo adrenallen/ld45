@@ -47,7 +47,7 @@ func _process(delta):
 	Game.oxygen -= delta*Game.currentPlanet.atmosphereToxicity
 	
 	if Game.oxygen < 0:
-		Game.die()
+		$KinematicBody2D.die()
 
 func setTileIndex():
 	if Game.currentPlanet.biome == Game.PlanetBiome.Forest:
@@ -194,6 +194,8 @@ func generateMap():
 	return map
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
+	if $KinematicBody2D.dying:
+		return
 	if $KinematicBody2D.global_position.distance_to($"World/ship-top".global_position) < SHIP_ENTER_DISTANCE:
 		if event is InputEventMouseButton:
 			if Game.fuel >= minimumLaunchFuel:

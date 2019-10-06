@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
-const ACCEL = 120
-const MAX_SPEED = 128.0
+const ACCEL = 100
+const MAX_SPEED = 150.0
 
 var velocity = Vector2(0,0)
 
@@ -32,16 +32,18 @@ func getPlayer():
 		return get_tree().get_nodes_in_group("ship")[0]
 
 func explode():
-	# TODO = explodey boi
-	queue_free()
+	$"alien-missile/AnimationPlayer".play("explode")
 
 func _on_ExplodeTimer_timeout():
 	explode()
 
-
+var hasDoneDamage = false
 func _on_Area2D_body_entered(body):
+	if hasDoneDamage:
+		return
 	if body.is_in_group("ship"):
 		Game.shipHealth -= 1
+		hasDoneDamage = true
 		if Game.shipHealth <= 0:
 			Game.die({cause = Game.DeathBy.AlienShip})
 		explode()

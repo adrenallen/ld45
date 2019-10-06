@@ -3,13 +3,15 @@ extends KinematicBody2D
 const MAX_SPEED = 300
 const ACCEL = 200
 
-
+var dying = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	$"astro-top".frame = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	if dying:
+		return
 	self.look_at($Camera2D.get_global_mouse_position())
 	
 	var velocity = Vector2(0,0)
@@ -28,3 +30,10 @@ func _physics_process(delta):
 		velocity *= MAX_SPEED
 		
 	move_and_slide(velocity)
+	
+func die():
+	dying = true
+	$AnimationPlayer.play("die")
+	
+func endGame():
+	Game.die()
