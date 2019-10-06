@@ -26,7 +26,6 @@ Game="*res://Game.gd"
 [display]
 
 window/size/resizable=false
-window/size/borderless=true
 
 [importer_defaults]
 

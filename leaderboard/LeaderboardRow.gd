@@ -27,6 +27,7 @@ func init():
 	elif deathBy.cause == Game.DeathBy.AlienShip:
 		var alien = alienScene.instance()
 		alien.stunned = true
+		alien.scale = Vector2(2, 2)
 		$LeaderboardRow/Exhibit.add_child(alien)
 		
 	for ch in $LeaderboardRow/Exhibit.get_children():

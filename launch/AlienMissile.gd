@@ -42,7 +42,7 @@ func _on_ExplodeTimer_timeout():
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("ship"):
 		Game.shipHealth -= 1
-		if Game.shipHealth < 0:
+		if Game.shipHealth <= 0:
 			Game.die({cause = Game.DeathBy.AlienShip})
 		explode()
 		

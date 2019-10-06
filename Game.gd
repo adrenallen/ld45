@@ -30,7 +30,7 @@ var currentPlanet = {
 	atmosphereToxicity = 5
 }
 
-var debug = true
+var debug = false
 var planetsLandedOn = 0
 var dead = false
 var deathBy = {cause = null}
