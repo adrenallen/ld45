@@ -32,6 +32,7 @@ script = ExtResource( 1 )
 [node name="planet1" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 hframes = 5
+frame = 2
 
 [node name="GravityArea2D" type="Area2D" parent="."]
 

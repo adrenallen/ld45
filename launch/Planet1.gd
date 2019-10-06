@@ -27,6 +27,9 @@ func _ready():
 	
 func setPlanetImage():
 	$planet1.hframes = 1
+	$planet1.frame = 0
+	$AnimationPlayer.stop()
+	
 	if biome == Game.PlanetBiome.Mountain:
 		$planet1.texture = load("res://launch/planet_mountain.png")
 	elif biome == Game.PlanetBiome.Forest:
