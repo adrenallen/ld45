@@ -46,6 +46,8 @@ var currentDistance = 0 #distance in current scene
 var playerInAirPocket = false
 
 func refresh():
+	randomize()
+	
 	dead = false
 	deathBy = {cause = null}
 	planetsLandedOn = 0
@@ -54,9 +56,9 @@ func refresh():
 	oxygen = 100
 	playerInAirPocket = false
 	
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	randomize()
+	setFirstPlanet()
+
+func setFirstPlanet():
 	currentPlanet = generatePlanet()
 	
 	# First planet should be easy
@@ -64,8 +66,10 @@ func _ready():
 	currentPlanet.radius = 20.0
 	currentPlanet.biome = PlanetBiome.Mountain
 	
-	fuel = 50
-
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	refresh()
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("debugger"):
