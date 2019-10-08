@@ -55,6 +55,8 @@ func refresh():
 	fuel = 20
 	oxygen = 100
 	playerInAirPocket = false
+	distance = 0
+	currentDistance = 0
 	
 	setFirstPlanet()
 
