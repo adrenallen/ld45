@@ -114,6 +114,8 @@ func _process(delta):
 	$UI.global_position.y -= get_viewport_rect().size.y/2
 	
 	$"UI/fuel-icon/fuel-body".scale.x = Game.fuel / 100.0 * MAX_FUEL_SCALE
+	if $"UI/fuel-icon/fuel-body".scale.x > MAX_FUEL_SCALE:
+		$"UI/fuel-icon/fuel-body".scale.x = MAX_FUEL_SCALE
 	
 	Game.currentDistance = $Ship.global_position.length()
 	
