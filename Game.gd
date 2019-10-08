@@ -93,7 +93,8 @@ func setPlanet(planetNode):
 	print(currentPlanet)
 	
 func addFuel(amt):
-	self.fuel += amt
+	if fuel < 100:
+		fuel += amt
 
 func repairShip():
 	if shipHealth != MAX_SHIP_HEALTH:
