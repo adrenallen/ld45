@@ -52,7 +52,7 @@ func refresh():
 	deathBy = {cause = null}
 	planetsLandedOn = 0
 	shipHealth = MAX_SHIP_HEALTH
-	fuel = 0
+	fuel = 20
 	oxygen = 100
 	playerInAirPocket = false
 	
@@ -63,7 +63,7 @@ func setFirstPlanet():
 	
 	# First planet should be easy
 	currentPlanet.atmosphereToxicity = 1.0
-	currentPlanet.radius = 20.0
+	currentPlanet.radius = 16.0
 	currentPlanet.biome = PlanetBiome.Mountain
 	
 # Called when the node enters the scene tree for the first time.

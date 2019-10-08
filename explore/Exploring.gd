@@ -89,7 +89,7 @@ func _on_Transition_TransitionIn():
 func placeWorld():
 	var map = generateMap()
 	
-	var numberOfFuel = Game.currentPlanet.atmosphereToxicity * Game.currentPlanet.radius / 3.5
+	var numberOfFuel = Game.currentPlanet.atmosphereToxicity * Game.currentPlanet.radius / 2.25
 	var numberOfRepair = randi()%5
 	var numberOfAirPockets = randi()%(3 + int(Game.currentPlanet.atmosphereToxicity))
 	
@@ -181,8 +181,8 @@ func generateMapOpen(dimensions):
 
 func generateMap():
 	var dimensions = int(floor(Game.currentPlanet.radius*4))
-	var maxTunnels = int(floor(rand_range(dimensions*.75, dimensions*2)))
-	var maxLength = int(floor(rand_range(4,32)))
+	var maxTunnels = int(floor(rand_range(dimensions*.75, dimensions*4)))
+	var maxLength = int(floor(rand_range(2,20)))
 	var map = generateMapOpen(dimensions)
 	var currentRow = randi()%dimensions
 	var currentCol = randi()%dimensions
