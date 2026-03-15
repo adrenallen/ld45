@@ -1,0 +1,10 @@
+# Godot 4 specific ignores
+.godot/
+.import/
+*.import
+*.uid
+
+# Export
+*.pck
+*.x86_64
+*.exe

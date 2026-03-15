@@ -1,7 +1,7 @@
 extends Node2D
 
-export var gravity = 70
-export var radius = 64
+@export var gravity = 70
+@export var radius = 64
 
 
 var gravityPullingObjects = []
@@ -11,7 +11,7 @@ var planetsOrbiting = 0
 func _ready():
 	$planet1.transform.x = Vector2(radius/32, 0)
 	$planet1.transform.y = Vector2(0, radius/32)
-	
+
 	var planetShape = CircleShape2D.new()
 	planetShape.set_radius(radius)
 	$PlanetArea2D/CollisionShape2D.set_shape(planetShape)

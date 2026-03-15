@@ -13,22 +13,24 @@ func _ready():
 
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
-	var json = JSON.parse(body.get_string_from_utf8())
+	var json = JSON.new()
+	json.parse(body.get_string_from_utf8())
+	var data = json.get_data()
 	#[{deathBy:{cause:Null}, distance:0, name:asdfasdf, time:1570334831211}]
-	var position = 0
-	for lb in json.result:
-		var lbr = lbRowScene.instance()
+	var pos = 0
+	for lb in data:
+		var lbr = lbRowScene.instantiate()
 		lbr.planetName = lb.name
 		lbr.deathBy = lb.deathBy
 		lbr.distance = lb.distance
-		lbr.position.y += 55*position
-		lbr.z_index = -position
+		lbr.position.y += 55*pos
+		lbr.z_index = -pos
 		lbr.init()
-		
+
 		$Top10.add_child(lbr)
-		
-		position += 1
-		
+
+		pos += 1
+
 
 func _on_Button_button_up():
-	get_tree().change_scene("res://Menu.tscn")
+	get_tree().change_scene_to_file("res://Menu.tscn")

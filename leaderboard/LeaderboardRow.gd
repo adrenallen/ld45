@@ -14,10 +14,10 @@ func _ready():
 
 func init():
 	if deathBy.cause == Game.DeathBy.Sun:
-		var newSun = sunScene.instance()
+		var newSun = sunScene.instantiate()
 		$LeaderboardRow/Exhibit.add_child(newSun)
 	elif deathBy.cause == Game.DeathBy.Planet:
-		var newPlanet = planetScene.instance()
+		var newPlanet = planetScene.instantiate()
 		newPlanet.gravity = 0 # TODO - can we do some magic to turn this on after ship leaves?
 		newPlanet.landable = false
 		newPlanet.biome = deathBy.biome
@@ -25,15 +25,15 @@ func init():
 		newPlanet.atmosphereToxicity = deathBy.atmosphereToxicity
 		$LeaderboardRow/Exhibit.add_child(newPlanet)
 	elif deathBy.cause == Game.DeathBy.AlienShip:
-		var alien = alienScene.instance()
+		var alien = alienScene.instantiate()
 		alien.stunned = true
 		alien.scale = Vector2(2, 2)
 		$LeaderboardRow/Exhibit.add_child(alien)
-		
+
 	for ch in $LeaderboardRow/Exhibit.get_children():
 		ch.z_index = z_index-1
 	$LeaderboardRow/white_bg.z_index = z_index-2
-	
+
 	$LeaderboardRow/DistanceLabel.text = str(distance) + " miles"
 	$LeaderboardRow/NameLabel.text = planetName
 
