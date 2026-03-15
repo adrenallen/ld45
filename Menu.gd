@@ -23,7 +23,7 @@ func _ready():
 	$Options/Control4/CheaterMode.button_pressed = Game.cheaterMode
 
 	# Show/hide continue button based on save state
-	if $ContinueButton:
+	if has_node("ContinueButton"):
 		$ContinueButton.visible = SaveManager.has_save
 
 func _on_NewGameButton_pressed():
