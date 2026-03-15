@@ -64,6 +64,10 @@ debugger={
 ]
 }
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
+
 [rendering]
 
 environment/defaults/default_environment="res://default_env.tres"
