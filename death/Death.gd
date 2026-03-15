@@ -6,7 +6,6 @@ var alienScene = load("res://launch/AlienShip.tscn")
 
 const RECORD_URL = Game.BASE_URL + "/record"
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
@@ -24,7 +23,7 @@ func _ready():
 		$DetailsLabel.text = "Planets in orbit: " + str(Game.deathBy.planetsOrbiting)
 	elif Game.deathBy.cause == Game.DeathBy.Planet:
 		var newPlanet = planetScene.instantiate()
-		newPlanet.gravity = 0 # TODO - can we do some magic to turn this on after ship leaves?
+		newPlanet.gravity = 0
 		newPlanet.landable = false
 		newPlanet.biome = Game.deathBy.biome
 		newPlanet.planetRadius = Game.deathBy.radius
@@ -37,18 +36,24 @@ func _ready():
 		var alien = alienScene.instantiate()
 		alien.stunned = true
 		$Exhibit.add_child(alien)
+	elif Game.deathBy.cause == Game.DeathBy.Suffocation:
+		$DetailsLabel.text = "- Suffocated -\n\nAtmosphere Toxicity: " + str(Game.currentPlanet.atmosphereToxicity)
 
 	$DistanceLabel.text = str(Game.getMilesTraveled())
+
+	# Show loss summary
+	_show_loss_summary()
 
 	if Game.cheaterMode:
 		$Button.visible = false
 		$PlanetNameInput.visible = false
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
+func _show_loss_summary():
+	var summary = "\n\n-- Items Lost --\nAll carried inventory and ship cargo lost."
+	summary += "\nEquipment durability penalty: -%d" % Inventory.DEATH_DURABILITY_PENALTY
+	if Inventory.ship_safe_box.size() > 0:
+		summary += "\n\nSafe box items preserved: %d" % Inventory.ship_safe_box.size()
+	$DetailsLabel.text += summary
 
 func _on_PlanetNameInput_text_changed():
 	if $PlanetNameInput.text.length() > 32:
@@ -57,13 +62,12 @@ func _on_PlanetNameInput_text_changed():
 
 func _on_Button_button_up():
 	if Game.cheaterMode:
-		return #Extra safety
+		return
 	if $PlanetNameInput.text.length() > 1:
 		var request = JSON.stringify({deathBy = Game.deathBy, distance = Game.getMilesTraveled(), name = $PlanetNameInput.text, confirmer = Game.secret(Game.getMilesTraveled())})
 		var headers = PackedStringArray()
 		headers.append("Content-Type: application/json")
 		$HTTPRequest.request(RECORD_URL, headers, HTTPClient.METHOD_POST, request)
-
 
 
 func _on_LeaderboardButton_button_up():
@@ -72,6 +76,8 @@ func _on_LeaderboardButton_button_up():
 	else:
 		get_tree().change_scene_to_file("res://leaderboard/Leaderboard.tscn")
 
+func _on_BaseButton_pressed():
+	get_tree().change_scene_to_file("res://base/Base.tscn")
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	_on_LeaderboardButton_button_up()

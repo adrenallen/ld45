@@ -19,6 +19,10 @@ config/icon="res://icon.png"
 
 Game="*res://Game.gd"
 MP="*res://multiplayer/MultiplayerManager.gd"
+Items="*res://data/items.gd"
+Inventory="*res://data/inventory.gd"
+Crafting="*res://data/crafting.gd"
+SaveManager="*res://data/save_manager.gd"
 
 [display]
 

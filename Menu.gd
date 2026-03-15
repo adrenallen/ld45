@@ -1,16 +1,11 @@
 extends Control
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 var musicVol = 100
 var sfxVol = 100
 
 var musicMute = false
 var sfxMute = false
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	sfxVol = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Sound Effects"))
 	musicVol = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Background"))
@@ -26,6 +21,18 @@ func _ready():
 
 	$Options/Control3/QuickTransitionsButton.button_pressed = Game.quickTransitions
 	$Options/Control4/CheaterMode.button_pressed = Game.cheaterMode
+
+	# Show/hide continue button based on save state
+	if $ContinueButton:
+		$ContinueButton.visible = SaveManager.has_save
+
+func _on_NewGameButton_pressed():
+	SaveManager.new_game()
+	get_tree().change_scene_to_file("res://base/Base.tscn")
+
+func _on_ContinueButton_pressed():
+	if SaveManager.load_game():
+		get_tree().change_scene_to_file("res://base/Base.tscn")
 
 func _on_StartButton_button_up():
 	MP.weeklyMode = false

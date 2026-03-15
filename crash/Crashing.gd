@@ -131,9 +131,12 @@ func handleGroundMoves(delta):
 func hitObstacle(body):
 	if body.is_in_group("ship"):
 		$Ship/ObstacleHitAudio.play()
-		Game.shipHealth -= 1
+		var damage = max(1, 1 - Game.damageResistance)
+		Game.shipHealth -= damage
 		$Ship.showDamage()
-		# TODO - play hurt (spark and flash?)
+
+		# Degrade hull on collision
+		Inventory.degrade_ship_equipment(Items.ShipSlot.HULL, 1)
 
 	if Game.shipHealth <= 0:
 		$Ship.die()

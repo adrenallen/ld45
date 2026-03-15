@@ -18,7 +18,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	velocity.y += (SHIP_FALL_RATE+Game.currentPlanet.gravity)*delta
+	var fall_reduction = Game.landingSpeedReduction
+	var effective_fall = SHIP_FALL_RATE * (1.0 - fall_reduction)
+	velocity.y += (effective_fall+Game.currentPlanet.gravity)*delta
 	if Input.is_action_pressed("ui_right"):
 		velocity.x += SHIP_ACCEL_H*delta
 	elif Input.is_action_pressed("ui_left"):

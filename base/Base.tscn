@@ -1,0 +1,274 @@
+[gd_scene load_steps=6 format=3 uid="uid://base_scene"]
+
+[ext_resource type="Script" path="res://base/Base.gd" id="1"]
+[ext_resource type="Script" path="res://base/StashTab.gd" id="2"]
+[ext_resource type="Script" path="res://base/LoadoutTab.gd" id="3"]
+[ext_resource type="Script" path="res://base/CraftingTab.gd" id="4"]
+[ext_resource type="Script" path="res://base/LaunchTab.gd" id="5"]
+
+[node name="Base" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.08, 0.08, 0.12, 1)
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 10.0
+offset_right = 100.0
+offset_bottom = 35.0
+text = "HOME BASE"
+horizontal_alignment = 1
+
+[node name="StatsLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 35.0
+offset_right = 200.0
+offset_bottom = 50.0
+horizontal_alignment = 1
+
+[node name="TabBar" type="HBoxContainer" parent="."]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 55.0
+offset_right = 600.0
+offset_bottom = 85.0
+
+[node name="StashBtn" type="Button" parent="TabBar"]
+layout_mode = 2
+text = "Stash"
+
+[node name="LoadoutBtn" type="Button" parent="TabBar"]
+layout_mode = 2
+text = "Loadout"
+
+[node name="CraftingBtn" type="Button" parent="TabBar"]
+layout_mode = 2
+text = "Crafting"
+
+[node name="LaunchBtn" type="Button" parent="TabBar"]
+layout_mode = 2
+text = "Launch"
+
+[node name="MenuBtn" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 35.0
+text = "Main Menu"
+
+[node name="StashTab" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 90.0
+script = ExtResource("2")
+
+[node name="StashLabel" type="Label" parent="StashTab"]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 5.0
+offset_right = 200.0
+offset_bottom = 25.0
+text = "Base Stash"
+
+[node name="StashGrid" type="GridContainer" parent="StashTab"]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 30.0
+offset_right = 620.0
+offset_bottom = 430.0
+columns = 6
+
+[node name="LoadoutTab" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 90.0
+script = ExtResource("3")
+
+[node name="PlayerLabel" type="Label" parent="LoadoutTab"]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 5.0
+offset_right = 200.0
+offset_bottom = 25.0
+text = "Player Equipment"
+
+[node name="PlayerSlots" type="VBoxContainer" parent="LoadoutTab"]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 30.0
+offset_right = 300.0
+offset_bottom = 250.0
+
+[node name="ShipLabel" type="Label" parent="LoadoutTab"]
+layout_mode = 1
+offset_left = 320.0
+offset_top = 5.0
+offset_right = 600.0
+offset_bottom = 25.0
+text = "Ship Equipment"
+
+[node name="ShipSlots" type="VBoxContainer" parent="LoadoutTab"]
+layout_mode = 1
+offset_left = 320.0
+offset_top = 30.0
+offset_right = 620.0
+offset_bottom = 320.0
+
+[node name="StatsPanel" type="VBoxContainer" parent="LoadoutTab"]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 260.0
+offset_right = 300.0
+offset_bottom = 430.0
+
+[node name="StatsTitle" type="Label" parent="LoadoutTab/StatsPanel"]
+layout_mode = 2
+text = "-- Stats Summary --"
+
+[node name="StatsText" type="Label" parent="LoadoutTab/StatsPanel"]
+layout_mode = 2
+text = "..."
+
+[node name="CraftingTab" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 90.0
+script = ExtResource("4")
+
+[node name="WorkbenchSelector" type="HBoxContainer" parent="CraftingTab"]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 5.0
+offset_right = 620.0
+offset_bottom = 35.0
+
+[node name="ForgeBtn" type="Button" parent="CraftingTab/WorkbenchSelector"]
+layout_mode = 2
+text = "Forge"
+
+[node name="LabBtn" type="Button" parent="CraftingTab/WorkbenchSelector"]
+layout_mode = 2
+text = "Lab"
+
+[node name="AssemblerBtn" type="Button" parent="CraftingTab/WorkbenchSelector"]
+layout_mode = 2
+text = "Assembler"
+
+[node name="ShipyardBtn" type="Button" parent="CraftingTab/WorkbenchSelector"]
+layout_mode = 2
+text = "Shipyard"
+
+[node name="WorkbenchInfo" type="Label" parent="CraftingTab"]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 40.0
+offset_right = 620.0
+offset_bottom = 55.0
+
+[node name="RecipeList" type="VBoxContainer" parent="CraftingTab"]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 60.0
+offset_right = 620.0
+offset_bottom = 430.0
+
+[node name="LaunchTab" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 90.0
+script = ExtResource("5")
+
+[node name="LoadoutSummary" type="Label" parent="LaunchTab"]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 620.0
+offset_bottom = 300.0
+
+[node name="LaunchButton" type="Button" parent="LaunchTab"]
+layout_mode = 1
+offset_left = 220.0
+offset_top = 320.0
+offset_right = 420.0
+offset_bottom = 360.0
+text = "LAUNCH RUN"
+
+[node name="ExtractionPopup" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = 100.0
+
+[node name="ExtractionLabel" type="Label" parent="ExtractionPopup"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -40.0
+text = "Extraction Successful!
+Loot transferred to stash."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CloseBtn" type="Button" parent="ExtractionPopup"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -35.0
+offset_right = 40.0
+offset_bottom = -10.0
+text = "OK"
+
+[connection signal="pressed" from="TabBar/StashBtn" to="." method="_on_stash_button_pressed"]
+[connection signal="pressed" from="TabBar/LoadoutBtn" to="." method="_on_loadout_button_pressed"]
+[connection signal="pressed" from="TabBar/CraftingBtn" to="." method="_on_crafting_button_pressed"]
+[connection signal="pressed" from="TabBar/LaunchBtn" to="." method="_on_launch_button_pressed"]
+[connection signal="pressed" from="MenuBtn" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="ExtractionPopup/CloseBtn" to="." method="_on_extraction_popup_close"]
