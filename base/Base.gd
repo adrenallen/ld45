@@ -1,3 +1,4 @@
+class_name Base
 extends Control
 
 var current_tab = 0
