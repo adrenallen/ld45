@@ -10,11 +10,11 @@ const RECORD_URL = Game.BASE_URL + "/record"
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	if Game.deathBy.cause == Game.DeathBy.Sun:
-		var newSun = sunScene.instance()
+		var newSun = sunScene.instantiate()
 		$Exhibit.add_child(newSun)
 		$DetailsLabel.text = "Planets in orbit: " + str(Game.deathBy.planetsOrbiting)
 	elif Game.deathBy.cause == Game.DeathBy.Planet:
-		var newPlanet = planetScene.instance()
+		var newPlanet = planetScene.instantiate()
 		newPlanet.gravity = 0 # TODO - can we do some magic to turn this on after ship leaves?
 		newPlanet.landable = false
 		newPlanet.biome = Game.deathBy.biome
@@ -25,17 +25,17 @@ func _ready():
 		$DetailsLabel.text += "\n\nAtmosphere Toxicity: " + str(Game.deathBy.atmosphereToxicity)
 		$DetailsLabel.text += "\n\nGravity Rating: " + str(round(Game.deathBy.gravity))
 	elif Game.deathBy.cause == Game.DeathBy.AlienShip:
-		var alien = alienScene.instance()
+		var alien = alienScene.instantiate()
 		alien.stunned = true
 		$Exhibit.add_child(alien)
-		
+
 	$DistanceLabel.text = str(Game.getMilesTraveled())
-	
+
 	if Game.cheaterMode:
 		$Button.visible = false
 		$PlanetNameInput.visible = false
-	
-	
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
@@ -50,15 +50,15 @@ func _on_Button_button_up():
 	if Game.cheaterMode:
 		return #Extra safety
 	if $PlanetNameInput.text.length() > 1:
-		var request = JSON.print({deathBy = Game.deathBy, distance = Game.getMilesTraveled(), name = $PlanetNameInput.text, confirmer = Game.secret(Game.getMilesTraveled())})
-		var headers = PoolStringArray()
+		var request = JSON.stringify({deathBy = Game.deathBy, distance = Game.getMilesTraveled(), name = $PlanetNameInput.text, confirmer = Game.secret(Game.getMilesTraveled())})
+		var headers = PackedStringArray()
 		headers.append("Content-Type: application/json")
-		$HTTPRequest.request(RECORD_URL, headers, false, HTTPClient.METHOD_POST, request)
+		$HTTPRequest.request(RECORD_URL, headers, HTTPClient.METHOD_POST, request)
 
 
 
 func _on_LeaderboardButton_button_up():
-	get_tree().change_scene("res://leaderboard/Leaderboard.tscn")
+	get_tree().change_scene_to_file("res://leaderboard/Leaderboard.tscn")
 
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):

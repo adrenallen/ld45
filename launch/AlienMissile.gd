@@ -1,9 +1,8 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 const ACCEL = 100
 const MAX_SPEED = 150.0
 
-var velocity = Vector2(0,0)
 var isExploding = false
 
 func _ready():
@@ -11,21 +10,21 @@ func _ready():
 
 func _physics_process(delta):
 	self.rotation = velocity.angle()
-	
+
 	var player = getPlayer()
 	if player == null:
 		return
-		
+
 	if !isExploding:
 		var vector = player.position - position
 		var thrust = vector.normalized()*ACCEL*delta
 		velocity += thrust
-	
+
 	if velocity.length() > MAX_SPEED:
 		velocity = velocity.normalized() * MAX_SPEED
-	
-	move_and_slide(velocity)
-	
+
+	move_and_slide()
+
 func getPlayer():
 	var playerList = get_tree().get_nodes_in_group("ship")
 	if playerList.size() < 1:
@@ -52,4 +51,4 @@ func _on_Area2D_body_entered(body):
 			Game.deathBy = {cause = Game.DeathBy.AlienShip}
 			body.die()
 		explode()
-		
+

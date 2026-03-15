@@ -1,12 +1,10 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 const THRUST_POWER = 190
 
 const MAX_SPEED = 120
 
 const FUEL_BURN_RATE = 5
-
-export var velocity = Vector2(0,0)
 
 var dying = false
 # Called when the node enters the scene tree for the first time.
@@ -25,20 +23,20 @@ func _process(delta):
 			Game.fuel -= FUEL_BURN_RATE*delta
 			if Game.fuel < 0:
 				Game.fuel = 0
-	
+
 	self.rotation = velocity.angle()
-	
+
 	if velocity.length() > MAX_SPEED:
 		velocity = velocity.normalized() * MAX_SPEED
-	move_and_slide(velocity)
-	
+	move_and_slide()
+
 func getFullVector():
 	return (velocity).normalized()
-	
+
 func die():
 	$AnimationPlayer.play("die")
 	dying = true
 	remove_from_group("ship")
-	
+
 func finishDying():
 	Game.die(Game.deathBy)

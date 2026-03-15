@@ -1,10 +1,10 @@
 extends Node2D
 
-export var gravity = 120
-export var planetRadius = 32
-export var biome = Game.PlanetBiome.Mountain
-export var atmosphereToxicity = 3
-export var landable = true
+@export var gravity = 120
+@export var planetRadius = 32
+@export var biome = Game.PlanetBiome.Mountain
+@export var atmosphereToxicity = 3
+@export var landable = true
 
 
 var gravityPullingObjects = []
@@ -14,7 +14,7 @@ var gravityPullingObjects = []
 func _ready():
 	$planet1.transform.x = Vector2(planetRadius/32, 0)
 	$planet1.transform.y = Vector2(0, planetRadius/32)
-	
+
 	var planetShape = CircleShape2D.new()
 	planetShape.set_radius(planetRadius)
 	$PlanetArea2D/CollisionShape2D.set_shape(planetShape)
@@ -22,14 +22,14 @@ func _ready():
 	var gravityShape = CircleShape2D.new()
 	gravityShape.set_radius(planetRadius*5)
 	$GravityArea2D/CollisionShape2D.set_shape(gravityShape)
-	
+
 	setPlanetImage()
-	
+
 func setPlanetImage():
 	$planet1.hframes = 1
 	$planet1.frame = 0
 	$AnimationPlayer.stop()
-	
+
 	if biome == Game.PlanetBiome.Mountain:
 		$planet1.texture = load("res://launch/planet_mountain.png")
 	elif biome == Game.PlanetBiome.Forest:
@@ -44,7 +44,7 @@ func setPlanetImage():
 		$AnimationPlayer.play("gas_idle")
 	elif biome == Game.PlanetBiome.Lava:
 		$planet1.texture = load("res://launch/planet_lava.png")
-		
+
 	var atmoFactor = atmosphereToxicity/Game.MAX_ATMO_TOXIC
 	if atmoFactor > 0.75:
 		$planet1.modulate *= 0.65
@@ -52,7 +52,7 @@ func setPlanetImage():
 	elif atmoFactor > 0.5:
 		$planet1.modulate *= 0.8
 		$planet1.modulate.r = 1
-		
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -64,7 +64,7 @@ func _process(delta):
 func _on_GravityArea2D_body_entered(body):
 	if body.is_in_group("ship") or body.is_in_group("alien-ship"):
 		gravityPullingObjects.append(body)
-	
+
 
 
 func _on_GravityArea2D_body_exited(body):

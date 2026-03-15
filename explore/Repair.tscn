@@ -1,13 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=3]
 
-[ext_resource path="res://explore/Repair.gd" type="Script" id=1]
-[ext_resource path="res://explore/shield-repair.png" type="Texture" id=2]
-[ext_resource path="res://sounds/fuel-pickup.wav" type="AudioStream" id=3]
+[ext_resource type="Script" path="res://explore/Repair.gd" id="1"]
+[ext_resource type="Texture2D" path="res://explore/shield-repair.png" id="2"]
+[ext_resource type="AudioStream" path="res://sounds/fuel-pickup.wav" id="3"]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id="1"]
 radius = 60.2894
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id="2"]
 resource_name = "pickup"
 tracks/0/type = "value"
 tracks/0/path = NodePath("AudioStreamPlayer2D:playing")
@@ -16,8 +16,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 1,
 "values": [ true ]
 }
@@ -28,8 +28,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 1,
 "values": [ false ]
 }
@@ -40,31 +40,38 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0.8 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0.8 ),
+"transitions": PackedFloat32Array( 1 ),
 "values": [ {
 "args": [  ],
 "method": "queue_free"
 } ]
 }
 
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1"]
+_data = {
+"pickup": SubResource("2")
+}
+
 [node name="Node2D" type="Node2D"]
 scale = Vector2( 0.5, 0.5 )
-script = ExtResource( 1 )
+script = ExtResource("1")
 
-[node name="repair-icon" type="Sprite" parent="."]
-texture = ExtResource( 2 )
+[node name="repair-icon" type="Sprite2D" parent="."]
+texture = ExtResource("2")
 
 [node name="Area2D" type="Area2D" parent="repair-icon"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="repair-icon/Area2D"]
-shape = SubResource( 1 )
+shape = SubResource("1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/pickup = SubResource( 2 )
+libraries = {
+"": SubResource("AnimationLibrary_1")
+}
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 3 )
+stream = ExtResource("3")
 volume_db = -6.0
 pitch_scale = 0.6
 bus = "Sound Effects"

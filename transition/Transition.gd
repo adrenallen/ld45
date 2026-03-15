@@ -5,7 +5,7 @@ extends Node2D
 # var b = "text"
 signal TransitionIn
 
-export var transitionPhase = 1
+@export var transitionPhase = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

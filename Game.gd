@@ -47,7 +47,7 @@ var playerInAirPocket = false
 
 func refresh():
 	randomize()
-	
+
 	dead = false
 	deathBy = {cause = null}
 	planetsLandedOn = 0
@@ -57,21 +57,21 @@ func refresh():
 	playerInAirPocket = false
 	distance = 0
 	currentDistance = 0
-	
+
 	setFirstPlanet()
 
 func setFirstPlanet():
 	currentPlanet = generatePlanet()
-	
+
 	# First planet should be easy
 	currentPlanet.atmosphereToxicity = 1.0
 	currentPlanet.radius = 16.0
 	currentPlanet.biome = PlanetBiome.Mountain
-	
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	refresh()
-	
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("debugger"):
@@ -79,12 +79,12 @@ func _process(delta):
 
 func generatePlanet():
 	return {
-		radius = rand_range(16,64),
-		gravity = rand_range(20, 80),
+		radius = randf_range(16,64),
+		gravity = randf_range(20, 80),
 		biome = PlanetBiome.values()[randi()%PlanetBiome.values().size()],
-		atmosphereToxicity = rand_range(1,MAX_ATMO_TOXIC)
+		atmosphereToxicity = randf_range(1,MAX_ATMO_TOXIC)
 	}
-	
+
 func setPlanet(planetNode):
 	self.currentPlanet = {
 		radius = planetNode.planetRadius,
@@ -93,7 +93,7 @@ func setPlanet(planetNode):
 		atmosphereToxicity = planetNode.atmosphereToxicity
 	}
 	print(currentPlanet)
-	
+
 func addFuel(amt):
 	if fuel < 100:
 		fuel += amt
@@ -116,12 +116,12 @@ func getCurrentBiomeTint():
 		bgColor = Color(193,193,193)
 	elif currentPlanet.biome == PlanetBiome.Gas:
 		bgColor = Color(231,255,177)
-	
+
 	#Fix for dumb
 	bgColor /= 255.0
 	bgColor *= .75
 	bgColor.a = 1
-	
+
 	return bgColor
 
 func die(deathInfo = null):
@@ -133,9 +133,9 @@ func die(deathInfo = null):
 		deathBy.atmosphereToxicity = Game.currentPlanet.atmosphereToxicity
 		deathBy.cause = Game.DeathBy.Planet
 		deathBy.gravity = Game.currentPlanet.gravity
-			
-	get_tree().change_scene("res://death/Death.tscn")
-	
+
+	get_tree().change_scene_to_file("res://death/Death.tscn")
+
 func getMilesTraveled():
 	if cheaterMode:
 		return 0
@@ -147,19 +147,19 @@ func setPhase(phase):
 	currentDistance = 0
 	if phase == 1:
 		if tutorialsCompleted.has(phase):
-			get_tree().change_scene("res://crash/Crashing.tscn")
+			get_tree().change_scene_to_file("res://crash/Crashing.tscn")
 		else:
-			get_tree().change_scene("res://crash/Tutorial.tscn")
+			get_tree().change_scene_to_file("res://crash/Tutorial.tscn")
 	elif phase == 2:
 		if tutorialsCompleted.has(phase):
-			get_tree().change_scene("res://explore/Exploring.tscn")
+			get_tree().change_scene_to_file("res://explore/Exploring.tscn")
 		else:
-			get_tree().change_scene("res://explore/Tutorial.tscn")
+			get_tree().change_scene_to_file("res://explore/Tutorial.tscn")
 	elif phase == 3:
 		if tutorialsCompleted.has(phase):
-			get_tree().change_scene("res://launch/Launching.tscn")
+			get_tree().change_scene_to_file("res://launch/Launching.tscn")
 		else:
-			get_tree().change_scene("res://launch/Tutorial.tscn")
+			get_tree().change_scene_to_file("res://launch/Tutorial.tscn")
 
 func getMaxAlienFighters():
 	return ceil(getMilesTraveled()/10000000.0)
@@ -167,4 +167,3 @@ func getMaxAlienFighters():
 func secret(distance):
 	# hahahahahah
 	return distance
-	
