@@ -7,6 +7,7 @@ const MAX_FUEL_SCALE = 3.96
 var planetScene = load("res://launch/Planet1.tscn")
 var sunScene = load("res://launch/Sun.tscn")
 var alienFighterScene = load("res://launch/AlienShip.tscn")
+var deathMarkerScene = load("res://multiplayer/DeathMarker.tscn")
 
 var playBoxCoordinates = {
 	minX = 0,
@@ -31,6 +32,11 @@ func _ready():
 	$Ship.global_position.y -= $LaunchPlanet.planetRadius
 
 	generateSpace($Ship.global_position)
+
+	# Load death markers for weekly mode
+	if MP.weeklyMode:
+		MP.death_markers_loaded.connect(_on_death_markers_loaded)
+		MP.fetchDeathMarkers(3)
 
 func calculatePlayBox():
 	playBoxCoordinates = {
@@ -119,6 +125,10 @@ func _process(delta):
 
 	Game.currentDistance = $Ship.global_position.length()
 
+	# Track position for death marker submission
+	if MP.weeklyMode:
+		MP.updatePosition(3, $Ship.global_position)
+
 	checkShipInPlaybox()
 
 
@@ -142,6 +152,15 @@ func destroyPlanets():
 func nextPhase():
 	Game.setPhase(1)
 
+
+func _on_death_markers_loaded(phase):
+	if phase != 3:
+		return
+	for marker in MP.deathMarkers[3]:
+		var dm = deathMarkerScene.instantiate()
+		dm.global_position = Vector2(marker.positionX, marker.positionY)
+		dm.init(marker)
+		$Planets.add_child(dm)
 
 func _on_TransitionIn_TransitionIn():
 	$Ship/Camera2D.current = true

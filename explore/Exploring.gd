@@ -12,6 +12,7 @@ var minimumLaunchFuel = 30 # TODO - change by gravity?
 var fuelScene = load("res://explore/Fuel.tscn")
 var repairScene = load("res://explore/Repair.tscn")
 var airPocketScene = load("res://explore/AirPocket.tscn")
+var deathMarkerScene = load("res://multiplayer/DeathMarker.tscn")
 
 # In Godot 4, TileMap uses source_id + atlas_coords instead of simple tile IDs
 # Each biome texture is an atlas source with 2 columns: open=(0,0), closed=(1,0)
@@ -30,6 +31,11 @@ func _ready():
 	Game.oxygen = 100
 	Game.planetsLandedOn += 1
 	Game.playerInAirPocket = false
+
+	# Load death markers for weekly mode
+	if MP.weeklyMode:
+		MP.death_markers_loaded.connect(_on_death_markers_loaded)
+		MP.fetchDeathMarkers(2)
 
 func _physics_process(delta):
 	if $CharacterBody2D.global_position.distance_to($"World/ship-top".global_position) < SHIP_ENTER_DISTANCE and mouseOnShip:
@@ -61,6 +67,10 @@ func _process(delta):
 	else:
 		Game.oxygen -= delta*Game.currentPlanet.atmosphereToxicity
 
+
+	# Track position for death marker submission
+	if MP.weeklyMode:
+		MP.updatePosition(2, $CharacterBody2D.global_position)
 
 	if Game.oxygen <= 0:
 		Game.oxygen = 0
@@ -232,3 +242,12 @@ func _on_Area2D_mouse_entered():
 
 func _on_Area2D_mouse_exited():
 	mouseOnShip = false
+
+func _on_death_markers_loaded(phase):
+	if phase != 2:
+		return
+	for marker in MP.deathMarkers[2]:
+		var dm = deathMarkerScene.instantiate()
+		dm.global_position = Vector2(marker.positionX, marker.positionY)
+		dm.init(marker)
+		$World.add_child(dm)

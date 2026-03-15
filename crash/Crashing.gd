@@ -12,6 +12,7 @@ var gasScene = load("res://crash/Gas.tscn")
 var waterScene = load("res://crash/Water.tscn")
 
 var junkScene = load("res://crash/Junk.tscn")
+var deathMarkerScene = load("res://multiplayer/DeathMarker.tscn")
 
 var distanceToGround = 39000
 
@@ -26,6 +27,11 @@ func _ready():
 	groundDirection = Vector2(cos(groundRad), sin(groundRad))
 
 	setBGColor()
+
+	# Load death markers for weekly mode
+	if MP.weeklyMode:
+		MP.death_markers_loaded.connect(_on_death_markers_loaded)
+		MP.fetchDeathMarkers(1)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -49,6 +55,10 @@ func _process(delta):
 	if distanceToGround < 15000:
 		$horizon.position.y -= delta*75
 		$horizon.position.x -= delta*30
+
+	# Track position for death marker submission
+	if MP.weeklyMode:
+		MP.updatePosition(1, $Ship.global_position)
 
 	if distanceToGround <= 0:
 		crash()
@@ -136,6 +146,15 @@ func crash():
 
 func nextPhase():
 	Game.setPhase(2)
+
+func _on_death_markers_loaded(phase):
+	if phase != 1:
+		return
+	for marker in MP.deathMarkers[1]:
+		var dm = deathMarkerScene.instantiate()
+		dm.global_position = Vector2(marker.positionX, marker.positionY)
+		dm.init(marker)
+		add_child(dm)
 
 func _on_DeathArea2D_body_entered(body):
 	if body.is_in_group("ship"):

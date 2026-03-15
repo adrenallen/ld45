@@ -48,15 +48,57 @@ theme_override_font_sizes/font_size = 32
 theme_override_colors/font_color = Color( 0.729412, 0.729412, 0.729412, 1 )
 text = "Leaderboard"
 
+[node name="WeeklyChallengeButton" type="Button" parent="."]
+offset_left = 64.0
+offset_top = 377.0
+offset_right = 436.0
+offset_bottom = 429.0
+theme_override_fonts/font = ExtResource("14")
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(0.4, 0.85, 1.0, 1)
+text = "Weekly Challenge"
+
 [node name="QuitButton" type="Button" parent="."]
 offset_left = 64.0
-offset_top = 457.0
+offset_top = 497.0
 offset_right = 436.0
-offset_bottom = 509.0
+offset_bottom = 549.0
 theme_override_fonts/font = ExtResource("14")
 theme_override_font_sizes/font_size = 32
 theme_override_colors/font_color = Color( 0.729412, 0.729412, 0.729412, 1 )
 text = "Eject"
+
+[node name="WeeklyOptions" type="Control" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PlayerNameLabel" type="Label" parent="WeeklyOptions"]
+offset_left = 64.0
+offset_top = 429.0
+offset_right = 200.0
+offset_bottom = 453.0
+theme_override_fonts/font = ExtResource("14")
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.4, 0.85, 1.0, 1)
+text = "Player Name:"
+
+[node name="PlayerNameInput" type="TextEdit" parent="WeeklyOptions"]
+offset_left = 200.0
+offset_top = 429.0
+offset_right = 436.0
+offset_bottom = 460.0
+theme_override_fonts/font = ExtResource("14")
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.729412, 0.729412, 0.729412, 1)
+
+[node name="WeeklyStatusLabel" type="Label" parent="WeeklyOptions"]
+offset_left = 64.0
+offset_top = 465.0
+offset_right = 436.0
+offset_bottom = 490.0
+theme_override_fonts/font = ExtResource("14")
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2")
@@ -229,3 +271,4 @@ offset_bottom = 245.203
 [connection signal="toggled" from="Options/Control2/SFXMute" to="." method="_on_SFXMute_toggled"]
 [connection signal="toggled" from="Options/Control3/QuickTransitionsButton" to="." method="_on_QuickTransitionsButton_toggled"]
 [connection signal="toggled" from="Options/Control4/CheaterMode" to="." method="_on_CheaterMode_toggled"]
+[connection signal="pressed" from="WeeklyChallengeButton" to="." method="_on_WeeklyChallengeButton_pressed"]

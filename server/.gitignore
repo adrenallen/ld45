@@ -1,0 +1,4 @@
+node_modules/
+planet_jumpers.db
+planet_jumpers.db-wal
+planet_jumpers.db-shm
