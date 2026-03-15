@@ -28,13 +28,32 @@ func _ready():
 	$Options/Control4/CheaterMode.button_pressed = Game.cheaterMode
 
 func _on_StartButton_button_up():
+	MP.weeklyMode = false
 	Game.refresh()
 	Game.tutorialsCompleted = [1,2,3]
 	Game.setPhase(1)
 
 func _on_StartTutButton_pressed():
+	MP.weeklyMode = false
 	Game.refresh()
 	Game.tutorialsCompleted = []
+	Game.setPhase(1)
+
+func _on_WeeklyChallengeButton_pressed():
+	var name = $WeeklyOptions/PlayerNameInput.text.strip_edges()
+	if name.length() < 1:
+		$WeeklyOptions/WeeklyStatusLabel.text = "Enter a player name first!"
+		return
+	MP.playerName = name
+	$WeeklyOptions/WeeklyStatusLabel.text = "Loading weekly seed..."
+	MP.weekly_seed_loaded.connect(_on_weekly_seed_ready, CONNECT_ONE_SHOT)
+	MP.fetchWeeklySeed()
+
+func _on_weekly_seed_ready():
+	$WeeklyOptions/WeeklyStatusLabel.text = "Week: " + MP.weekId + " - Starting..."
+	MP.weeklyMode = true
+	Game.tutorialsCompleted = [1,2,3]
+	MP.startWeeklyRun()
 	Game.setPhase(1)
 
 

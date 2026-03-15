@@ -9,6 +9,15 @@ const RECORD_URL = Game.BASE_URL + "/record"
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+	# Auto-submit death marker in weekly mode
+	if MP.weeklyMode:
+		MP.submitDeath()
+		$WeeklyLabel.visible = true
+		$WeeklyLabel.text = "Weekly Challenge: " + MP.weekId
+	else:
+		$WeeklyLabel.visible = false
+
 	if Game.deathBy.cause == Game.DeathBy.Sun:
 		var newSun = sunScene.instantiate()
 		$Exhibit.add_child(newSun)
@@ -58,7 +67,10 @@ func _on_Button_button_up():
 
 
 func _on_LeaderboardButton_button_up():
-	get_tree().change_scene_to_file("res://leaderboard/Leaderboard.tscn")
+	if MP.weeklyMode:
+		get_tree().change_scene_to_file("res://multiplayer/WeeklyLeaderboard.tscn")
+	else:
+		get_tree().change_scene_to_file("res://leaderboard/Leaderboard.tscn")
 
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):

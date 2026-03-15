@@ -46,7 +46,10 @@ var currentDistance = 0 #distance in current scene
 var playerInAirPocket = false
 
 func refresh():
-	randomize()
+	if MP.weeklyMode:
+		seed(MP.weeklySeed)
+	else:
+		randomize()
 
 	dead = false
 	deathBy = {cause = null}
