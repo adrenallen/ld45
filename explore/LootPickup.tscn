@@ -8,6 +8,7 @@ radius = 50.0
 
 [sub_resource type="Animation" id="2"]
 resource_name = "pickup"
+length = 0.8
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite2D:visible")
 tracks/0/interp = 1
@@ -44,14 +45,26 @@ tracks/2/keys = {
 "update": 1,
 "values": [true]
 }
-tracks/3/type = "method"
-tracks/3/path = NodePath(".")
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite2D:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.8),
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.3, 0.3), Vector2(0.5, 0.5), Vector2(0.0, 0.0)]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.5),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -73,18 +86,18 @@ modulate = Color(0.8, 0.8, 0.2, 1)
 scale = Vector2(0.3, 0.3)
 
 [node name="Label" type="Label" parent="."]
-offset_left = -40.0
-offset_top = 20.0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -50.0
+offset_top = 18.0
+offset_right = 50.0
+offset_bottom = 38.0
 text = "Loot"
 horizontal_alignment = 1
 
 [node name="FullLabel" type="Label" parent="."]
 visible = false
-offset_left = -50.0
-offset_top = -40.0
-offset_right = 50.0
+offset_left = -60.0
+offset_top = -45.0
+offset_right = 60.0
 offset_bottom = -20.0
 text = "Inventory Full!"
 horizontal_alignment = 1

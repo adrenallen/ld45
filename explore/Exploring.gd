@@ -28,6 +28,9 @@ var safe_box_layer: CanvasLayer
 var sb_inv_container: VBoxContainer
 var sb_box_container: VBoxContainer
 var ship_prompt_label: Label
+var inventory_open: bool = false
+var inv_layer: CanvasLayer
+var inv_container: VBoxContainer
 
 func _ready():
 	setTileSource()
@@ -43,6 +46,7 @@ func _ready():
 
 	_create_safe_box_ui()
 	_create_ship_prompt()
+	_create_inventory_overlay()
 
 	if MP.weeklyMode:
 		MP.death_markers_loaded.connect(_on_death_markers_loaded)
@@ -60,11 +64,17 @@ func _physics_process(delta):
 		ship_prompt_label.visible = near_ship and not safe_box_open
 
 func _unhandled_input(event):
-	if event is InputEventKey and event.pressed and event.keycode == KEY_E:
-		if safe_box_open:
-			_close_safe_box()
-		elif near_ship:
-			_open_safe_box()
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_E:
+			if safe_box_open:
+				_close_safe_box()
+			elif near_ship and not inventory_open:
+				_open_safe_box()
+		elif event.keycode == KEY_TAB:
+			if inventory_open:
+				_close_inventory()
+			elif not safe_box_open:
+				_open_inventory()
 
 func _process(delta):
 	$UI.global_position = $CharacterBody2D/Camera2D.get_screen_center_position()
@@ -97,6 +107,11 @@ func _process(delta):
 	if Game.oxygen <= 0:
 		Game.oxygen = 0
 		$CharacterBody2D.die()
+
+	# Auto-refresh inventory overlay if open (throttled to ~2 fps)
+	if inventory_open and inv_layer.visible:
+		if Engine.get_frames_drawn() % 30 == 0:
+			_refresh_inventory_overlay()
 
 func setTileSource():
 	tileSource = 0
@@ -339,6 +354,129 @@ func _on_Area2D_mouse_entered():
 
 func _on_Area2D_mouse_exited():
 	mouseOnShip = false
+
+func _create_inventory_overlay():
+	# Always-visible TAB hint
+	var hint_layer = CanvasLayer.new()
+	hint_layer.layer = 89
+	add_child(hint_layer)
+	var hint = Label.new()
+	hint.text = "[TAB] Inventory"
+	hint.add_theme_font_size_override("font_size", 11)
+	hint.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6, 0.6))
+	hint.position = Vector2(10, 10)
+	hint_layer.add_child(hint)
+
+	inv_layer = CanvasLayer.new()
+	inv_layer.layer = 93
+	inv_layer.visible = false
+	add_child(inv_layer)
+
+	var panel = Panel.new()
+	panel.set_anchors_preset(Control.PRESET_CENTER_RIGHT)
+	panel.offset_left = -260
+	panel.offset_top = -220
+	panel.offset_right = -10
+	panel.offset_bottom = 220
+	inv_layer.add_child(panel)
+
+	var title = Label.new()
+	title.text = "Inventory (TAB to close)"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.position = Vector2(5, 5)
+	title.size = Vector2(240, 20)
+	title.add_theme_font_size_override("font_size", 14)
+	title.add_theme_color_override("font_color", Color(1, 0.9, 0.5))
+	panel.add_child(title)
+
+	# Equipment summary
+	var equip_label = Label.new()
+	equip_label.name = "EquipLabel"
+	equip_label.position = Vector2(5, 30)
+	equip_label.size = Vector2(240, 80)
+	equip_label.add_theme_font_size_override("font_size", 11)
+	equip_label.add_theme_color_override("font_color", Color(0.7, 0.85, 1.0))
+	panel.add_child(equip_label)
+
+	var sep = HSeparator.new()
+	sep.position = Vector2(10, 110)
+	sep.size = Vector2(230, 4)
+	panel.add_child(sep)
+
+	var items_title = Label.new()
+	items_title.text = "Carried Items"
+	items_title.position = Vector2(5, 118)
+	items_title.size = Vector2(240, 18)
+	items_title.add_theme_font_size_override("font_size", 12)
+	items_title.add_theme_color_override("font_color", Color(0.9, 0.9, 0.6))
+	panel.add_child(items_title)
+
+	inv_container = VBoxContainer.new()
+	inv_container.position = Vector2(5, 138)
+	inv_container.size = Vector2(240, 280)
+	panel.add_child(inv_container)
+
+func _open_inventory():
+	inventory_open = true
+	_refresh_inventory_overlay()
+	inv_layer.visible = true
+
+func _close_inventory():
+	inventory_open = false
+	inv_layer.visible = false
+
+func _refresh_inventory_overlay():
+	# Equipment summary
+	var equip_text = ""
+	var slot_names = {
+		Items.EquipSlot.HELMET: "Helmet",
+		Items.EquipSlot.SUIT: "Suit",
+		Items.EquipSlot.BACKPACK: "Backpack",
+		Items.EquipSlot.BOOTS: "Boots",
+		Items.EquipSlot.TOOL: "Tool",
+	}
+	for slot in slot_names:
+		var name = slot_names[slot]
+		if Inventory.player_equipment.has(slot):
+			var inst = Inventory.player_equipment[slot]
+			var def = Items.get_item(inst.item_id)
+			var dur_str = ""
+			if inst.current_durability >= 0:
+				dur_str = " [%d]" % inst.current_durability
+			equip_text += "%s: %s%s\n" % [name, def.get("name", "?"), dur_str]
+		else:
+			equip_text += "%s: (none)\n" % name
+
+	var panel = inv_layer.get_child(0)
+	panel.get_node("EquipLabel").text = equip_text
+
+	# Items list
+	for child in inv_container.get_children():
+		child.queue_free()
+
+	var cap = Inventory.get_inventory_capacity()
+	var cap_label = Label.new()
+	cap_label.text = "%d / %d slots" % [Inventory.player_inventory.size(), cap]
+	cap_label.add_theme_font_size_override("font_size", 10)
+	cap_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
+	inv_container.add_child(cap_label)
+
+	for inst in Inventory.player_inventory:
+		var item_def = Items.get_item(inst.item_id)
+		var rarity = item_def.get("rarity", Items.Rarity.COMMON)
+		var color = Items.RARITY_COLORS.get(rarity, Color.WHITE)
+		var lbl = Label.new()
+		lbl.text = "%s x%d" % [item_def.get("name", inst.item_id), inst.quantity]
+		lbl.add_theme_font_size_override("font_size", 12)
+		lbl.add_theme_color_override("font_color", color)
+		inv_container.add_child(lbl)
+
+	if Inventory.player_inventory.size() == 0:
+		var empty = Label.new()
+		empty.text = "(empty)"
+		empty.add_theme_font_size_override("font_size", 11)
+		empty.add_theme_color_override("font_color", Color(0.4, 0.4, 0.4))
+		inv_container.add_child(empty)
 
 func _create_ship_prompt():
 	ship_prompt_label = Label.new()
