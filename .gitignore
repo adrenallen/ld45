@@ -2,6 +2,7 @@
 .godot/
 .import/
 *.import
+*.uid
 
 # Export
 *.pck
