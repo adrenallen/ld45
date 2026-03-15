@@ -204,4 +204,4 @@ func _on_death_markers_loaded(phase):
 		$Planets.add_child(dm)
 
 func _on_TransitionIn_TransitionIn():
-	$Ship/Camera2D.current = true
+	$Ship/Camera2D.make_current()

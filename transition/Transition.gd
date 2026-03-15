@@ -13,25 +13,24 @@ func _ready():
 	$AnimationPlayer.play("intro")
 	get_tree().paused = true
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Game.quickTransitions:
 		$AnimationPlayer.speed_scale = 10
 
 func setTransitionTitle():
 	if transitionPhase == 1:
-		$title.texture = load("res://transition/crash_title.png")
+		$CanvasLayer/title.texture = load("res://transition/crash_title.png")
 	elif transitionPhase == 2:
-		$title.texture = load("res://transition/explore_title.png")
+		$CanvasLayer/title.texture = load("res://transition/explore_title.png")
 	elif transitionPhase == 3:
-		$title.texture = load("res://transition/launch_title.png")
+		$CanvasLayer/title.texture = load("res://transition/launch_title.png")
 	else:
 		print("TODO - Secret level?")
 
 func fadeIn():
 	# Force overlays fully transparent since unpausing stops this node's
 	# AnimationPlayer (process_mode = WHEN_PAUSED), leaving them partially visible
-	$black_bg.modulate = Color(1, 1, 1, 0)
-	$title.self_modulate = Color(1, 1, 1, 0)
+	$CanvasLayer/black_bg.modulate = Color(1, 1, 1, 0)
+	$CanvasLayer/title.self_modulate = Color(1, 1, 1, 0)
 	get_tree().paused = false
 	emit_signal("TransitionIn")

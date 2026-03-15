@@ -21,6 +21,13 @@ var closedAtlasCoords = Vector2i(1, 0)
 
 var mouseOnShip = false
 var playerStartPos = Vector2(0, 0)
+var near_ship = false
+var safe_box_open = false
+
+var safe_box_layer: CanvasLayer
+var sb_inv_container: VBoxContainer
+var sb_box_container: VBoxContainer
+var ship_prompt_label: Label
 
 func _ready():
 	setTileSource()
@@ -34,17 +41,30 @@ func _ready():
 	var gravity_factor = clamp(Game.currentPlanet.gravity / 40.0, 1, 3)
 	Inventory.degrade_ship_equipment(Items.ShipSlot.LANDING_SYSTEM, gravity_factor)
 
+	_create_safe_box_ui()
+	_create_ship_prompt()
+
 	if MP.weeklyMode:
 		MP.death_markers_loaded.connect(_on_death_markers_loaded)
 		MP.fetchDeathMarkers(2)
 
 func _physics_process(delta):
-	if $CharacterBody2D.global_position.distance_to($"World/ship-top".global_position) < SHIP_ENTER_DISTANCE and mouseOnShip:
+	near_ship = $CharacterBody2D.global_position.distance_to($"World/ship-top".global_position) < SHIP_ENTER_DISTANCE
+	if near_ship and mouseOnShip:
 		Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
-		$"World/ship-top".frame =1
+		$"World/ship-top".frame = 1
 	else:
 		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
-		$"World/ship-top".frame =0
+		$"World/ship-top".frame = 0
+	if ship_prompt_label:
+		ship_prompt_label.visible = near_ship and not safe_box_open
+
+func _unhandled_input(event):
+	if event is InputEventKey and event.pressed and event.keycode == KEY_E:
+		if safe_box_open:
+			_close_safe_box()
+		elif near_ship:
+			_open_safe_box()
 
 func _process(delta):
 	$UI.global_position = $CharacterBody2D/Camera2D.get_screen_center_position()
@@ -305,10 +325,10 @@ func generateMap():
 	return map
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
-	if $CharacterBody2D.dying:
+	if $CharacterBody2D.dying or safe_box_open:
 		return
-	if $CharacterBody2D.global_position.distance_to($"World/ship-top".global_position) < SHIP_ENTER_DISTANCE:
-		if event is InputEventMouseButton:
+	if near_ship:
+		if event is InputEventMouseButton and event.pressed:
 			if Game.fuel >= minimumLaunchFuel:
 				nextPhase()
 			if Game.cheaterMode:
@@ -319,6 +339,151 @@ func _on_Area2D_mouse_entered():
 
 func _on_Area2D_mouse_exited():
 	mouseOnShip = false
+
+func _create_ship_prompt():
+	ship_prompt_label = Label.new()
+	ship_prompt_label.text = "[E] Safe Box  |  [Click] Launch"
+	ship_prompt_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	ship_prompt_label.visible = false
+	ship_prompt_label.add_theme_font_size_override("font_size", 14)
+	ship_prompt_label.add_theme_color_override("font_color", Color(1, 1, 0.6))
+	# Position via CanvasLayer so it's screen-space
+	var prompt_layer = CanvasLayer.new()
+	prompt_layer.layer = 90
+	add_child(prompt_layer)
+	ship_prompt_label.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+	ship_prompt_label.offset_top = -30
+	ship_prompt_label.offset_bottom = 0
+	ship_prompt_label.offset_left = -150
+	ship_prompt_label.offset_right = 150
+	prompt_layer.add_child(ship_prompt_label)
+
+func _create_safe_box_ui():
+	safe_box_layer = CanvasLayer.new()
+	safe_box_layer.layer = 95
+	safe_box_layer.visible = false
+	add_child(safe_box_layer)
+
+	var panel = Panel.new()
+	panel.set_anchors_preset(Control.PRESET_CENTER)
+	panel.offset_left = -280
+	panel.offset_top = -200
+	panel.offset_right = 280
+	panel.offset_bottom = 200
+	safe_box_layer.add_child(panel)
+
+	var title = Label.new()
+	title.text = "Ship Safe Box  (Press E to close)"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	title.offset_top = 10
+	title.offset_bottom = 30
+	title.add_theme_font_size_override("font_size", 16)
+	panel.add_child(title)
+
+	# Left side: inventory
+	var inv_label = Label.new()
+	inv_label.text = "Your Inventory"
+	inv_label.position = Vector2(10, 35)
+	inv_label.add_theme_font_size_override("font_size", 13)
+	inv_label.add_theme_color_override("font_color", Color(0.7, 0.9, 1.0))
+	panel.add_child(inv_label)
+
+	sb_inv_container = VBoxContainer.new()
+	sb_inv_container.position = Vector2(10, 55)
+	sb_inv_container.size = Vector2(260, 320)
+	panel.add_child(sb_inv_container)
+
+	# Right side: safe box
+	var sb_label = Label.new()
+	sb_label.text = "Safe Box (3 slots - survives death)"
+	sb_label.position = Vector2(290, 35)
+	sb_label.add_theme_font_size_override("font_size", 13)
+	sb_label.add_theme_color_override("font_color", Color(1.0, 0.8, 0.3))
+	panel.add_child(sb_label)
+
+	sb_box_container = VBoxContainer.new()
+	sb_box_container.position = Vector2(290, 55)
+	sb_box_container.size = Vector2(260, 320)
+	panel.add_child(sb_box_container)
+
+func _open_safe_box():
+	safe_box_open = true
+	$CharacterBody2D.set_physics_process(false)
+	_refresh_safe_box_ui()
+	safe_box_layer.visible = true
+
+func _close_safe_box():
+	safe_box_open = false
+	$CharacterBody2D.set_physics_process(true)
+	safe_box_layer.visible = false
+
+func _refresh_safe_box_ui():
+	# Clear old buttons
+	for child in sb_inv_container.get_children():
+		child.queue_free()
+	for child in sb_box_container.get_children():
+		child.queue_free()
+
+	# Inventory items with "Move >" buttons
+	for i in range(Inventory.player_inventory.size()):
+		var inst = Inventory.player_inventory[i]
+		var item_def = Items.get_item(inst.item_id)
+		var btn = Button.new()
+		btn.text = "%s x%d  [> Safe Box]" % [item_def.get("name", inst.item_id), inst.quantity]
+		btn.add_theme_font_size_override("font_size", 11)
+		var idx = i
+		btn.pressed.connect(func(): _on_move_to_safebox_pressed(idx))
+		sb_inv_container.add_child(btn)
+
+	if Inventory.player_inventory.size() == 0:
+		var lbl = Label.new()
+		lbl.text = "(empty)"
+		lbl.add_theme_font_size_override("font_size", 11)
+		lbl.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
+		sb_inv_container.add_child(lbl)
+
+	# Safe box items with "< Move" buttons
+	for i in range(Inventory.ship_safe_box.size()):
+		var inst = Inventory.ship_safe_box[i]
+		var item_def = Items.get_item(inst.item_id)
+		var btn = Button.new()
+		btn.text = "%s x%d  [< Inventory]" % [item_def.get("name", inst.item_id), inst.quantity]
+		btn.add_theme_font_size_override("font_size", 11)
+		var idx = i
+		btn.pressed.connect(func(): _on_move_to_inventory_pressed(idx))
+		sb_box_container.add_child(btn)
+
+	if Inventory.ship_safe_box.size() == 0:
+		var lbl = Label.new()
+		lbl.text = "(empty)"
+		lbl.add_theme_font_size_override("font_size", 11)
+		lbl.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
+		sb_box_container.add_child(lbl)
+
+	# Capacity indicator
+	var cap_lbl = Label.new()
+	cap_lbl.text = "%d/3 slots used" % Inventory.ship_safe_box.size()
+	cap_lbl.add_theme_font_size_override("font_size", 10)
+	cap_lbl.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6))
+	sb_box_container.add_child(cap_lbl)
+
+func _on_move_to_safebox_pressed(index: int):
+	if index >= Inventory.player_inventory.size():
+		return
+	if Inventory.ship_safe_box.size() >= 3:
+		return
+	var inst = Inventory.player_inventory[index]
+	Inventory.transfer_item(Inventory.player_inventory, Inventory.ship_safe_box, inst.instance_id, 3)
+	_refresh_safe_box_ui()
+
+func _on_move_to_inventory_pressed(index: int):
+	if index >= Inventory.ship_safe_box.size():
+		return
+	var inst = Inventory.ship_safe_box[index]
+	var cap = Inventory.get_inventory_capacity()
+	Inventory.transfer_item(Inventory.ship_safe_box, Inventory.player_inventory, inst.instance_id, cap)
+	_refresh_safe_box_ui()
 
 func _on_death_markers_loaded(phase):
 	if phase != 2:
