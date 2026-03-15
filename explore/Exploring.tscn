@@ -112,7 +112,7 @@ shape = SubResource("1")
 [node name="Transition" parent="." instance=ExtResource("5")]
 transitionPhase = 2
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="TileMap" type="TileMapLayer" parent="."]
 z_index = -5
 tile_set = SubResource("8")
 
