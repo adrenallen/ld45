@@ -95,10 +95,10 @@ func _build_save_data() -> Dictionary:
 		inventory = Inventory.to_dict(),
 		crafting = Crafting.to_dict(),
 		stats = {
-			runs_completed = Game.get("runs_completed", 0),
-			runs_died = Game.get("runs_died", 0),
-			items_crafted = Game.get("items_crafted", 0),
-			successful_extractions = Game.get("successful_extractions", 0),
+			runs_completed = Game.runs_completed,
+			runs_died = Game.runs_died,
+			items_crafted = Game.items_crafted,
+			successful_extractions = Game.successful_extractions,
 		}
 	}
 

@@ -73,7 +73,7 @@ func craft(recipe_id: String) -> bool:
 		Inventory.remove_item_by_id_from(Inventory.base_stash, ingredient.item_id, ingredient.quantity)
 	# Produce result
 	Inventory.add_to_base_stash(recipe.result_id, recipe.result_quantity)
-	Game.items_crafted = Game.get("items_crafted", 0) + 1
+	Game.items_crafted += 1
 	return true
 
 func upgrade_workbench(type: int) -> bool:
