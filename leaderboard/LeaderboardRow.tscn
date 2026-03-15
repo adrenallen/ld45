@@ -1,41 +1,27 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=9 format=3]
 
-[ext_resource path="res://leaderboard/LeaderboardRow.gd" type="Script" id=1]
-[ext_resource path="res://leaderboard/LeadeboardRow.png" type="Texture" id=2]
-[ext_resource path="res://crash/white_bg.png" type="Texture" id=3]
+[ext_resource type="Script" path="res://leaderboard/LeaderboardRow.gd" id="1"]
+[ext_resource type="Texture2D" path="res://leaderboard/LeadeboardRow.png" id="2"]
+[ext_resource type="Texture2D" path="res://crash/white_bg.png" id="3"]
+[ext_resource type="FontFile" path="res://death/Aero.ttf" id="6"]
 
-[sub_resource type="DynamicFontData" id=1]
-font_path = "res://death/Aero.ttf"
-
-[sub_resource type="DynamicFont" id=2]
-font_data = SubResource( 1 )
-
-[sub_resource type="Theme" id=3]
-default_font = SubResource( 2 )
-
-[sub_resource type="DynamicFontData" id=4]
-font_path = "res://death/Aero.ttf"
-
-[sub_resource type="DynamicFont" id=5]
-size = 20
-use_mipmaps = true
-use_filter = true
-extra_spacing_char = 1
-font_data = SubResource( 4 )
+[sub_resource type="Theme" id="3"]
+default_font = ExtResource("6")
+default_font_size = 14
 
 [node name="Node2D" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource("1")
 
-[node name="LeaderboardRow" type="Sprite" parent="."]
-texture = ExtResource( 2 )
+[node name="LeaderboardRow" type="Sprite2D" parent="."]
+texture = ExtResource("2")
 centered = false
 
-[node name="white_bg" type="Sprite" parent="LeaderboardRow"]
+[node name="white_bg" type="Sprite2D" parent="LeaderboardRow"]
 modulate = Color( 0, 0, 0, 1 )
 show_behind_parent = true
 position = Vector2( 111.201, 28.6383 )
 scale = Vector2( 0.208139, 0.079927 )
-texture = ExtResource( 3 )
+texture = ExtResource("3")
 
 [node name="Exhibit" type="Node2D" parent="LeaderboardRow"]
 show_behind_parent = true
@@ -43,23 +29,25 @@ position = Vector2( 97.7147, 27.805 )
 scale = Vector2( 0.5, 0.5 )
 
 [node name="DistanceLabel" type="Label" parent="LeaderboardRow"]
-margin_left = 344.839
-margin_top = 22.8566
-margin_right = 1016.84
-margin_bottom = 60.8566
-theme = SubResource( 3 )
-custom_fonts/font = SubResource( 5 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
+offset_left = 344.839
+offset_top = 22.8566
+offset_right = 1016.84
+offset_bottom = 60.8566
+theme = SubResource("3")
+theme_override_fonts/font = ExtResource("6")
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1
 
 [node name="NameLabel" type="Label" parent="LeaderboardRow"]
-margin_left = 347.0
-margin_top = -2.0
-margin_right = 1019.0
-margin_bottom = 36.0
-theme = SubResource( 3 )
-custom_fonts/font = SubResource( 5 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
+offset_left = 347.0
+offset_top = -2.0
+offset_right = 1019.0
+offset_bottom = 36.0
+theme = SubResource("3")
+theme_override_fonts/font = ExtResource("6")
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1

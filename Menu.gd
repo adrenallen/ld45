@@ -14,18 +14,18 @@ var sfxMute = false
 func _ready():
 	sfxVol = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Sound Effects"))
 	musicVol = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Background"))
-	
+
 	sfxMute = AudioServer.is_bus_mute(AudioServer.get_bus_index("Sound Effects"))
 	musicMute = AudioServer.is_bus_mute(AudioServer.get_bus_index("Background"))
-		
-	$Options/Control2/SFXMute.pressed = sfxMute
-	$Options/Control/MusicMute.pressed = musicMute
-	
+
+	$Options/Control2/SFXMute.button_pressed = sfxMute
+	$Options/Control/MusicMute.button_pressed = musicMute
+
 	$Options/Control2/SFXVolume.text = str(sfxVol)
 	$Options/Control/MusicVolume.text = str(musicVol)
-	
-	$Options/Control3/QuickTransitionsButton.pressed = Game.quickTransitions
-	$Options/Control4/CheaterMode.pressed = Game.cheaterMode
+
+	$Options/Control3/QuickTransitionsButton.button_pressed = Game.quickTransitions
+	$Options/Control4/CheaterMode.button_pressed = Game.cheaterMode
 
 func _on_StartButton_button_up():
 	Game.refresh()
@@ -39,7 +39,7 @@ func _on_StartTutButton_pressed():
 
 
 func _on_LeaderboardButton_pressed():
-	get_tree().change_scene("res://leaderboard/Leaderboard.tscn")
+	get_tree().change_scene_to_file("res://leaderboard/Leaderboard.tscn")
 
 
 func _on_QuitButton_pressed():
