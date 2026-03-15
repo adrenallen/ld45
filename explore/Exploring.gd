@@ -95,7 +95,7 @@ func nextPhase():
 	Game.setPhase(3)
 
 func _on_Transition_TransitionIn():
-	$CharacterBody2D/Camera2D.current = true
+	$CharacterBody2D/Camera2D.make_current()
 
 func placeWorld():
 	var map = generateMap()

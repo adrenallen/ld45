@@ -29,5 +29,9 @@ func setTransitionTitle():
 		print("TODO - Secret level?")
 
 func fadeIn():
+	# Force overlays fully transparent since unpausing stops this node's
+	# AnimationPlayer (process_mode = WHEN_PAUSED), leaving them partially visible
+	$black_bg.modulate = Color(1, 1, 1, 0)
+	$title.self_modulate = Color(1, 1, 1, 0)
 	get_tree().paused = false
 	emit_signal("TransitionIn")
