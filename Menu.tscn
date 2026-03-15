@@ -285,6 +285,7 @@ offset_left = 940.0
 offset_top = 323.0
 offset_right = 970.0
 offset_bottom = 347.0
+[connection signal="finished" from="AudioStreamPlayer" to="AudioStreamPlayer" method="play"]
 [connection signal="pressed" from="NewGameButton" to="." method="_on_NewGameButton_pressed"]
 [connection signal="pressed" from="ContinueButton" to="." method="_on_ContinueButton_pressed"]
 [connection signal="button_up" from="StartButton" to="." method="_on_StartButton_button_up"]

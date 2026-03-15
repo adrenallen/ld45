@@ -302,4 +302,5 @@ stream = ExtResource("10")
 volume_db = -16.0
 autoplay = true
 bus = "Background"
+[connection signal="finished" from="BackgroundMusic" to="BackgroundMusic" method="play"]
 [connection signal="body_entered" from="Boundaries/DeathArea2D" to="." method="_on_DeathArea2D_body_entered"]

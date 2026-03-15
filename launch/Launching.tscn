@@ -111,4 +111,5 @@ stream = ExtResource("11")
 volume_db = -17.0
 autoplay = true
 bus = "Background"
+[connection signal="finished" from="AudioStreamPlayer" to="AudioStreamPlayer" method="play"]
 [connection signal="TransitionIn" from="TransitionIn" to="." method="_on_TransitionIn_TransitionIn"]
